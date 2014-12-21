@@ -114,7 +114,7 @@
                 android:paddingBottom="@dimen/activity_horizontal_margin"
                 android:text="@string/zero_amount"
                 android:textColor="@color/actionBarPrimary"
-                android:textSize="56sp" />
+                android:textSize="70sp" />
         </LinearLayout>
     </LinearLayout>
 
