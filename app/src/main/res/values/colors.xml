@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="actionBarPrimary">#ef6c00</color>
+    <color name="colorAccent">#ffa726</color>
+    <color name="colorPrimaryDark">#e65100</color>
+    <color name="actionBarTextWhite">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="activityBackground">#fff3e0</color>
+
+
+</resources>
+
