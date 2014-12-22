@@ -353,7 +353,6 @@ public class MainActivity extends ActionBarActivity {
                 getAmountDouble = Double.parseDouble(getAmount);
 
                 Double finalAmount;
-                String finalAmountString;
 
                 finalAmount = getAmountDouble * currencyFromWebDouble;
 
