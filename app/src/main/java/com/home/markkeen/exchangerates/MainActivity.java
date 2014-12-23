@@ -100,8 +100,8 @@ public class MainActivity extends ActionBarActivity {
 
         amountEditText = (EditText) findViewById(R.id.amountEditText);
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
-        currencyToSpinner = (Spinner) findViewById(R.id.spinnerCurrencyTo);
-        exchangeAmountTextView = (TextView) findViewById(R.id.exchangeAmountTextView);
+       // currencyToSpinner = (Spinner) findViewById(R.id.spinnerCurrencyTo);
+       // exchangeAmountTextView = (TextView) findViewById(R.id.exchangeAmountTextView);
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
 
