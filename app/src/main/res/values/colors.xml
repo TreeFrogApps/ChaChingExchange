@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="actionBarPrimary">#ef6c00</color>
-    <color name="colorAccent">#ffa726</color>
-    <color name="colorPrimaryDark">#e65100</color>
+    <color name="actionBarPrimary">#9143d6</color>
+    <color name="colorAccent">#ab64e9</color>
+    <color name="colorPrimaryDark">#7435ab</color>
     <color name="actionBarTextWhite">#ffffffff</color>
     <color name="black">#ff000000</color>
     <color name="activityBackground">#fff3e0</color>
+    <color name="gradientStart">#803c3c3c</color>
+    <color name="gradientEnd">#80dcdcdc</color>
+    <color name="editTextGrey">#FF999999</color>
+    <color name="myRed">#ff990e10</color>
+
+
 
 
 </resources>
