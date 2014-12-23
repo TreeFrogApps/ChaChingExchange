@@ -10,19 +10,21 @@
         <item name="colorPrimary">@color/actionBarPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:textColorPrimary">@color/actionBarTextWhite</item>
-        <item name="colorControlNormal">@color/actionBarTextWhite</item>
         <item name="android:spinnerItemStyle">@style/mySpinnerItemStyle</item>
+        <item name="android:windowContentOverlay">@color/black</item>
     </style>
+
+
+
 
     <style name="AppTheme.Base.PopUpMenu.Overlay" parent="ThemeOverlay.AppCompat.Light" >
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="mySpinnerItemStyle" parent="">
-        <item name="android:textColor">@color/actionBarPrimary</item>
-        <item name="android:textSize">18sp</item>
-
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_standard</item>
     </style>
+
 
 </resources>

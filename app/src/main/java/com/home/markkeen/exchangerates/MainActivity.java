@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -39,6 +40,40 @@ public class MainActivity extends ActionBarActivity {
     Spinner currencyFromSpinner;
     Spinner currencyToSpinner;
     TextView exchangeAmountTextView;
+    ImageView flagBase;
+    int[] flags = {
+            R.drawable.flag_ic_aud_00,
+            R.drawable.flag_ic_bgn_01,
+            R.drawable.flag_ic_brl_02,
+            R.drawable.flag_ic_cad_03,
+            R.drawable.flag_ic_chf_04,
+            R.drawable.flag_ic_cny_05,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_holder,
+    };
 
     static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
     static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
@@ -67,6 +102,8 @@ public class MainActivity extends ActionBarActivity {
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
         currencyToSpinner = (Spinner) findViewById(R.id.spinnerCurrencyTo);
         exchangeAmountTextView = (TextView) findViewById(R.id.exchangeAmountTextView);
+        flagBase = (ImageView) findViewById(R.id.flag_base);
+
 
         addItemExchangeRateFromSpinner();
         addItemExchangeRateToSpinner();
@@ -108,10 +145,10 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                        currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
+                        currencyFromSubsting = currencyFromType.substring(0, 3);
+                        flagBase.setImageResource(flags[position]);
 
-                currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
-
-                currencyFromSubsting = currencyFromType.substring(0, 3);
 
                 Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
 

@@ -17,7 +17,7 @@
         <item>BGN   Bulgarian Lev</item>
         <item>BRL   Brazilian Real</item>
         <item>CAD	Canadian Dollar</item>
-        <item>CHF	Confederation Helvetica Francs</item>
+        <item>CHF	CH Francs</item>
         <item>CNY	Chinese Yuan</item>
         <item>CZK	Czech Koruna</item>
         <item>DKK	Danish Krone</item>
@@ -47,6 +47,11 @@
         <item>ZAR	South African Rand</item>
 
     </string-array>
+
+    <string name="base_currency_layout_enter_amount">Amount</string>
+    <string name="currency_GBP">GBP British Pound</string>
+    <string name="currency_Flag">Flag</string>
+
 
 
 
