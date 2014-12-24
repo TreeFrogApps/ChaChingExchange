@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -48,32 +50,39 @@ public class MainActivity extends ActionBarActivity {
             R.drawable.flag_ic_cad_03,
             R.drawable.flag_ic_chf_04,
             R.drawable.flag_ic_cny_05,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
-            R.drawable.flag_ic_holder,
+            R.drawable.flag_ic_czk_06,
+            R.drawable.flag_ic_dkk_07,
+            R.drawable.flag_ic_eur_08,
+            R.drawable.flag_ic_gbp_09,
+            R.drawable.flag_ic_hkd_10,
+            R.drawable.flag_ic_hrk_11,
+            R.drawable.flag_ic_huf_12,
+            R.drawable.flag_ic_idr_13,
+            R.drawable.flag_ic_ils_14,
+            R.drawable.flag_ic_inr_15,
+            R.drawable.flag_ic_jpy_16,
+            R.drawable.flag_ic_krw_17,
+            R.drawable.flag_ic_ltl_18,
+            R.drawable.flag_ic_mxn_19,
+            R.drawable.flag_ic_nok_20,
+            R.drawable.flag_ic_nzd_21,
+            R.drawable.flag_ic_php_22,
+            R.drawable.flag_ic_pln_23,
+            R.drawable.flag_ic_ron_24,
+            R.drawable.flag_ic_rub_25,
+            R.drawable.flag_ic_sek_26,
+            R.drawable.flag_ic_sgd_27,
+            R.drawable.flag_ic_thb_28,
+            R.drawable.flag_ic_try_29,
+            R.drawable.flag_ic_usd_30,
+            R.drawable.flag_ic_zar_31,
     };
+
+    private CustomAdapter customAdapter;
+
+    private ListView listView;
+
+
 
     static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
     static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
@@ -82,12 +91,15 @@ public class MainActivity extends ActionBarActivity {
     double getAmountDouble;
 
     String currencyFromType;
-    String currencyToType;
     String currencyFromSubsting;
     String currencyToSubsting;
 
     static String currencyFromWeb = "";
     static double currencyFromWebDouble = 0;
+
+
+    ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
+
 
 
     @Override
@@ -106,12 +118,20 @@ public class MainActivity extends ActionBarActivity {
 
 
         addItemExchangeRateFromSpinner();
-        addItemExchangeRateToSpinner();
+        //addItemExchangeRateToSpinner();
 
+       setExchangeAmountOnTextChangeListener();
 
-        setExchangeAmountOnTextChangeListener();
 
         new MyAsyncTask();
+
+        populatedArrayList();
+
+        // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
+        customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
+        listView = (ListView) findViewById(R.id.listView);
+
+        listView.setAdapter(customAdapter);
 
     }
 
@@ -155,14 +175,14 @@ public class MainActivity extends ActionBarActivity {
 
                 getAmount = amountEditText.getText().toString();
 
-                if (!getAmount.equals("")) {
+           /*     if (!getAmount.equals("")) {
 
                     new MyAsyncTask().execute();
 
                 } else {
                     exchangeAmountTextView.setText("0.00");
                 }
-
+            */
             }
 
             @Override
@@ -172,37 +192,6 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
-    public void addItemExchangeRateToSpinner() {
-
-        currencyToSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-                currencyToType = (currencyToSpinner.getSelectedItem().toString());
-
-                currencyToSubsting = currencyToType.substring(0, 3);
-
-                Log.v("SELECT TO SPINNER ", currencyToSubsting);
-
-                getAmount = amountEditText.getText().toString();
-
-                if (!getAmount.equals("")) {
-
-                    new MyAsyncTask().execute();
-
-                } else {
-                    exchangeAmountTextView.setText("0.00");
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
 
 
     public void setExchangeAmountOnTextChangeListener() {
@@ -223,18 +212,149 @@ public class MainActivity extends ActionBarActivity {
 
                 getAmount = amountEditText.getText().toString();
 
-                if (!getAmount.equals("")) {
+            /*    if (!getAmount.equals("")) {
 
                     new MyAsyncTask().execute();
 
                 } else {
                     exchangeAmountTextView.setText("0.00");
                 }
-
+            */
             }
         });
 
     }
+
+
+
+
+
+    public ArrayList<HashMap<String, String>> populatedArrayList() {
+
+        String[] flag = {
+                "flag_ic_aud_00",
+                "flag_ic_bgn_01",
+                "flag_ic_brl_02",
+                "flag_ic_cad_03",
+                "flag_ic_chf_04",
+                "flag_ic_cny_05",
+                "flag_ic_czk_06",
+                "flag_ic_dkk_07",
+                "flag_ic_eur_08",
+                "flag_ic_gbp_09",
+                "flag_ic_hkd_10",
+                "flag_ic_hrk_11",
+                "flag_ic_huf_12",
+                "flag_ic_idr_13",
+                "flag_ic_ils_14",
+                "flag_ic_inr_15",
+                "flag_ic_jpy_16",
+                "flag_ic_krw_17",
+                "flag_ic_ltl_18",
+                "flag_ic_mxn_19",
+                "flag_ic_nok_20",
+                "flag_ic_nzd_21",
+                "flag_ic_php_22",
+                "flag_ic_pln_23",
+                "flag_ic_ron_24",
+                "flag_ic_rub_25",
+                "flag_ic_sek_26",
+                "flag_ic_sgd_27",
+                "flag_ic_thb_28",
+                "flag_ic_try_29",
+                "flag_ic_usd_30",
+                "flag_ic_zar_31" };
+
+        String[] currencyCode = {
+                "AUD",
+                "BGN",
+                "BRL",
+                "CAD",
+                "CHF",
+                "CNY",
+                "CZK",
+                "DKK",
+                "EUR",
+                "GBP",
+                "HKD",
+                "HRK",
+                "HUF",
+                "IDR",
+                "ILS",
+                "INR",
+                "JPY",
+                "KRW",
+                "LTL",
+                "MXN",
+                "NOK",
+                "NZD",
+                "PHP",
+                "PLN",
+                "RON",
+                "RUB",
+                "SEK",
+                "SGD",
+                "THB",
+                "TRY",
+                "USD",
+                "ZAR" };
+
+        String[] currency = {
+                "Australian Dollar",
+                "Bulgarian Lev",
+                "Brazilian Real",
+                "Canadian Dollar",
+                "CH Francs",
+                "Chinese Yuan",
+                "Czech Koruna",
+                "Danish Krone",
+                "Euro",
+                "British Pound",
+                "Hong Kong Dollar",
+                "Croatian Kuna",
+                "Hungarian Forint",
+                "Indonesian Rupiah",
+                "Israeli Shekel",
+                "Indian Rupee",
+                "Japanese Yen",
+                "Korean Won",
+                "Lithuanian Litas",
+                "Mexican Peso",
+                "Norwegian Krone",
+                "New Zealand Dollar",
+                "Philippine Peso",
+                "Polish NEW Zloty",
+                "Romanian Leu",
+                "Russian Rouble",
+                "Swedish Krona",
+                "Singapore Dollar",
+                "Thai Baht",
+                "New Turkish Lira",
+                "United States Dollar",
+                "South African Rand" };
+
+
+
+        for (int i = 0; i < flag.length; i++){
+
+            HashMap<String, String> currencyFlagList = new HashMap<String, String>();
+
+            currencyFlagList.put("flagType", flag[i]);
+            currencyFlagList.put("currencyCode", currencyCode[i]);
+            currencyFlagList.put("currencyType", currency[i]);
+
+            flagAndCurrencyList.add(currencyFlagList);
+
+            Log.v("CURRENCY Code", currencyCode[i]);
+            Log.v("CURRENCY TYPE", currency[i]);
+            Log.v("FLAG TYPE", flag[i]);
+        }
+
+
+        return flagAndCurrencyList;
+    }
+
+
 
 
     private class MyAsyncTask extends AsyncTask<String, String, String>
