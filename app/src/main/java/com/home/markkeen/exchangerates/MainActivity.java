@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -40,8 +39,6 @@ public class MainActivity extends ActionBarActivity {
 
     EditText amountEditText;
     Spinner currencyFromSpinner;
-    Spinner currencyToSpinner;
-    TextView exchangeAmountTextView;
     ImageView flagBase;
     int[] flags = {
             R.drawable.flag_ic_aud_00,
@@ -82,27 +79,21 @@ public class MainActivity extends ActionBarActivity {
 
     private ListView listView;
 
-
-
-
-
     static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
     static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
     String getRatesLatest;
+    String getRatesFinal;
     String getAmount;
     String[] rateArray;
-    double getAmountDouble;
+    String[] currency;
+    String[] flag;
+    String[] currencyCode;
+
 
     String currencyFromType;
     String currencyFromSubsting;
-    String currencyToSubsting;
-
-    static String currencyFromWeb = "";
-    static double[] currencyFromWebDouble;
-
 
     ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
-
 
 
     @Override
@@ -115,15 +106,15 @@ public class MainActivity extends ActionBarActivity {
 
         amountEditText = (EditText) findViewById(R.id.amountEditText);
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
-       // currencyToSpinner = (Spinner) findViewById(R.id.spinnerCurrencyTo);
-       // exchangeAmountTextView = (TextView) findViewById(R.id.exchangeAmountTextView);
+        // currencyToSpinner = (Spinner) findViewById(R.id.spinnerCurrencyTo);
+        // exchangeAmountTextView = (TextView) findViewById(R.id.exchangeAmountTextView);
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
 
         addItemExchangeRateFromSpinner();
         //addItemExchangeRateToSpinner();
 
-       setExchangeAmountOnTextChangeListener();
+        setExchangeAmountOnTextChangeListener();
 
 
         new MyAsyncTask();
@@ -168,9 +159,9 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                        currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
-                        currencyFromSubsting = currencyFromType.substring(0, 3);
-                        flagBase.setImageResource(flags[position]);
+                currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
+                currencyFromSubsting = currencyFromType.substring(0, 3);
+                flagBase.setImageResource(flags[position]);
 
 
                 Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
@@ -194,7 +185,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
-
 
 
     public void setExchangeAmountOnTextChangeListener() {
@@ -229,12 +219,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-
-
-
     public ArrayList<HashMap<String, String>> populatedArrayList() {
 
-        String[] flag = {
+        flag = new String[]{
                 "flag_ic_aud_00",
                 "flag_ic_bgn_01",
                 "flag_ic_brl_02",
@@ -266,9 +253,9 @@ public class MainActivity extends ActionBarActivity {
                 "flag_ic_thb_28",
                 "flag_ic_try_29",
                 "flag_ic_usd_30",
-                "flag_ic_zar_31" };
+                "flag_ic_zar_31"};
 
-        String[] currencyCode = {
+        currencyCode = new String[] {
                 "AUD",
                 "BGN",
                 "BRL",
@@ -300,9 +287,9 @@ public class MainActivity extends ActionBarActivity {
                 "THB",
                 "TRY",
                 "USD",
-                "ZAR" };
+                "ZAR"};
 
-        String[] currency = {
+        currency = new String[] {
                 "Australian Dollar",
                 "Bulgarian Lev",
                 "Brazilian Real",
@@ -334,11 +321,10 @@ public class MainActivity extends ActionBarActivity {
                 "Thai Baht",
                 "New Turkish Lira",
                 "United States Dollar",
-                "South African Rand" };
+                "South African Rand"};
 
 
-
-        for (int i = 0; i < flag.length; i++){
+        for (int i = 0; i < flag.length; i++) {
 
             HashMap<String, String> currencyFlagList = new HashMap<String, String>();
 
@@ -346,18 +332,23 @@ public class MainActivity extends ActionBarActivity {
             currencyFlagList.put("currencyCode", currencyCode[i]);
             currencyFlagList.put("currencyType", currency[i]);
 
+            // add the returned values from the http query, only if the populated rate array is the same
+            // length as the flag array count - it should be, however if not then avoids null pointer exception
+            if (rateArray.length == flag.length) {
+                currencyFlagList.put("rateArray", rateArray[i]);
+            }
+
             flagAndCurrencyList.add(currencyFlagList);
 
             Log.v("CURRENCY Code", currencyCode[i]);
             Log.v("CURRENCY TYPE", currency[i]);
             Log.v("FLAG TYPE", flag[i]);
+            Log.v("RATE", rateArray[i]);
         }
 
 
         return flagAndCurrencyList;
     }
-
-
 
 
     private class MyAsyncTask extends AsyncTask<String, String, String>
@@ -373,13 +364,25 @@ public class MainActivity extends ActionBarActivity {
 
             // Define that I want to use the POST method to grab data from
             // the provided URL
+            getRatesLatest = getRatesURLA + currencyFromSubsting;
 
-            getRatesLatest = getRatesURLA + currencyFromSubsting + currencyToSubsting + getGetRatesURLB;
+            // loop round all the country codes concatenating into one big URL string
+            for (int i = 0; i < currencyCode.length; i++){
 
-            HttpPost httpPost = new HttpPost(getRatesLatest);
+                getRatesLatest = getRatesLatest + currencyCode[i] + "%22%2C%22";
+
+            }
+
+            // remove last "%22%2C%22" reassigning the string using substring to minus 9 characters
+            getRatesLatest = getRatesLatest.substring(0, getRatesLatest.length() - 9);
+
+            getRatesFinal = getRatesLatest + getGetRatesURLB;
 
 
-            Log.v("HTTPS Address ", getRatesLatest);
+            HttpPost httpPost = new HttpPost(getRatesFinal);
+
+
+            Log.v("HTTPS Address ", getRatesFinal);
 
             // Web service used is defined
             httpPost.setHeader("Content-type", "application/json");
@@ -460,16 +463,16 @@ public class MainActivity extends ActionBarActivity {
                 JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
 
                 // Get the JSON object named rate inside of the results object
-               // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
+                // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
 
 
                 // Get the JSON array named rate inside of the results object
                 JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
                 int arrayLength = jsonArray.length();
 
-                for (int i = 0; i < arrayLength; i++){
+                for (int i = 0; i < arrayLength; i++) {
 
-                     JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
+                    JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
 
                     rateArray[i] = currencyJSONObject.getString("Rate");
 
@@ -487,20 +490,18 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            if (!getAmount.equals("")) {
-
-                for (int i = 0; i < rateArray.length; i++) {
-
-                    currencyFromWebDouble[i] = Double.parseDouble(rateArray[i]);
-
-                }
+            populatedArrayList();
 
 
-            }
+            customAdapter.notifyDataSetChanged();
+            listView.setAdapter(customAdapter);
 
         }
 
+
     }
+
 }
+
 
 

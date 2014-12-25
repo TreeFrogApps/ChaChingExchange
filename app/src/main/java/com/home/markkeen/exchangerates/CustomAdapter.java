@@ -40,10 +40,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
     }
 
-    public void ResultsFromWeb(int[] currencyFromWebDouble){
-
-
-    }
 
 
     @Override
@@ -90,7 +86,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
         // Populate the data into the template view using the data object
         viewHolder.flagType.setBackground(flagImage);
-        viewHolder.convertedCurrencyAmount.setText("0.00");
+        viewHolder.convertedCurrencyAmount.setText("rateArray");
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
         viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType"));
         viewHolder.context_menu = (ImageView) convertView.findViewById(R.id.context_menu);
