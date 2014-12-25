@@ -84,10 +84,13 @@ public class MainActivity extends ActionBarActivity {
 
 
 
+
+
     static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
     static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
     String getRatesLatest;
     String getAmount;
+    String[] rateArray;
     double getAmountDouble;
 
     String currencyFromType;
@@ -95,7 +98,7 @@ public class MainActivity extends ActionBarActivity {
     String currencyToSubsting;
 
     static String currencyFromWeb = "";
-    static double currencyFromWebDouble = 0;
+    static double[] currencyFromWebDouble;
 
 
     ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
@@ -456,40 +459,22 @@ public class MainActivity extends ActionBarActivity {
                 // Get the JSON object named results inside of the query object
                 JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
 
-                // Get the JSON object named quote inside of the results object
-                JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
+                // Get the JSON object named rate inside of the results object
+               // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
 
 
-                currencyFromWeb = currencyJSONObject.getString("Rate");
+                // Get the JSON array named rate inside of the results object
+                JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
+                int arrayLength = jsonArray.length();
 
-                Log.v("CURRENCY FROM WEB ", currencyFromWeb);
+                for (int i = 0; i < arrayLength; i++){
 
+                     JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
 
-                // NOT REQUIRED - LOGGING ONLY (see all retrieved data items)
-                // GET ARRAY DATA
-                JSONArray queryArray = currencyJSONObject.names();
+                    rateArray[i] = currencyJSONObject.getString("Rate");
 
-                ArrayList<String> list = new ArrayList<String>();
-
-                for (int i = 0; i < queryArray.length(); i++) {
-
-                    list.add(queryArray.getString(i));
+                    Log.v("CURRENCY FROM WEB ", rateArray[i]);
                 }
-
-                for (String item : list) {
-
-                    Log.v("JSON ARRAY ITEMS ", item);
-
-                }
-
-                // END OF GET ARRAY DATA
-
-                // Gets the first item in the JSONObject
-                JSONArray objectArray = resultsJSONObject.names();
-
-                // Prints out that first item in the JSONObject
-                Log.v("JSON NEXT NODE ", objectArray.getString(0));
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -504,21 +489,14 @@ public class MainActivity extends ActionBarActivity {
 
             if (!getAmount.equals("")) {
 
+                for (int i = 0; i < rateArray.length; i++) {
 
-                currencyFromWebDouble = Double.parseDouble(currencyFromWeb);
+                    currencyFromWebDouble[i] = Double.parseDouble(rateArray[i]);
 
-                getAmountDouble = Double.parseDouble(getAmount);
+                }
 
-                Double finalAmount;
 
-                finalAmount = getAmountDouble * currencyFromWebDouble;
-
-                exchangeAmountTextView.setText(String.format("%.02f", finalAmount));
-
-            } else {
-                exchangeAmountTextView.setText("0.00");
             }
-
 
         }
 

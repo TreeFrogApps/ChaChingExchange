@@ -40,6 +40,10 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
     }
 
+    public void ResultsFromWeb(int[] currencyFromWebDouble){
+
+
+    }
 
 
     @Override
