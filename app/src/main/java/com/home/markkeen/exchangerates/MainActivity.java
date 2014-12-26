@@ -1,5 +1,6 @@
 package com.home.markkeen.exchangerates;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -84,14 +86,17 @@ public class MainActivity extends ActionBarActivity {
     String getRatesLatest;
     String getRatesFinal;
     String getAmount;
-    String[] rateArray;
+    double getAmountAsDouble;
+    double [] convertedAmount = new double[32];
+    double [] finalConvertedAmount = new double[32];
+    String[] rateArray = new String[32];
+    String[] finalConvertedAmountText = new String[32];
     String[] currency;
     String[] flag;
     String[] currencyCode;
-
-
     String currencyFromType;
     String currencyFromSubsting;
+    int test = 0;
 
     ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 
@@ -106,20 +111,19 @@ public class MainActivity extends ActionBarActivity {
 
         amountEditText = (EditText) findViewById(R.id.amountEditText);
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
-        // currencyToSpinner = (Spinner) findViewById(R.id.spinnerCurrencyTo);
-        // exchangeAmountTextView = (TextView) findViewById(R.id.exchangeAmountTextView);
+
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
-
         addItemExchangeRateFromSpinner();
-        //addItemExchangeRateToSpinner();
 
         setExchangeAmountOnTextChangeListener();
 
 
         new MyAsyncTask();
 
+
         populatedArrayList();
+
 
         // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
         customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
@@ -169,14 +173,13 @@ public class MainActivity extends ActionBarActivity {
 
                 getAmount = amountEditText.getText().toString();
 
-           /*     if (!getAmount.equals("")) {
+              if (!getAmount.equals("")) {
+
+                    getAmountAsDouble = Double.parseDouble(getAmount);
 
                     new MyAsyncTask().execute();
 
-                } else {
-                    exchangeAmountTextView.setText("0.00");
                 }
-            */
             }
 
             @Override
@@ -205,150 +208,19 @@ public class MainActivity extends ActionBarActivity {
 
                 getAmount = amountEditText.getText().toString();
 
-            /*    if (!getAmount.equals("")) {
+               if (!getAmount.equals("")) {
+
+                   getAmountAsDouble = Double.parseDouble(getAmount);
 
                     new MyAsyncTask().execute();
 
-                } else {
-                    exchangeAmountTextView.setText("0.00");
                 }
-            */
+
             }
         });
 
     }
 
-
-    public ArrayList<HashMap<String, String>> populatedArrayList() {
-
-        flag = new String[]{
-                "flag_ic_aud_00",
-                "flag_ic_bgn_01",
-                "flag_ic_brl_02",
-                "flag_ic_cad_03",
-                "flag_ic_chf_04",
-                "flag_ic_cny_05",
-                "flag_ic_czk_06",
-                "flag_ic_dkk_07",
-                "flag_ic_eur_08",
-                "flag_ic_gbp_09",
-                "flag_ic_hkd_10",
-                "flag_ic_hrk_11",
-                "flag_ic_huf_12",
-                "flag_ic_idr_13",
-                "flag_ic_ils_14",
-                "flag_ic_inr_15",
-                "flag_ic_jpy_16",
-                "flag_ic_krw_17",
-                "flag_ic_ltl_18",
-                "flag_ic_mxn_19",
-                "flag_ic_nok_20",
-                "flag_ic_nzd_21",
-                "flag_ic_php_22",
-                "flag_ic_pln_23",
-                "flag_ic_ron_24",
-                "flag_ic_rub_25",
-                "flag_ic_sek_26",
-                "flag_ic_sgd_27",
-                "flag_ic_thb_28",
-                "flag_ic_try_29",
-                "flag_ic_usd_30",
-                "flag_ic_zar_31"};
-
-        currencyCode = new String[] {
-                "AUD",
-                "BGN",
-                "BRL",
-                "CAD",
-                "CHF",
-                "CNY",
-                "CZK",
-                "DKK",
-                "EUR",
-                "GBP",
-                "HKD",
-                "HRK",
-                "HUF",
-                "IDR",
-                "ILS",
-                "INR",
-                "JPY",
-                "KRW",
-                "LTL",
-                "MXN",
-                "NOK",
-                "NZD",
-                "PHP",
-                "PLN",
-                "RON",
-                "RUB",
-                "SEK",
-                "SGD",
-                "THB",
-                "TRY",
-                "USD",
-                "ZAR"};
-
-        currency = new String[] {
-                "Australian Dollar",
-                "Bulgarian Lev",
-                "Brazilian Real",
-                "Canadian Dollar",
-                "CH Francs",
-                "Chinese Yuan",
-                "Czech Koruna",
-                "Danish Krone",
-                "Euro",
-                "British Pound",
-                "Hong Kong Dollar",
-                "Croatian Kuna",
-                "Hungarian Forint",
-                "Indonesian Rupiah",
-                "Israeli Shekel",
-                "Indian Rupee",
-                "Japanese Yen",
-                "Korean Won",
-                "Lithuanian Litas",
-                "Mexican Peso",
-                "Norwegian Krone",
-                "New Zealand Dollar",
-                "Philippine Peso",
-                "Polish NEW Zloty",
-                "Romanian Leu",
-                "Russian Rouble",
-                "Swedish Krona",
-                "Singapore Dollar",
-                "Thai Baht",
-                "New Turkish Lira",
-                "United States Dollar",
-                "South African Rand"};
-
-
-        for (int i = 0; i < flag.length; i++) {
-
-            HashMap<String, String> currencyFlagList = new HashMap<String, String>();
-
-            currencyFlagList.put("flagType", flag[i]);
-            currencyFlagList.put("currencyCode", currencyCode[i]);
-            currencyFlagList.put("currencyType", currency[i]);
-
-            // add the returned values from the http query, only if the populated rate array is the same
-            // length as the flag array count - it should be, however if not then avoids null pointer exception
-            if (rateArray.length == flag.length) {
-                currencyFlagList.put("rateArray", rateArray[i]);
-            }
-
-            flagAndCurrencyList.add(currencyFlagList);
-
-            Log.v("CURRENCY Code", currencyCode[i]);
-            Log.v("CURRENCY TYPE", currency[i]);
-            Log.v("FLAG TYPE", flag[i]);
-            Log.v("RATE", rateArray[i]);
-        }
-
-
-        return flagAndCurrencyList;
-    }
 
 
     private class MyAsyncTask extends AsyncTask<String, String, String>
@@ -364,12 +236,12 @@ public class MainActivity extends ActionBarActivity {
 
             // Define that I want to use the POST method to grab data from
             // the provided URL
-            getRatesLatest = getRatesURLA + currencyFromSubsting;
+            getRatesLatest = getRatesURLA;
 
             // loop round all the country codes concatenating into one big URL string
             for (int i = 0; i < currencyCode.length; i++){
 
-                getRatesLatest = getRatesLatest + currencyCode[i] + "%22%2C%22";
+                getRatesLatest = getRatesLatest + currencyFromSubsting + currencyCode[i] + "%22%2C%22";
 
             }
 
@@ -490,16 +362,178 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(String result) {
 
+            test = 1;
+
+            for (int i = 0; i < rateArray.length; i++){
+
+                convertedAmount[i] = Double.parseDouble(rateArray[i]);
+
+                finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
+            }
+
+            for (int i = 0; i < rateArray.length; i++){
+
+                finalConvertedAmountText[i] = String.valueOf((String.format("%.02f",finalConvertedAmount[i])));
+
+                Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LISTVIEW", finalConvertedAmountText[i]);
+            }
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
+
+            customAdapter.clear();
+
             populatedArrayList();
 
-
             customAdapter.notifyDataSetChanged();
-            listView.setAdapter(customAdapter);
+
+
 
         }
 
 
     }
+
+
+
+
+
+    public ArrayList<HashMap<String, String>> populatedArrayList() {
+
+        flag = new String[]{
+                "flag_ic_aud_00",
+                "flag_ic_bgn_01",
+                "flag_ic_brl_02",
+                "flag_ic_cad_03",
+                "flag_ic_chf_04",
+                "flag_ic_cny_05",
+                "flag_ic_czk_06",
+                "flag_ic_dkk_07",
+                "flag_ic_eur_08",
+                "flag_ic_gbp_09",
+                "flag_ic_hkd_10",
+                "flag_ic_hrk_11",
+                "flag_ic_huf_12",
+                "flag_ic_idr_13",
+                "flag_ic_ils_14",
+                "flag_ic_inr_15",
+                "flag_ic_jpy_16",
+                "flag_ic_krw_17",
+                "flag_ic_ltl_18",
+                "flag_ic_mxn_19",
+                "flag_ic_nok_20",
+                "flag_ic_nzd_21",
+                "flag_ic_php_22",
+                "flag_ic_pln_23",
+                "flag_ic_ron_24",
+                "flag_ic_rub_25",
+                "flag_ic_sek_26",
+                "flag_ic_sgd_27",
+                "flag_ic_thb_28",
+                "flag_ic_try_29",
+                "flag_ic_usd_30",
+                "flag_ic_zar_31"};
+
+        currencyCode = new String[] {
+                "AUD",
+                "BGN",
+                "BRL",
+                "CAD",
+                "CHF",
+                "CNY",
+                "CZK",
+                "DKK",
+                "EUR",
+                "GBP",
+                "HKD",
+                "HRK",
+                "HUF",
+                "IDR",
+                "ILS",
+                "INR",
+                "JPY",
+                "KRW",
+                "LTL",
+                "MXN",
+                "NOK",
+                "NZD",
+                "PHP",
+                "PLN",
+                "RON",
+                "RUB",
+                "SEK",
+                "SGD",
+                "THB",
+                "TRY",
+                "USD",
+                "ZAR"};
+
+        currency = new String[] {
+                "Australian Dollar",
+                "Bulgarian Lev",
+                "Brazilian Real",
+                "Canadian Dollar",
+                "CH Francs",
+                "Chinese Yuan",
+                "Czech Koruna",
+                "Danish Krone",
+                "Euro",
+                "British Pound",
+                "Hong Kong Dollar",
+                "Croatian Kuna",
+                "Hungarian Forint",
+                "Indonesian Rupiah",
+                "Israeli Shekel",
+                "Indian Rupee",
+                "Japanese Yen",
+                "Korean Won",
+                "Lithuanian Litas",
+                "Mexican Peso",
+                "Norwegian Krone",
+                "New Zealand Dollar",
+                "Philippine Peso",
+                "Polish NEW Zloty",
+                "Romanian Leu",
+                "Russian Rouble",
+                "Swedish Krona",
+                "Singapore Dollar",
+                "Thai Baht",
+                "New Turkish Lira",
+                "United States Dollar",
+                "South African Rand"};
+
+
+
+        for (int i = 0; i < flag.length; i++) {
+
+            HashMap<String, String> currencyFlagList = new HashMap<String, String>();
+
+            currencyFlagList.put("flagType", flag[i]);
+            currencyFlagList.put("currencyCode", currencyCode[i]);
+            currencyFlagList.put("currencyType", currency[i]);
+
+            // add the returned values from the http query, only if the populated rate array is the same
+            // length as the flag array count - it should be, however if not then avoids null pointer exception
+            if (test != 0) {
+                currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
+            } else {
+
+
+                currencyFlagList.put("finalConvertedAmountText", (finalConvertedAmountText[i] = "0.00"));
+            }
+
+            flagAndCurrencyList.add(currencyFlagList);
+
+            Log.v("CURRENCY Code", currencyCode[i]);
+            Log.v("CURRENCY TYPE", currency[i]);
+            Log.v("FLAG TYPE", flag[i]);
+            Log.v("RATE", finalConvertedAmountText[i]);
+        }
+
+
+        return flagAndCurrencyList;
+    }
+
 
 }
 
