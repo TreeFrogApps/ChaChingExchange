@@ -1,14 +1,18 @@
 package com.home.markkeen.exchangerates;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +28,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         protected TextView convertedCurrencyCode;
         protected TextView convertedCurrencyAmount;
         protected TextView convertedCurrencyType;
-        protected ImageView context_menu;
+        protected Button context_menu;
 
     }
 
@@ -70,7 +74,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             viewHolder.convertedCurrencyAmount = (TextView) convertView.findViewById(R.id.convertedCurrencyAmount);
             viewHolder.convertedCurrencyCode = (TextView) convertView.findViewById(R.id.convertedCurrencyCode);
             viewHolder.convertedCurrencyType = (TextView) convertView.findViewById(R.id.convertedCurrencyType);
-            viewHolder.context_menu = (ImageView) convertView.findViewById(R.id.context_menu);
+            viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 
             // store the information in a tag
             convertView.setTag(viewHolder);
@@ -91,7 +95,31 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         viewHolder.convertedCurrencyAmount.setText(flagAndCurrencyItem.get("finalConvertedAmountText"));
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
         viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType"));
-        viewHolder.context_menu = (ImageView) convertView.findViewById(R.id.context_menu);
+        viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
+
+        viewHolder.context_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View convertView) {
+
+
+                final CharSequence[] menuItems = {"Pin currency", "Remove", "Move to top"};
+
+                AlertDialog.Builder contextMenu = new AlertDialog.Builder(getContext());
+
+                contextMenu.setItems(menuItems, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Toast.makeText(getContext(), menuItems[which], Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+
+
+            }
+        });
 
 
         return convertView;

@@ -179,7 +179,16 @@ public class MainActivity extends ActionBarActivity {
 
                     new MyAsyncTask().execute();
 
-                }
+                } else {
+
+                  getAmount = "0.00";
+
+                  getAmountAsDouble = Double.parseDouble(getAmount);
+
+                  new MyAsyncTask().execute();
+              }
+
+
             }
 
             @Override
@@ -214,7 +223,14 @@ public class MainActivity extends ActionBarActivity {
 
                     new MyAsyncTask().execute();
 
-                }
+                } else {
+
+                   getAmount = "0.00";
+
+                   getAmountAsDouble = Double.parseDouble(getAmount);
+
+                   new MyAsyncTask().execute();
+               }
 
             }
         });
@@ -362,7 +378,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            test = 1;
+
 
             for (int i = 0; i < rateArray.length; i++){
 
@@ -387,14 +403,17 @@ public class MainActivity extends ActionBarActivity {
 
             customAdapter.notifyDataSetChanged();
 
+            // after initial populated list change test to 1, so that each time from now on it updates
+            // the amount to convert from the text, and spinner input (see 'if / else' statements)
+            // the only way to update the query/list is to change the input amount & spinner
+            test = 1;
+
 
 
         }
 
 
     }
-
-
 
 
 
@@ -513,11 +532,11 @@ public class MainActivity extends ActionBarActivity {
             currencyFlagList.put("currencyType", currency[i]);
 
             // add the returned values from the http query, only if the populated rate array is the same
-            // length as the flag array count - it should be, however if not then avoids null pointer exception
+            // test value is for first time run, initially set to zero, so on startup the 'else' statement is true
+            // but once an Amount has been entered, the if statement becomes 'true' - otherwise MyAsyncTask will have null pointer exception
             if (test != 0) {
                 currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
             } else {
-
 
                 currencyFlagList.put("finalConvertedAmountText", (finalConvertedAmountText[i] = "0.00"));
             }
@@ -532,6 +551,8 @@ public class MainActivity extends ActionBarActivity {
 
 
         return flagAndCurrencyList;
+
+
     }
 
 
