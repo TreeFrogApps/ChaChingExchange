@@ -3,6 +3,7 @@ package com.home.markkeen.exchangerates;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -91,7 +92,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         viewHolder.flagType.setBackground(flagImage);
         viewHolder.convertedCurrencyAmount.setText(flagAndCurrencyItem.get("finalConvertedAmountText"));
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
-        viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType"));
+        viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType").substring(3));
         viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 
         // context menu for each row (3 dots menu)
@@ -101,7 +102,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             public void onClick(View convertView) {
 
                 //create popUpMenu (context menu)
-                PopupMenu popUpMenu = new PopupMenu(getContext(), convertView);
+                Context style = new ContextThemeWrapper(getContext(), R.style.PopUpMenu);
+
+                PopupMenu popUpMenu = new PopupMenu(style, convertView);
 
                 // inflate my context menu xml layout
                 MenuInflater inflater = popUpMenu.getMenuInflater();

@@ -1,6 +1,7 @@
 package com.home.markkeen.exchangerates;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -34,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -43,42 +45,20 @@ public class MainActivity extends ActionBarActivity {
     Spinner currencyFromSpinner;
     ImageView flagBase;
     int[] flags = {
-            R.drawable.flag_ic_aud_00,
-            R.drawable.flag_ic_bgn_01,
-            R.drawable.flag_ic_brl_02,
-            R.drawable.flag_ic_cad_03,
-            R.drawable.flag_ic_chf_04,
-            R.drawable.flag_ic_cny_05,
-            R.drawable.flag_ic_czk_06,
-            R.drawable.flag_ic_dkk_07,
-            R.drawable.flag_ic_eur_08,
-            R.drawable.flag_ic_gbp_09,
-            R.drawable.flag_ic_hkd_10,
-            R.drawable.flag_ic_hrk_11,
-            R.drawable.flag_ic_huf_12,
-            R.drawable.flag_ic_idr_13,
-            R.drawable.flag_ic_ils_14,
-            R.drawable.flag_ic_inr_15,
-            R.drawable.flag_ic_jpy_16,
-            R.drawable.flag_ic_krw_17,
-            R.drawable.flag_ic_ltl_18,
-            R.drawable.flag_ic_mxn_19,
-            R.drawable.flag_ic_nok_20,
-            R.drawable.flag_ic_nzd_21,
-            R.drawable.flag_ic_php_22,
-            R.drawable.flag_ic_pln_23,
-            R.drawable.flag_ic_ron_24,
-            R.drawable.flag_ic_rub_25,
-            R.drawable.flag_ic_sek_26,
-            R.drawable.flag_ic_sgd_27,
-            R.drawable.flag_ic_thb_28,
-            R.drawable.flag_ic_try_29,
-            R.drawable.flag_ic_usd_30,
-            R.drawable.flag_ic_zar_31,
+            R.drawable.flag_ic_aud_00, R.drawable.flag_ic_bgn_01, R.drawable.flag_ic_brl_02,
+            R.drawable.flag_ic_cad_03, R.drawable.flag_ic_chf_04, R.drawable.flag_ic_cny_05,
+            R.drawable.flag_ic_czk_06, R.drawable.flag_ic_dkk_07, R.drawable.flag_ic_eur_08,
+            R.drawable.flag_ic_gbp_09, R.drawable.flag_ic_hkd_10, R.drawable.flag_ic_hrk_11,
+            R.drawable.flag_ic_huf_12, R.drawable.flag_ic_idr_13, R.drawable.flag_ic_ils_14,
+            R.drawable.flag_ic_inr_15, R.drawable.flag_ic_jpy_16, R.drawable.flag_ic_krw_17,
+            R.drawable.flag_ic_ltl_18, R.drawable.flag_ic_mxn_19, R.drawable.flag_ic_nok_20,
+            R.drawable.flag_ic_nzd_21, R.drawable.flag_ic_php_22, R.drawable.flag_ic_pln_23,
+            R.drawable.flag_ic_ron_24, R.drawable.flag_ic_rub_25, R.drawable.flag_ic_sek_26,
+            R.drawable.flag_ic_sgd_27, R.drawable.flag_ic_thb_28, R.drawable.flag_ic_try_29,
+            R.drawable.flag_ic_usd_30, R.drawable.flag_ic_zar_31,
     };
 
     private CustomAdapter customAdapter;
-
     private ListView listView;
 
     static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
@@ -100,7 +80,6 @@ public class MainActivity extends ActionBarActivity {
 
     ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,18 +97,36 @@ public class MainActivity extends ActionBarActivity {
 
         setExchangeAmountOnTextChangeListener();
 
-
         new MyAsyncTask();
-
 
         populatedArrayList();
 
 
         // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
         customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
-        listView = (ListView) findViewById(R.id.listView);
 
+
+        listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(customAdapter);
+    }
+
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        customAdapter.clear();
+
+        populatedArrayList();
+
+        customAdapter.notifyDataSetChanged();
+
+        new MyAsyncTask();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
 
     }
 
@@ -153,6 +150,9 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.action_choose_currencies){
+
+            Intent intent = new Intent(this, CurrencyActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -190,7 +190,6 @@ public class MainActivity extends ActionBarActivity {
 
                   new MyAsyncTask().execute();
               }
-
 
             }
 
@@ -314,7 +313,6 @@ public class MainActivity extends ActionBarActivity {
                 // Store the complete data in result
                 result = theStringBuilder.toString();
 
-
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (ClientProtocolException e) {
@@ -331,15 +329,12 @@ public class MainActivity extends ActionBarActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
-
 
             // Holds Key Value pairs from a JSON source
             JSONObject jsonObject;
 
             try {
-
 
                 Log.v("JSONParser RESULT ", result);
 
@@ -374,14 +369,11 @@ public class MainActivity extends ActionBarActivity {
                 e.printStackTrace();
             }
 
-
             return result;
         }
 
         @Override
         protected void onPostExecute(String result) {
-
-
 
             for (int i = 0; i < rateArray.length; i++){
 
@@ -411,13 +403,9 @@ public class MainActivity extends ActionBarActivity {
             // the only way to update the query/list is to change the input amount & spinner
             test = 1;
 
-
-
         }
 
-
     }
-
 
 
     public ArrayList<HashMap<String, String>> populatedArrayList() {
@@ -456,6 +444,8 @@ public class MainActivity extends ActionBarActivity {
                 "flag_ic_usd_30",
                 "flag_ic_zar_31"};
 
+        Arrays.sort(flag);
+
         currencyCode = new String[] {
                 "AUD",
                 "BGN",
@@ -490,40 +480,43 @@ public class MainActivity extends ActionBarActivity {
                 "USD",
                 "ZAR"};
 
-        currency = new String[] {
-                "Australian Dollar",
-                "Bulgarian Lev",
-                "Brazilian Real",
-                "Canadian Dollar",
-                "CH Francs",
-                "Chinese Yuan",
-                "Czech Koruna",
-                "Danish Krone",
-                "Euro",
-                "British Pound",
-                "Hong Kong Dollar",
-                "Croatian Kuna",
-                "Hungarian Forint",
-                "Indonesian Rupiah",
-                "Israeli Shekel",
-                "Indian Rupee",
-                "Japanese Yen",
-                "Korean Won",
-                "Lithuanian Litas",
-                "Mexican Peso",
-                "Norwegian Krone",
-                "New Zealand Dollar",
-                "Philippine Peso",
-                "Polish NEW Zloty",
-                "Romanian Leu",
-                "Russian Rouble",
-                "Swedish Krona",
-                "Singapore Dollar",
-                "Thai Baht",
-                "New Turkish Lira",
-                "United States Dollar",
-                "South African Rand"};
+        Arrays.sort(currencyCode);
 
+        currency = new String[] {
+                "00 Australian Dollar",
+                "01 Bulgarian Lev",
+                "02 Brazilian Real",
+                "03 Canadian Dollar",
+                "04 CH Francs",
+                "05 Chinese Yuan",
+                "06 Czech Koruna",
+                "07 Danish Krone",
+                "08 Euro",
+                "09 British Pound",
+                "10 Hong Kong Dollar",
+                "11 Croatian Kuna",
+                "12 Hungarian Forint",
+                "13 Indonesian Rupiah",
+                "14 Israeli Shekel",
+                "15 Indian Rupee",
+                "16 Japanese Yen",
+                "17 Korean Won",
+                "18 Lithuanian Litas",
+                "19 Mexican Peso",
+                "20 Norwegian Krone",
+                "21 New Zealand Dollar",
+                "22 Philippine Peso",
+                "23 Polish NEW Zloty",
+                "24 Romanian Leu",
+                "25 Russian Rouble",
+                "26 Swedish Krona",
+                "27 Singapore Dollar",
+                "28 Thai Baht",
+                "29 New Turkish Lira",
+                "30 United States Dollar",
+                "31 South African Rand"};
+
+        Arrays.sort(currency);
 
 
         for (int i = 0; i < flag.length; i++) {

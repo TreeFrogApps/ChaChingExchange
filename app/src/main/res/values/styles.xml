@@ -14,10 +14,12 @@
         <item name="android:windowContentOverlay">@color/black</item>
     </style>
 
+    <style name="AppTheme.Base.PopUpMenu.Overlay" parent="ThemeOverlay.AppCompat">
+        <item name="android:textColor">@color/black</item>
+    </style>
 
-
-
-    <style name="AppTheme.Base.PopUpMenu.Overlay" parent="ThemeOverlay.AppCompat.Light" >
+    <style name="PopUpMenu" parent="AppTheme.Base">
+        <item name="android:popupBackground">@color/actionBarTextWhite</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
