@@ -2,6 +2,7 @@ package com.home.markkeen.exchangerates;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -58,6 +59,8 @@ public class MainActivity extends ActionBarActivity {
             R.drawable.flag_ic_usd_30, R.drawable.flag_ic_zar_31,
     };
 
+    SharedPreferences sharedPreferences;
+
     private CustomAdapter customAdapter;
     private ListView listView;
 
@@ -67,6 +70,9 @@ public class MainActivity extends ActionBarActivity {
     String getRatesFinal;
     String getAmount;
     double getAmountAsDouble;
+    String [] items;
+    int[] positionsToRemove;
+    String removedPositions;
     double [] convertedAmount = new double[32];
     double [] finalConvertedAmount = new double[32];
     String[] rateArray = new String[32];
@@ -115,13 +121,42 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume(){
         super.onResume();
 
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+
+        if (removedPositions.length() > 1)  {
+
+            // function to change string which contains list of number in format [1,2,3,4] back to int array
+            // remove [ ] from beginning of string
+
+            items = removedPositions.substring(1, removedPositions.length() - 1).split(",");
+            positionsToRemove = new int[items.length];
+
+            for (int i = 0; i < items.length; i++ ){
+
+                positionsToRemove[i] = Integer.parseInt(items[i].trim());
+            }
+
+            for (int i = 0; i < positionsToRemove.length; i++) {
+                Log.v("SAVED POSITIONS", String.valueOf(positionsToRemove[i]));
+            }
+
+        }
+
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        // clear preferences for "POSITIONS TO REMOVE" from master set from "MyPrefs" otherwise it will append to the preferences string rather than overwrite
+        editor.remove("POSITIONS_TO_REMOVE").apply();
+
+        items = new String[0];
+
         customAdapter.clear();
 
         populatedArrayList();
 
         customAdapter.notifyDataSetChanged();
 
-        new MyAsyncTask();
+
     }
 
     @Override
@@ -386,7 +421,7 @@ public class MainActivity extends ActionBarActivity {
 
                 finalConvertedAmountText[i] = String.valueOf((String.format("%.02f",finalConvertedAmount[i])));
 
-                Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LISTVIEW", finalConvertedAmountText[i]);
+                Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
             }
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -546,8 +581,30 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
-        return flagAndCurrencyList;
 
+        // Remove positions from currencyActivity from retrieved int[] positionsToRemove from onResume()
+        // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception
+        // as the PositionsToRemove array won't have been initialised i.e. int[] myInt = new int[32]
+        // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
+
+
+
+            try {
+                for (int i= 31 ; i >= 0; i--){
+
+                    if (positionsToRemove[i] != 0){
+
+                        // remove position - minus 1 because array has ALL zero's in 32 holders (default),
+                        // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
+                        flagAndCurrencyList.remove((positionsToRemove[i] - 1));
+                    }
+                }
+
+            } catch (NullPointerException e){
+
+            }
+
+        return flagAndCurrencyList;
 
     }
 

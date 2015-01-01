@@ -30,8 +30,6 @@ public class CurrencyActivity extends ActionBarActivity {
 
         CurrencyAdapter currencyAdapter = new CurrencyAdapter(this, arrayListData);
 
-        currencyAdapter.hasStableIds();
-
         listview = (ListView) findViewById(R.id.listViewCurrency);
         listview.setAdapter(currencyAdapter);
 
@@ -61,7 +59,6 @@ public class CurrencyActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     public void populatedListData() {

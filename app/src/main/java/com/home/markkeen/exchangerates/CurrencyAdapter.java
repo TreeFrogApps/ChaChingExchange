@@ -1,6 +1,7 @@
 package com.home.markkeen.exchangerates;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CurrencyAdapter extends BaseAdapter {
 
@@ -19,11 +21,18 @@ public class CurrencyAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
 
+
+    //  sharedPreferences
+    SharedPreferences sharedPreferences;
+
     public CurrencyAdapter(Context context, ArrayList<CurrencyActivity.ListData> arrayListData) {
 
         this.arrayListData = arrayListData;
         this.context = context;
         inflater = LayoutInflater.from(this.context);
+
+        // initialise preferences
+        this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
 
     }
 
@@ -34,8 +43,6 @@ public class CurrencyAdapter extends BaseAdapter {
         protected ToggleButton switchOnOff;
 
     }
-
-    ArrayList<Integer> positions;
 
     int[] positionsToRemove = new int[32];
 
@@ -84,7 +91,6 @@ public class CurrencyAdapter extends BaseAdapter {
             viewHolder.currencyCode = (TextView) convertView.findViewById(R.id.currencyCodeCurrencyActivity);
             viewHolder.currencyType = (TextView) convertView.findViewById(R.id.currencyTypeCurrencyActivity);
             viewHolder.switchOnOff = (ToggleButton) convertView.findViewById(R.id.setOnOffCurrencyActivity);
-            viewHolder.switchOnOff.setChecked(true);
 
             // store the information in a tag
             convertView.setTag(viewHolder);
@@ -97,38 +103,54 @@ public class CurrencyAdapter extends BaseAdapter {
         viewHolder.currencyCode.setText(arrayListData.get(position).getCountryCode());
         viewHolder.currencyType.setText(arrayListData.get(position).getCountry());
         viewHolder.switchOnOff = (ToggleButton) convertView.findViewById(R.id.setOnOffCurrencyActivity);
+        viewHolder.switchOnOff.setChecked(true);
 
             viewHolder.switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                // clear preferences for "POSITIONS TO REMOVE" from master set from "MyPrefs" otherwise it will append to the preferences string rather than overwrite
+                editor.remove("POSITIONS_TO_REMOVE").apply();
+
                 if (!isChecked){
-
-
 
                     for (int i = 0; i < positionsToRemove.length; i++){
 
                         if (position == i) {
 
-                            positionsToRemove[i] = position;
+                            positionsToRemove[i] = (position + 1);
                             Log.v("REMOVED POSITION", String.valueOf(position));
                             Log.v("REMOVED POSITION", String.valueOf(positionsToRemove[i]));
-
                         }
                     }
 
+                } else {
+
                     for (int i = 0; i < positionsToRemove.length; i++){
 
+                        if (position == i) {
 
-                            Log.v("POSITION", String.valueOf(positionsToRemove[i]));
-
-
+                            positionsToRemove[i] = 0;
+                        }
                     }
 
                 }
+
+                for (int i = 0; i < positionsToRemove.length; i++) {
+                    Log.v("POSITION", String.valueOf(positionsToRemove[i]));
+
+                }
+
+                // Cannot store int array in SharedPreferences - must be converted to String format
+                String positionsToString = Arrays.toString(positionsToRemove);
+
+                // Get SharedPreferences
+                editor.putString("POSITIONS_TO_REMOVE", positionsToString);
+                editor.apply();
+
             }
         });
-
 
         return convertView;
     }
