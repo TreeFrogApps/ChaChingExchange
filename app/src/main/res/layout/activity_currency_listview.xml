@@ -68,6 +68,7 @@
             android:layout_height="23dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/button_toggle"
+            android:checked="true"
             />
 
 

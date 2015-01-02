@@ -34,6 +34,34 @@ public class CurrencyAdapter extends BaseAdapter {
         // initialise preferences
         this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
 
+        // if any currencies have been removed previously then this will call sharedPreferences to get the list
+        // if its never been used then the 'if (removedPositions.contains("["))' statement is not fulfilled and is skipped
+        String removedPositions;
+        String[] items;
+        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+
+
+        if (removedPositions.contains("["))  {
+
+            // function to change string which contains list of number in format [1,2,3,4] back to int array
+            // remove [ ] from beginning of string
+            // Rest of code to set switch on/off according to the result positionsToRemove is below in getView when setting the switchOnOff
+            items = removedPositions.substring(1, removedPositions.length() - 1).split(",");
+            positionsToRemove = new int[items.length];
+
+            for (int i = 0; i < items.length; i++ ){
+
+                positionsToRemove[i] = Integer.parseInt(items[i].trim());
+            }
+
+            for (int i = 0; i < positionsToRemove.length; i++) {
+                Log.v("SAVED POSITIONS", String.valueOf(positionsToRemove[i]));
+            }
+
+        }
+
+        items = new String[0];
+
     }
 
     private static class ViewHolder {
@@ -103,15 +131,23 @@ public class CurrencyAdapter extends BaseAdapter {
         viewHolder.currencyCode.setText(arrayListData.get(position).getCountryCode());
         viewHolder.currencyType.setText(arrayListData.get(position).getCountry());
         viewHolder.switchOnOff = (ToggleButton) convertView.findViewById(R.id.setOnOffCurrencyActivity);
-        viewHolder.switchOnOff.setChecked(true);
+
+        // set the switch according to the sharedPreferences and returned int array 'positionsToRemove'
+        // uss nullPointerException try/catch just in case (may not be needed)
+        try {
+              if (positionsToRemove[position] != 0){
+
+                    viewHolder.switchOnOff.setChecked(false);
+                }
+
+        } catch (NullPointerException e){
+
+        }
 
             viewHolder.switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                // clear preferences for "POSITIONS TO REMOVE" from master set from "MyPrefs" otherwise it will append to the preferences string rather than overwrite
-                editor.remove("POSITIONS_TO_REMOVE").apply();
 
                 if (!isChecked){
 
@@ -120,6 +156,7 @@ public class CurrencyAdapter extends BaseAdapter {
                         if (position == i) {
 
                             positionsToRemove[i] = (position + 1);
+
                             Log.v("REMOVED POSITION", String.valueOf(position));
                             Log.v("REMOVED POSITION", String.valueOf(positionsToRemove[i]));
                         }
@@ -142,15 +179,18 @@ public class CurrencyAdapter extends BaseAdapter {
 
                 }
 
+
                 // Cannot store int array in SharedPreferences - must be converted to String format
                 String positionsToString = Arrays.toString(positionsToRemove);
 
-                // Get SharedPreferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                // Get SharedPreferences and store as a string - NO NEED TO CLEAR WHEN SWAPPING ACTIVITIES!
+                // It is overwritten each time 'putString' 'apply' is used (not appended as its a concatenated single string!)
                 editor.putString("POSITIONS_TO_REMOVE", positionsToString);
                 editor.apply();
 
-            }
-        });
+                }
+            });
 
         return convertView;
     }

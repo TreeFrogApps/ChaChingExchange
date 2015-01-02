@@ -46,6 +46,8 @@ public class MainActivity extends ActionBarActivity {
     Spinner currencyFromSpinner;
     ImageView flagBase;
     int[] flags = {
+            // holder flag for 'Choose a base currency' position in Select currency from web spinner
+            R.drawable.flag_ic_00_empty,
             R.drawable.flag_ic_aud_00, R.drawable.flag_ic_bgn_01, R.drawable.flag_ic_brl_02,
             R.drawable.flag_ic_cad_03, R.drawable.flag_ic_chf_04, R.drawable.flag_ic_cny_05,
             R.drawable.flag_ic_czk_06, R.drawable.flag_ic_dkk_07, R.drawable.flag_ic_eur_08,
@@ -70,11 +72,11 @@ public class MainActivity extends ActionBarActivity {
     String getRatesFinal;
     String getAmount;
     double getAmountAsDouble;
-    String [] items;
+    String[] items;
     int[] positionsToRemove;
     String removedPositions;
-    double [] convertedAmount = new double[32];
-    double [] finalConvertedAmount = new double[32];
+    double[] convertedAmount = new double[32];
+    double[] finalConvertedAmount = new double[32];
     String[] rateArray = new String[32];
     String[] finalConvertedAmountText = new String[32];
     String[] currency;
@@ -82,7 +84,6 @@ public class MainActivity extends ActionBarActivity {
     String[] currencyCode;
     String currencyFromType;
     String currencyFromSubsting;
-    int test = 0;
 
     ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 
@@ -103,10 +104,7 @@ public class MainActivity extends ActionBarActivity {
 
         setExchangeAmountOnTextChangeListener();
 
-        new MyAsyncTask();
-
         populatedArrayList();
-
 
         // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
         customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
@@ -118,13 +116,13 @@ public class MainActivity extends ActionBarActivity {
 
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
         removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
-        if (removedPositions.length() > 1)  {
+        if (removedPositions.contains("[")) {
 
             // function to change string which contains list of number in format [1,2,3,4] back to int array
             // remove [ ] from beginning of string
@@ -132,7 +130,7 @@ public class MainActivity extends ActionBarActivity {
             items = removedPositions.substring(1, removedPositions.length() - 1).split(",");
             positionsToRemove = new int[items.length];
 
-            for (int i = 0; i < items.length; i++ ){
+            for (int i = 0; i < items.length; i++) {
 
                 positionsToRemove[i] = Integer.parseInt(items[i].trim());
             }
@@ -143,11 +141,6 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        // clear preferences for "POSITIONS TO REMOVE" from master set from "MyPrefs" otherwise it will append to the preferences string rather than overwrite
-        editor.remove("POSITIONS_TO_REMOVE").apply();
-
         items = new String[0];
 
         customAdapter.clear();
@@ -156,11 +149,10 @@ public class MainActivity extends ActionBarActivity {
 
         customAdapter.notifyDataSetChanged();
 
-
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState){
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
     }
@@ -184,7 +176,7 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.action_choose_currencies){
+        if (id == R.id.action_choose_currencies) {
 
             Intent intent = new Intent(this, CurrencyActivity.class);
             startActivity(intent);
@@ -201,30 +193,41 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
-                currencyFromSubsting = currencyFromType.substring(0, 3);
+                // set flag according to spinner position and currency/country
                 flagBase.setImageResource(flags[position]);
 
+                // position 0 is the initial 'Choose a base currency' - no action required, only do if it is not that one!
+                if (!currencyFromSpinner.getSelectedItem().toString().equals("Choose a base currency")) {
 
-                Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
+
+                    currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
+                    currencyFromSubsting = currencyFromType.substring(0, 3);
 
 
-                getAmount = amountEditText.getText().toString();
 
-              if (!getAmount.equals("")) {
+                    Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
 
-                    getAmountAsDouble = Double.parseDouble(getAmount);
 
-                    new MyAsyncTask().execute();
+                    getAmount = amountEditText.getText().toString();
 
-                } else {
+                    Log.v("GET AMOUNT", getAmount);
 
-                  getAmount = "0.00";
+                    if (!getAmount.equals("")) {
 
-                  getAmountAsDouble = Double.parseDouble(getAmount);
+                        getAmountAsDouble = Double.parseDouble(getAmount);
 
-                  new MyAsyncTask().execute();
-              }
+                        new MyAsyncTask().execute();
+
+                    } else {
+
+                        getAmount = "0.00";
+
+                        getAmountAsDouble = Double.parseDouble(getAmount);
+
+                        new MyAsyncTask().execute();
+
+                    }
+                }
 
             }
 
@@ -252,28 +255,31 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                getAmount = amountEditText.getText().toString();
+                // check if a base currency has been set otherwise http: requests will be done against a 'null' currency - inefficient
+                if (!currencyFromSpinner.getSelectedItem().toString().equals("Choose a base currency")) {
 
-               if (!getAmount.equals("")) {
+                    getAmount = amountEditText.getText().toString();
 
-                   getAmountAsDouble = Double.parseDouble(getAmount);
+                    if (!getAmount.equals("")) {
 
-                    new MyAsyncTask().execute();
+                        getAmountAsDouble = Double.parseDouble(getAmount);
 
-                } else {
+                        new MyAsyncTask().execute();
 
-                   getAmount = "0.00";
+                    } else {
 
-                   getAmountAsDouble = Double.parseDouble(getAmount);
+                        getAmount = "0.00";
 
-                   new MyAsyncTask().execute();
-               }
+                        getAmountAsDouble = Double.parseDouble(getAmount);
+
+                        new MyAsyncTask().execute();
+                    }
+                }
 
             }
         });
 
     }
-
 
 
     private class MyAsyncTask extends AsyncTask<String, String, String>
@@ -292,7 +298,7 @@ public class MainActivity extends ActionBarActivity {
             getRatesLatest = getRatesURLA;
 
             // loop round all the country codes concatenating into one big URL string
-            for (int i = 0; i < currencyCode.length; i++){
+            for (int i = 0; i < currencyCode.length; i++) {
 
                 getRatesLatest = getRatesLatest + currencyFromSubsting + currencyCode[i] + "%22%2C%22";
 
@@ -410,16 +416,16 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            for (int i = 0; i < rateArray.length; i++){
+            for (int i = 0; i < rateArray.length; i++) {
 
                 convertedAmount[i] = Double.parseDouble(rateArray[i]);
 
                 finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
             }
 
-            for (int i = 0; i < rateArray.length; i++){
+            for (int i = 0; i < rateArray.length; i++) {
 
-                finalConvertedAmountText[i] = String.valueOf((String.format("%.02f",finalConvertedAmount[i])));
+                finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
 
                 Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
             }
@@ -432,11 +438,6 @@ public class MainActivity extends ActionBarActivity {
             populatedArrayList();
 
             customAdapter.notifyDataSetChanged();
-
-            // after initial populated list change test to 1, so that each time from now on it updates
-            // the amount to convert from the text, and spinner input (see 'if / else' statements)
-            // the only way to update the query/list is to change the input amount & spinner
-            test = 1;
 
         }
 
@@ -481,7 +482,7 @@ public class MainActivity extends ActionBarActivity {
 
         Arrays.sort(flag);
 
-        currencyCode = new String[] {
+        currencyCode = new String[]{
                 "AUD",
                 "BGN",
                 "BRL",
@@ -517,7 +518,7 @@ public class MainActivity extends ActionBarActivity {
 
         Arrays.sort(currencyCode);
 
-        currency = new String[] {
+        currency = new String[]{
                 "00 Australian Dollar",
                 "01 Bulgarian Lev",
                 "02 Brazilian Real",
@@ -563,51 +564,40 @@ public class MainActivity extends ActionBarActivity {
             currencyFlagList.put("currencyType", currency[i]);
 
             // add the returned values from the http query, only if the populated rate array is the same
-            // test value is for first time run, initially set to zero, so on startup the 'else' statement is true
-            // but once an Amount has been entered, the if statement becomes 'true' - otherwise MyAsyncTask will have null pointer exception
-            if (test != 0) {
-                currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
-            } else {
 
-                currencyFlagList.put("finalConvertedAmountText", (finalConvertedAmountText[i] = "0.00"));
-            }
+                currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
+
 
             flagAndCurrencyList.add(currencyFlagList);
 
             Log.v("CURRENCY Code", currencyCode[i]);
             Log.v("CURRENCY TYPE", currency[i]);
             Log.v("FLAG TYPE", flag[i]);
-            Log.v("RATE", finalConvertedAmountText[i]);
+
         }
-
-
 
         // Remove positions from currencyActivity from retrieved int[] positionsToRemove from onResume()
         // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception
         // as the PositionsToRemove array won't have been initialised i.e. int[] myInt = new int[32]
         // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
+        try {
+            for (int i = 31; i >= 0; i--) {
 
+                if (positionsToRemove[i] != 0) {
 
-
-            try {
-                for (int i= 31 ; i >= 0; i--){
-
-                    if (positionsToRemove[i] != 0){
-
-                        // remove position - minus 1 because array has ALL zero's in 32 holders (default),
-                        // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
-                        flagAndCurrencyList.remove((positionsToRemove[i] - 1));
-                    }
+                    // remove position - minus 1 because array has ALL zero's in 32 holders (default),
+                    // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
+                    flagAndCurrencyList.remove((positionsToRemove[i] - 1));
                 }
-
-            } catch (NullPointerException e){
-
             }
+
+        } catch (NullPointerException e) {
+
+        }
 
         return flagAndCurrencyList;
 
     }
-
 
 }
 

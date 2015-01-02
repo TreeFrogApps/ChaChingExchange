@@ -11,6 +11,7 @@
     <string name="choose_currencies">Currency selector</string>
 
     <string-array name="currency_spinner">
+        <item>Choose a base currency</item>
         <item>AUD   Australian Dollar</item>
         <item>BGN   Bulgarian Lev</item>
         <item>BRL   Brazilian Real</item>

@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/currency_Flag"
-            android:src="@drawable/flag_ic_holder" />
+            android:src="@drawable/flag_ic_00_empty" />
 
 
         <LinearLayout
