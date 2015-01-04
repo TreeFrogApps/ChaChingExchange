@@ -9,7 +9,6 @@
     android:background="?attr/colorPrimary"
     app:theme="@style/AppTheme.Base"
     app:popupTheme="@style/AppTheme.Base.PopUpMenu.Overlay"
-    app:title="@string/app_name"
 />
 
 

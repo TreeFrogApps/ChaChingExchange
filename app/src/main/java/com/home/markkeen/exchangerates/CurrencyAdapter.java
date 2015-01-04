@@ -2,6 +2,7 @@ package com.home.markkeen.exchangerates;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,8 +21,8 @@ public class CurrencyAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
 
+    int[] positionsToRemove = new int[32];
 
-    //  sharedPreferences
     SharedPreferences sharedPreferences;
 
     public CurrencyAdapter(Context context, ArrayList<CurrencyActivity.ListData> arrayListData) {
@@ -30,6 +30,12 @@ public class CurrencyAdapter extends BaseAdapter {
         this.arrayListData = arrayListData;
         this.context = context;
         inflater = LayoutInflater.from(this.context);
+
+        SwitchButtonsOnOff();
+
+    }
+
+    public void SwitchButtonsOnOff () {
 
         // initialise preferences
         this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
@@ -41,7 +47,7 @@ public class CurrencyAdapter extends BaseAdapter {
         removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
 
-        if (removedPositions.contains("["))  {
+        if (removedPositions.contains("[")) {
 
             // function to change string which contains list of number in format [1,2,3,4] back to int array
             // remove [ ] from beginning of string
@@ -49,7 +55,7 @@ public class CurrencyAdapter extends BaseAdapter {
             items = removedPositions.substring(1, removedPositions.length() - 1).split(",");
             positionsToRemove = new int[items.length];
 
-            for (int i = 0; i < items.length; i++ ){
+            for (int i = 0; i < items.length; i++) {
 
                 positionsToRemove[i] = Integer.parseInt(items[i].trim());
             }
@@ -61,18 +67,15 @@ public class CurrencyAdapter extends BaseAdapter {
         }
 
         items = new String[0];
-
     }
+
 
     private static class ViewHolder {
         protected ImageView flagType;
         protected TextView currencyCode;
         protected TextView currencyType;
-        protected ToggleButton switchOnOff;
-
+        protected SwitchCompat switchOnOff;
     }
-
-    int[] positionsToRemove = new int[32];
 
     @Override
     public int getCount() {
@@ -109,7 +112,7 @@ public class CurrencyAdapter extends BaseAdapter {
 
         final ViewHolder viewHolder;
 
-        if(convertView == null){
+        if (convertView == null) {
 
             viewHolder = new ViewHolder();
 
@@ -118,7 +121,7 @@ public class CurrencyAdapter extends BaseAdapter {
             viewHolder.flagType = (ImageView) convertView.findViewById(R.id.flagTypeCurrencyActivity);
             viewHolder.currencyCode = (TextView) convertView.findViewById(R.id.currencyCodeCurrencyActivity);
             viewHolder.currencyType = (TextView) convertView.findViewById(R.id.currencyTypeCurrencyActivity);
-            viewHolder.switchOnOff = (ToggleButton) convertView.findViewById(R.id.setOnOffCurrencyActivity);
+            viewHolder.switchOnOff = (SwitchCompat) convertView.findViewById(R.id.setOnOffCurrencyActivity);
 
             // store the information in a tag
             convertView.setTag(viewHolder);
@@ -130,28 +133,30 @@ public class CurrencyAdapter extends BaseAdapter {
         viewHolder.flagType.setImageResource(arrayListData.get(position).getFlagNumberId());
         viewHolder.currencyCode.setText(arrayListData.get(position).getCountryCode());
         viewHolder.currencyType.setText(arrayListData.get(position).getCountry());
-        viewHolder.switchOnOff = (ToggleButton) convertView.findViewById(R.id.setOnOffCurrencyActivity);
+        viewHolder.switchOnOff = (SwitchCompat) convertView.findViewById(R.id.setOnOffCurrencyActivity);
 
         // set the switch according to the sharedPreferences and returned int array 'positionsToRemove'
-        // uss nullPointerException try/catch just in case (may not be needed)
+        // use nullPointerException try/catch just in case (may not be needed)
         try {
-              if (positionsToRemove[position] != 0){
+            if (positionsToRemove[position] != 0) {
 
-                    viewHolder.switchOnOff.setChecked(false);
-                }
+                viewHolder.switchOnOff.setChecked(false);
+            } else {
 
-        } catch (NullPointerException e){
+                viewHolder.switchOnOff.setChecked(true);
+            }
+
+        } catch (NullPointerException e) {
 
         }
 
-            viewHolder.switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolder.switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                if (!isChecked) {
 
-                if (!isChecked){
-
-                    for (int i = 0; i < positionsToRemove.length; i++){
+                    for (int i = 0; i < positionsToRemove.length; i++) {
 
                         if (position == i) {
 
@@ -164,7 +169,7 @@ public class CurrencyAdapter extends BaseAdapter {
 
                 } else {
 
-                    for (int i = 0; i < positionsToRemove.length; i++){
+                    for (int i = 0; i < positionsToRemove.length; i++) {
 
                         if (position == i) {
 
@@ -179,7 +184,6 @@ public class CurrencyAdapter extends BaseAdapter {
 
                 }
 
-
                 // Cannot store int array in SharedPreferences - must be converted to String format
                 String positionsToString = Arrays.toString(positionsToRemove);
 
@@ -189,8 +193,9 @@ public class CurrencyAdapter extends BaseAdapter {
                 editor.putString("POSITIONS_TO_REMOVE", positionsToString);
                 editor.apply();
 
-                }
-            });
+            }
+        });
+
 
         return convertView;
     }

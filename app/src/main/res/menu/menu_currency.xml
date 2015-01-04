@@ -4,10 +4,11 @@
     tools:context="com.home.markkeen.exchangerates.CurrencyActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/menu_pin_button_id"
+        android:title=""
         android:orderInCategory="1"
-        app:showAsAction="never" />
+        app:showAsAction="always"
+        />
 
     <item
         android:id="@+id/action_settings2"

@@ -60,20 +60,17 @@
                 android:textSize="@dimen/text_bigger" />
         </LinearLayout>
 
-        <ToggleButton
-            android:textOff="off"
-            android:textOn="on"
+        <android.support.v7.widget.SwitchCompat
+            android:textOff=""
+            android:textOn=""
             android:id="@+id/setOnOffCurrencyActivity"
-            android:layout_width="40dp"
-            android:layout_height="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/button_toggle"
-            android:checked="true"
+            android:background="@null"
             />
 
-
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="fill_parent"

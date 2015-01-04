@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -72,9 +74,15 @@ public class MainActivity extends ActionBarActivity {
     String getRatesFinal;
     String getAmount;
     double getAmountAsDouble;
+
     String[] items;
     int[] positionsToRemove;
     String removedPositions;
+
+    String[] pinnedItems;
+    int[] pinnedPositions;
+    String pinnedPositionsToKeep;
+
     double[] convertedAmount = new double[32];
     double[] finalConvertedAmount = new double[32];
     String[] rateArray = new String[32];
@@ -84,6 +92,8 @@ public class MainActivity extends ActionBarActivity {
     String[] currencyCode;
     String currencyFromType;
     String currencyFromSubsting;
+    ToggleButton menuPinToggleButton;
+    ImageView pinToggle;
 
     ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 
@@ -92,6 +102,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // added to every activity when including the Toolbar layout
         Toolbar actionBar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(actionBar);
 
@@ -100,11 +111,19 @@ public class MainActivity extends ActionBarActivity {
 
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+
+        // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
+        pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
+
+
         addItemExchangeRateFromSpinner();
 
         setExchangeAmountOnTextChangeListener();
 
         populatedArrayList();
+
+        pinToggle = (ImageView) findViewById(R.id.list_view_pin);
 
         // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
         customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
@@ -119,7 +138,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
         removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
         if (removedPositions.contains("[")) {
@@ -162,6 +180,73 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // inflate my special menu toggle button, add item to menu, then set the layout xml file i've created to inflate into that menu posotion
+        MenuItem menuPinToggle = menu.findItem(R.id.menu_pin_toggle_id);
+        menuPinToggle.setActionView(R.layout.menu_pin_toggle_layout);
+
+        // initialise the ToggleButton which is in the menuItem, which has my inflated layout (which the button is in)
+        menuPinToggleButton = (ToggleButton) menu.findItem(R.id.menu_pin_toggle_id).getActionView().findViewById(R.id.menu_main_activity_pin_toggle);
+
+        menuPinToggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (menuPinToggleButton.isChecked()) {
+
+                    // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
+                    pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
+
+                    if (pinnedPositionsToKeep.contains("[")) {
+
+                        // function to change string which contains list of number in format [1,2,3,4] back to int array
+                        // remove [ ] from beginning of string
+
+                        pinnedItems = pinnedPositionsToKeep.substring(1, pinnedPositionsToKeep.length() - 1).split(",");
+                        pinnedPositions = new int[pinnedItems.length];
+
+                        for (int i = 0; i < pinnedItems.length; i++) {
+
+                            pinnedPositions[i] = Integer.parseInt(pinnedItems[i].trim());
+                        }
+
+                        for (int i = 0; i < pinnedPositions.length; i++) {
+                            Log.v("SAVED POSITIONS", String.valueOf(pinnedPositions[i]));
+                        }
+                    }
+
+                    else {
+
+                        pinnedPositions = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+                    }
+
+                        customAdapter.clear();
+
+                        populatedArrayList();
+
+                        customAdapter.notifyDataSetChanged();
+
+                }
+
+                if (!menuPinToggleButton.isChecked()) {
+
+                    Toast.makeText(getApplication(), "unchecked", Toast.LENGTH_SHORT).show();
+
+                    customAdapter.clear();
+
+                    populatedArrayList();
+
+                    customAdapter.notifyDataSetChanged();
+                }
+
+                pinnedItems = new String[0];
+
+            }
+
+
+        });
+
+
         return true;
     }
 
@@ -172,14 +257,31 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
         if (id == R.id.action_choose_currencies) {
 
             Intent intent = new Intent(this, CurrencyActivity.class);
             startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_reset_pinned) {
+
+        pinnedPositions = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+        sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
+
+        customAdapter.pinnedPositionsToKeep = "";
+
+        customAdapter.positionsToPin = new int[32];
+
+        customAdapter.clear();
+
+        populatedArrayList();
+        customAdapter.notifyDataSetChanged();
+            return true;
+        }
+
+        if (id == R.id.action_settings) {
             return true;
         }
 
@@ -202,7 +304,6 @@ public class MainActivity extends ActionBarActivity {
 
                     currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
                     currencyFromSubsting = currencyFromType.substring(0, 3);
-
 
 
                     Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
@@ -562,10 +663,7 @@ public class MainActivity extends ActionBarActivity {
             currencyFlagList.put("flagType", flag[i]);
             currencyFlagList.put("currencyCode", currencyCode[i]);
             currencyFlagList.put("currencyType", currency[i]);
-
-            // add the returned values from the http query, only if the populated rate array is the same
-
-                currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
+            currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
 
 
             flagAndCurrencyList.add(currencyFlagList);
@@ -576,27 +674,39 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        // Remove positions from currencyActivity from retrieved int[] positionsToRemove from onResume()
-        // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception
-        // as the PositionsToRemove array won't have been initialised i.e. int[] myInt = new int[32]
+        // Remove positions from currencyActivity from retrieved int[] positionsToRemove from onResume() and from menuPinToggle
+        // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception (try/catch)
         // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
+
         try {
             for (int i = 31; i >= 0; i--) {
 
-                if (positionsToRemove[i] != 0) {
+                // check to see if the menuToggle is checked
+                if (menuPinToggleButton.isChecked()) {
 
-                    // remove position - minus 1 because array has ALL zero's in 32 holders (default),
-                    // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
-                    flagAndCurrencyList.remove((positionsToRemove[i] - 1));
+                    if (pinnedPositions[i] == 0) {
+
+                        flagAndCurrencyList.remove(i);
+                    }
+
+                }
+
+                // if the menuToggle is NOT checked
+                else {
+
+                    if (positionsToRemove[i] != 0) {
+
+                        // remove position - minus 1 because array has ALL zero's in 32 holders (default),
+                        // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
+                        flagAndCurrencyList.remove((positionsToRemove[i] - 1));
+                    }
                 }
             }
 
         } catch (NullPointerException e) {
 
         }
-
         return flagAndCurrencyList;
-
     }
 
 }

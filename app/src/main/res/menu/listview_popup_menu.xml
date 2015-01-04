@@ -9,18 +9,11 @@
         android:title="@string/popupmenu_pin_currency"
         android:orderInCategory="1"
         app:showAsAction="never"
-
-        />
-
-    <item android:id="@+id/menu_remove"
-        android:title="@string/popupmenu_remove"
-        android:orderInCategory="2"
-        app:showAsAction="never"
         />
 
     <item android:id="@+id/menu_move_to_top"
         android:title="@string/popupmenu_move_to_top"
-        android:orderInCategory="3"
+        android:orderInCategory="2"
         app:showAsAction="never"
         />
 </menu>

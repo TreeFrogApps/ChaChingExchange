@@ -5,9 +5,10 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <include layout="@layout/my_currency_tool_action_bar"></include>
+    <include layout="@layout/my_tool_action_bar"></include>
 
     <ListView
+        android:clickable="false"
         android:id="@+id/listViewCurrency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -2,7 +2,9 @@ package com.home.markkeen.exchangerates;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -17,19 +19,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
+    int[] positionsToPin = new int[32];
+    String[] pinnedItems;
+
+
+    SharedPreferences sharedPreferences;
+    String pinnedPositionsToKeep;
+    String removedPositions;
     private final Context context;
     private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
-    private MainActivity mainActivity;
 
     private static class ViewHolder {
         protected ImageView flagType;
         protected TextView convertedCurrencyCode;
         protected TextView convertedCurrencyAmount;
         protected TextView convertedCurrencyType;
+        protected ImageView pinToggle;
         protected Button context_menu;
 
     }
@@ -38,19 +48,37 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
     public CustomAdapter(Context context, ArrayList<HashMap<String, String>> flagAndCurrencyList) {
         super(context, R.layout.list_view_results, flagAndCurrencyList);
 
+        // initialise preferences
+        this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
         this.context = context;
         this.flagAndCurrencyList = flagAndCurrencyList;
-        this.mainActivity = new MainActivity();
 
+        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
+        // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
+        pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
     }
 
+    // denotes the listView size
+    @Override
+    public int getViewTypeCount() {
+        //Count=Size of ArrayList.
+        return flagAndCurrencyList.size();
+    }
+
+    // forces no recycle of view, as the listView size has been established above
+    // used to stop duplicate changes to  individual listItem resource changes
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
 
-        HashMap<String, String> flagAndCurrencyItem = flagAndCurrencyList.get(position);
+        final HashMap<String, String> flagAndCurrencyItem = flagAndCurrencyList.get(position);
 
         final ViewHolder viewHolder;
 
@@ -74,6 +102,8 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             viewHolder.convertedCurrencyType = (TextView) convertView.findViewById(R.id.convertedCurrencyType);
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 
+
+
             // store the information in a tag
             convertView.setTag(viewHolder);
 
@@ -93,13 +123,21 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         viewHolder.convertedCurrencyAmount.setText(flagAndCurrencyItem.get("finalConvertedAmountText"));
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
         viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType").substring(3));
+        viewHolder.pinToggle = (ImageView) convertView.findViewById(R.id.list_view_pin);
         viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
+
+        if (positionsToPin.length > flagAndCurrencyList.size()) {
+
+            viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_on));
+        }
+
+
 
         // context menu for each row (3 dots menu)
         // set setOnClickListener for button
         viewHolder.context_menu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View convertView) {
+            public void onClick(final View convertView) {
 
                 //create popUpMenu (context menu)
                 Context style = new ContextThemeWrapper(getContext(), R.style.PopUpMenu);
@@ -119,11 +157,49 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                             case R.id.menu_pin_currency:
 
                                 Toast.makeText(getContext(), "Pin currency selected", Toast.LENGTH_SHORT).show();
-                                return true;
 
-                            case R.id.menu_remove:
+                                viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_on));
 
-                                Toast.makeText(getContext(), "Remove selected", Toast.LENGTH_SHORT).show();
+                                if (pinnedPositionsToKeep.contains("[")){
+
+                                    // function to change string which contains list of number in format [1,2,3,4] back to int array
+                                    // remove [ ] from beginning of string
+
+                                    pinnedItems = pinnedPositionsToKeep.substring(1, pinnedPositionsToKeep.length() - 1).split(",");
+                                    positionsToPin = new int[pinnedItems.length];
+
+                                    for (int i = 0; i < pinnedItems.length; i++) {
+
+                                        positionsToPin[i] = Integer.parseInt(pinnedItems[i].trim());
+                                    }
+
+                                    for (int i = 0; i < positionsToPin.length; i++) {
+                                        Log.v("SAVED POSITIONS", String.valueOf(positionsToPin[i]));
+                                    }
+
+                                }
+                                // loop through entire list checking to pinned positions
+                                for (int i = 0; i < positionsToPin.length; i++) {
+
+                                    if (position == i) {
+
+                                        positionsToPin[i] = (position + 1);
+                                    }
+                                }
+
+
+                                for (int i = 0; i < positionsToPin.length; i++) {
+                                    Log.v("POSITION", String.valueOf(positionsToPin[i]));
+                                }
+
+                                // Cannot store int array in SharedPreferences - must be converted to String format
+                                String positionsToString = Arrays.toString(positionsToPin);
+
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                // Get SharedPreferences and store as a string - NO NEED TO CLEAR WHEN SWAPPING ACTIVITIES!
+                                // It is overwritten each time 'putString' 'apply' is used (not appended as its a concatenated single string!)
+                                editor.putString("PINNED_POSITIONS_TO_KEEP", positionsToString);
+                                editor.apply();
                                 return true;
 
                             case R.id.menu_move_to_top:
