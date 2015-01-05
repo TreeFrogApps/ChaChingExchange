@@ -11,8 +11,8 @@
         app:showAsAction="never"
         />
 
-    <item android:id="@+id/menu_move_to_top"
-        android:title="@string/popupmenu_move_to_top"
+    <item android:id="@+id/menu_swap_to_base_currency"
+        android:title="@string/popupmenu_swap_to_base"
         android:orderInCategory="2"
         app:showAsAction="never"
         />

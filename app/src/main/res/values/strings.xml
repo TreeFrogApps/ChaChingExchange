@@ -18,7 +18,7 @@
         <item>BGN   Bulgarian Lev</item>
         <item>BRL   Brazilian Real</item>
         <item>CAD	Canadian Dollar</item>
-        <item>CHF	CH Francs</item>
+        <item>CHF	Swiss Franc</item>
         <item>CNY	Chinese Yuan</item>
         <item>CZK	Czech Koruna</item>
         <item>DKK	Danish Krone</item>
@@ -63,7 +63,7 @@
     <string name="popupmenu_pin_currency">Pin Currency</string>
     <string name="popupmenu_unpin_currency">Unpin Currency</string>
     <string name="popupmenu_remove">Remove</string>
-    <string name="popupmenu_move_to_top">Move to top</string>
+    <string name="popupmenu_swap_to_base">Set as base currency</string>
     <string name="title_activity_currency">CurrencyActivity</string>
 
 </resources>

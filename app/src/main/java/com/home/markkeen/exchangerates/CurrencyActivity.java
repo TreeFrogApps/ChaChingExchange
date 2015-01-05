@@ -218,7 +218,7 @@ public class CurrencyActivity extends ActionBarActivity {
                 "Bulgarian Lev",
                 "Brazilian Real",
                 "Canadian Dollar",
-                "CH Francs",
+                "Swiss Franc",
                 "Chinese Yuan",
                 "Czech Koruna",
                 "Danish Krone",

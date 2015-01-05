@@ -1,7 +1,6 @@
 package com.home.markkeen.exchangerates;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -47,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
     EditText amountEditText;
     Spinner currencyFromSpinner;
     ImageView flagBase;
+
     int[] flags = {
             // holder flag for 'Choose a base currency' position in Select currency from web spinner
             R.drawable.flag_ic_00_empty,
@@ -95,6 +95,10 @@ public class MainActivity extends ActionBarActivity {
     ToggleButton menuPinToggleButton;
     ImageView pinToggle;
 
+    // int's for saving position of the listView
+    int indexPosition;
+    int top;
+
     ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 
     @Override
@@ -116,7 +120,6 @@ public class MainActivity extends ActionBarActivity {
         // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
         pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
 
-
         addItemExchangeRateFromSpinner();
 
         setExchangeAmountOnTextChangeListener();
@@ -127,8 +130,6 @@ public class MainActivity extends ActionBarActivity {
 
         // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
         customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
-
-
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(customAdapter);
     }
@@ -160,11 +161,8 @@ public class MainActivity extends ActionBarActivity {
         }
 
         items = new String[0];
-
         customAdapter.clear();
-
         populatedArrayList();
-
         customAdapter.notifyDataSetChanged();
 
     }
@@ -194,6 +192,13 @@ public class MainActivity extends ActionBarActivity {
 
                 if (menuPinToggleButton.isChecked()) {
 
+                    // get the listview first visible position (i will get the index position and not a partial position)
+                    indexPosition = listView.getFirstVisiblePosition();
+                    // to factor the listview for a partial scrolled position this works out the difference between
+                    // index item 0 and current top view - set when going back to  pinToggle OFF
+                    top = listView.getChildAt(0).getTop();
+
+
                     // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
                     pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
 
@@ -217,15 +222,11 @@ public class MainActivity extends ActionBarActivity {
 
                     else {
 
-                        pinnedPositions = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+                        pinnedPositions = new int[32];
                     }
-
                         customAdapter.clear();
-
                         populatedArrayList();
-
                         customAdapter.notifyDataSetChanged();
-
                 }
 
                 if (!menuPinToggleButton.isChecked()) {
@@ -233,20 +234,15 @@ public class MainActivity extends ActionBarActivity {
                     Toast.makeText(getApplication(), "unchecked", Toast.LENGTH_SHORT).show();
 
                     customAdapter.clear();
-
                     populatedArrayList();
-
                     customAdapter.notifyDataSetChanged();
+
+                    // get the previous listView position
+                    listView.setSelectionFromTop(indexPosition, top);
                 }
-
                 pinnedItems = new String[0];
-
             }
-
-
         });
-
-
         return true;
     }
 
@@ -257,21 +253,24 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
         if (id == R.id.action_choose_currencies) {
 
-            Intent intent = new Intent(this, CurrencyActivity.class);
-            startActivity(intent);
-            return true;
+         //   Intent intent = new Intent(this, CurrencyActivity.class);
+         //  startActivity(intent);
+         //   return true;
         }
         if (id == R.id.action_reset_pinned) {
 
+        // reset the pinnedPositions int[]
         pinnedPositions = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
+        // remove the save pinned positions string from shared Prefs
         sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
 
+        // reset the pinnedPositionsToKeep string from the customAdapter
         customAdapter.pinnedPositionsToKeep = "";
 
+        // reset the positionsToPin int[] from the customAdapter
         customAdapter.positionsToPin = new int[32];
 
         customAdapter.clear();
@@ -284,7 +283,6 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -580,7 +578,6 @@ public class MainActivity extends ActionBarActivity {
                 "flag_ic_try_29",
                 "flag_ic_usd_30",
                 "flag_ic_zar_31"};
-
         Arrays.sort(flag);
 
         currencyCode = new String[]{
@@ -616,7 +613,6 @@ public class MainActivity extends ActionBarActivity {
                 "TRY",
                 "USD",
                 "ZAR"};
-
         Arrays.sort(currencyCode);
 
         currency = new String[]{
@@ -624,7 +620,7 @@ public class MainActivity extends ActionBarActivity {
                 "01 Bulgarian Lev",
                 "02 Brazilian Real",
                 "03 Canadian Dollar",
-                "04 CH Francs",
+                "04 Swiss Franc",
                 "05 Chinese Yuan",
                 "06 Czech Koruna",
                 "07 Danish Krone",
@@ -652,9 +648,7 @@ public class MainActivity extends ActionBarActivity {
                 "29 New Turkish Lira",
                 "30 United States Dollar",
                 "31 South African Rand"};
-
         Arrays.sort(currency);
-
 
         for (int i = 0; i < flag.length; i++) {
 
