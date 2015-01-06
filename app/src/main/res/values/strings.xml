@@ -59,6 +59,7 @@
     <string name="currency_results">Results</string>
     <string name="currency_results_amount">0.00</string>
     <string name="currency_results_code">Currency type</string>
+    <string name="currency_results_rate">Rate</string>
     <string name="currency_code">Code</string>
     <string name="popupmenu_pin_currency">Pin Currency</string>
     <string name="popupmenu_unpin_currency">Unpin Currency</string>
