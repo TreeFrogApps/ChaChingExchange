@@ -39,6 +39,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         protected TextView convertedCurrencyCode;
         protected TextView convertedCurrencyAmount;
         protected TextView convertedCurrencyType;
+        protected TextView currencyRateText;
         protected ImageView pinToggle;
         protected Button context_menu;
 
@@ -61,20 +62,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
     }
 
-    // denotes the listView size
-    @Override
-    public int getViewTypeCount() {
-        //Count=Size of ArrayList.
-        return flagAndCurrencyList.size();
-    }
-
-    // forces no recycle of view, as the listView size has been established above
-    // used to stop duplicate changes to  individual listItem resource changes
-    @Override
-    public int getItemViewType(int position) {
-
-        return position;
-    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -102,7 +89,18 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             viewHolder.convertedCurrencyAmount = (TextView) convertView.findViewById(R.id.convertedCurrencyAmount);
             viewHolder.convertedCurrencyCode = (TextView) convertView.findViewById(R.id.convertedCurrencyCode);
             viewHolder.convertedCurrencyType = (TextView) convertView.findViewById(R.id.convertedCurrencyType);
+            viewHolder.currencyRateText = (TextView) convertView.findViewById(R.id.currencyRateText);
+            viewHolder.pinToggle = (ImageView) convertView.findViewById(R.id.list_view_pin);
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
+
+            if (positionsToPin.length > flagAndCurrencyList.size()) {
+
+                viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_on));
+
+            } else {
+
+                viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_off));
+            }
 
             // store the information in a tag
             convertView.setTag(viewHolder);
@@ -123,6 +121,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         viewHolder.convertedCurrencyAmount.setText(flagAndCurrencyItem.get("finalConvertedAmountText"));
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
         viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType").substring(3));
+        viewHolder.currencyRateText.setText(flagAndCurrencyItem.get("rateAmountText"));
         viewHolder.pinToggle = (ImageView) convertView.findViewById(R.id.list_view_pin);
         viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 

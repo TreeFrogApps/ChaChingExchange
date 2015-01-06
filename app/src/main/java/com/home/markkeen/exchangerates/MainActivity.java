@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import org.apache.http.HttpEntity;
@@ -86,6 +85,7 @@ public class MainActivity extends ActionBarActivity {
     double[] convertedAmount = new double[32];
     double[] finalConvertedAmount = new double[32];
     String[] rateArray = new String[32];
+    String[] finalRateArray = new String[32];
     String[] finalConvertedAmountText = new String[32];
     String[] currency;
     String[] flag;
@@ -231,8 +231,6 @@ public class MainActivity extends ActionBarActivity {
 
                 if (!menuPinToggleButton.isChecked()) {
 
-                    Toast.makeText(getApplication(), "unchecked", Toast.LENGTH_SHORT).show();
-
                     customAdapter.clear();
                     populatedArrayList();
                     customAdapter.notifyDataSetChanged();
@@ -262,7 +260,7 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_reset_pinned) {
 
         // reset the pinnedPositions int[]
-        pinnedPositions = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        pinnedPositions = new int[32];
 
         // remove the save pinned positions string from shared Prefs
         sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
@@ -517,6 +515,7 @@ public class MainActivity extends ActionBarActivity {
 
             for (int i = 0; i < rateArray.length; i++) {
 
+                // parse the String rateArray to double
                 convertedAmount[i] = Double.parseDouble(rateArray[i]);
 
                 finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
@@ -524,6 +523,9 @@ public class MainActivity extends ActionBarActivity {
 
             for (int i = 0; i < rateArray.length; i++) {
 
+                // convert back the rate but to 2 decimal places in String format
+                finalRateArray[i] = String.valueOf((String.format("%.02f", convertedAmount[i])));
+                // convert the rate amount to string 2 decimal places
                 finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
 
                 Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
@@ -658,6 +660,8 @@ public class MainActivity extends ActionBarActivity {
             currencyFlagList.put("currencyCode", currencyCode[i]);
             currencyFlagList.put("currencyType", currency[i]);
             currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
+            currencyFlagList.put("rateAmountText", finalRateArray[i]);
+
 
 
             flagAndCurrencyList.add(currencyFlagList);
