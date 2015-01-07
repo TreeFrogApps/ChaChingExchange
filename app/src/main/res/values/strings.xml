@@ -4,7 +4,7 @@
     <string name="app_name">Exchange Rates</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="reset_pinned_currencies">Reset pinned</string>
+    <string name="reset_pinned_currencies">Clear pins</string>
 
     <string name="currency_from">FROM</string>
     <string name="currency_to">TARGET CURRENCY</string>

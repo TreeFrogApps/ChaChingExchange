@@ -27,6 +27,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
     int[] positionsToPin = new int[32];
     String[] pinnedItems;
 
+    String currencyCode;
+    String spinnerItem;
+
     MainActivity mainActivity;
     SharedPreferences sharedPreferences;
     String pinnedPositionsToKeep;
@@ -56,7 +59,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
         removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
-        mainActivity = new MainActivity();
+        this.mainActivity = new MainActivity();
 
         // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
         pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
@@ -164,7 +167,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
                                 } else {
 
-                                    if (pinnedPositionsToKeep.contains("[")){
+                                    if (pinnedPositionsToKeep.contains("[")) {
 
                                         // function to change string which contains list of number in format [1,2,3,4] back to int array
                                         // remove [ ] from beginning of string
@@ -212,7 +215,17 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
                                 Toast.makeText(getContext(), "Set as base selected", Toast.LENGTH_SHORT).show();
 
+                                currencyCode = viewHolder.convertedCurrencyCode.getText().toString();
 
+                                for (int i = 0; i < flagAndCurrencyList.size(); i++) {
+
+                                     spinnerItem = mainActivity.currencyFromSpinner.getItemAtPosition(position).toString();
+
+                                    if (currencyCode.equals(spinnerItem.substring(0, 3))) {
+
+                                        mainActivity.currencyFromSpinner.setSelection(i);
+                                    }
+                                }
                                 return true;
                             default:
                                 return false;

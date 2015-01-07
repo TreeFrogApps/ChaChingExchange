@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -94,6 +96,8 @@ public class MainActivity extends ActionBarActivity {
     String currencyFromSubsting;
     ToggleButton menuPinToggleButton;
     ImageView pinToggle;
+    ImageView progressBar;
+    Animation progressBarAnimation;
 
     // int's for saving position of the listView
     int indexPosition;
@@ -112,6 +116,8 @@ public class MainActivity extends ActionBarActivity {
 
         amountEditText = (EditText) findViewById(R.id.amountEditText);
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
+        progressBar = (ImageView) findViewById(R.id.progress_bar);
+        progressBarAnimation = AnimationUtils.loadAnimation(this, R.anim.progress_bar_rotate);
 
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
@@ -139,6 +145,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
+        // not used until currency removal is universal - see removed menu option below for details
         removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
         if (removedPositions.contains("[")) {
@@ -251,12 +258,18 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_choose_currencies) {
+        // disabled along with menu item missing - will be used on v2? - need to work out how to use;
+        // will need to remove positions from the original String arrays in mainActivity, rather than using a new adapter
+        // this will remove positions before they are put in a ArrayList (so they weren't removed, they simply didn't exist)
+        // need to also reset pinned currencies before any are removed
+
+        //if (id == R.id.action_choose_currencies) {
 
          //   Intent intent = new Intent(this, CurrencyActivity.class);
          //  startActivity(intent);
          //   return true;
-        }
+        //}
+
         if (id == R.id.action_reset_pinned) {
 
         // reset the pinnedPositions int[]
@@ -383,6 +396,14 @@ public class MainActivity extends ActionBarActivity {
 
     {
 
+        @Override
+        protected void onPreExecute(){
+
+            progressBar.startAnimation(progressBarAnimation);
+            progressBar.setVisibility(View.VISIBLE);
+
+
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -512,6 +533,9 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(String result) {
+
+            progressBar.setVisibility(View.INVISIBLE);
+            progressBar.clearAnimation();
 
             for (int i = 0; i < rateArray.length; i++) {
 
