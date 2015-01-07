@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,9 +27,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
     String[] pinnedItems;
 
     String currencyCode;
-    String spinnerItem;
 
-    MainActivity mainActivity;
     SharedPreferences sharedPreferences;
     String pinnedPositionsToKeep;
     String removedPositions;
@@ -58,8 +55,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         this.flagAndCurrencyList = flagAndCurrencyList;
 
         removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
-
-        this.mainActivity = new MainActivity();
 
         // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
         pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
@@ -194,7 +189,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                         }
                                     }
 
-
                                     for (int i = 0; i < positionsToPin.length; i++) {
                                         Log.v("POSITION", String.valueOf(positionsToPin[i]));
                                     }
@@ -213,19 +207,16 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
                             case R.id.menu_swap_to_base_currency:
 
-                                Toast.makeText(getContext(), "Set as base selected", Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(getContext(), "Set as base selected", Toast.LENGTH_SHORT).show();
 
                                 currencyCode = viewHolder.convertedCurrencyCode.getText().toString();
 
-                                for (int i = 0; i < flagAndCurrencyList.size(); i++) {
+                                // pass in the 3 letter currency code for the appropriate listItem
+                                // DIRECTLY reference the method as it is static
+                                // any reference inside the method to variables used elsewhere also have to be classed as static
+                                // variables declared in the class don't
+                                MainActivity.swapBaseCurrency(currencyCode);
 
-                                     spinnerItem = mainActivity.currencyFromSpinner.getItemAtPosition(position).toString();
-
-                                    if (currencyCode.equals(spinnerItem.substring(0, 3))) {
-
-                                        mainActivity.currencyFromSpinner.setSelection(i);
-                                    }
-                                }
                                 return true;
                             default:
                                 return false;

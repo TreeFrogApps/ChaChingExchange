@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,8 +46,10 @@ import java.util.HashMap;
 public class MainActivity extends ActionBarActivity {
 
     EditText amountEditText;
-    Spinner currencyFromSpinner;
-    ImageView flagBase;
+    static Spinner currencyFromSpinner;
+    static String[] spinnerCurrencyList;
+    static ArrayAdapter<String> spinnerArray;
+    static ImageView flagBase;
 
     int[] flags = {
             // holder flag for 'Choose a base currency' position in Select currency from web spinner
@@ -71,9 +74,9 @@ public class MainActivity extends ActionBarActivity {
 
     static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
     static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-    String getRatesLatest;
-    String getRatesFinal;
-    String getAmount;
+    static String getRatesLatest;
+    static String getRatesFinal;
+    static String getAmount;
     double getAmountAsDouble;
 
     String[] items;
@@ -115,14 +118,31 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(actionBar);
 
         amountEditText = (EditText) findViewById(R.id.amountEditText);
+
+        spinnerCurrencyList = new String[]{
+                "Choose a base currency",   "AUD\t\tAustralian Dollar",   "BGN\t\tBulgarian Lev",
+                "BRL\t\tBrazilian Real",     "CAD\t\tCanadian Dollar",   "CHF\t\tSwiss Franc",
+                "CNY\t\tChinese Yuan",      "CZK\t\tCzech Koruna",      "DKK\t\tDanish Krone",
+                "EUR\t\tEuro",              "GBP\t\tBritish Pound",     "HKD\t\tHong Kong Dollar",
+                "HRK\t\tCroatian Kuna",     "HUF\t\tHungarian Forint",  "IDR\t\tIndonesian Rupiah",
+                "ILS\t\tIsraeli Shekel",    "INR\t\tIndian Rupee",      "JPY\t\tJapanese Yen",
+                "KRW\t\tKorean Won",        "LTL\t\tLithuanian Litas",  "MXN\t\tMexican Peso",
+                "NOK\t\tNorwegian Krone",   "NZD\t\tNew Zealand Dollar","PHP\t\tPhilippine Peso",
+                "PLN\t\tPolish NEW Zloty",  "RON\t\tRomanian Leu",       "RUB\t\tRussian Rouble",
+                "SEK\t\tSwedish Krona",     "SGD\t\tSingapore Dollar",  "THB\t\tThai Baht",
+                "TRY\t\tNew Turkish Lira",  "USD\t\tUnited States Dollar","ZAR\t\tSouth African Rand"};
+
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
+        spinnerArray = new ArrayAdapter<String>(this, R.layout.spinner_view, R.id.spinner_list_item, spinnerCurrencyList);
+        currencyFromSpinner.setAdapter(spinnerArray);
+
+
         progressBar = (ImageView) findViewById(R.id.progress_bar);
         progressBarAnimation = AnimationUtils.loadAnimation(this, R.anim.progress_bar_rotate);
 
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
-
         // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
         pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
 
@@ -389,6 +409,23 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+    }
+
+    public static void swapBaseCurrency(String currency) {
+
+        String spinnerItem;
+
+        for (int i = 0; i < currencyFromSpinner.getCount(); i++) {
+
+
+
+            spinnerItem = currencyFromSpinner.getItemAtPosition(i).toString();
+
+            if (currency.equals(spinnerItem.substring(0, 3))) {
+
+                currencyFromSpinner.setSelection(i);
+            }
+        }
     }
 
 
