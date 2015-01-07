@@ -101,6 +101,7 @@ public class MainActivity extends ActionBarActivity {
     ImageView pinToggle;
     ImageView progressBar;
     Animation progressBarAnimation;
+    Animation flagAnimation;
 
     // int's for saving position of the listView
     int indexPosition;
@@ -141,6 +142,8 @@ public class MainActivity extends ActionBarActivity {
         progressBarAnimation = AnimationUtils.loadAnimation(this, R.anim.progress_bar_rotate);
 
         flagBase = (ImageView) findViewById(R.id.flag_base);
+        flagAnimation = AnimationUtils.loadAnimation(this, R.anim.flag_scale);
+
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
         // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
@@ -326,6 +329,9 @@ public class MainActivity extends ActionBarActivity {
 
                 // set flag according to spinner position and currency/country
                 flagBase.setImageResource(flags[position]);
+                flagBase.startAnimation(flagAnimation);
+
+
 
                 // position 0 is the initial 'Choose a base currency' - no action required, only do if it is not that one!
                 if (!currencyFromSpinner.getSelectedItem().toString().equals("Choose a base currency")) {
