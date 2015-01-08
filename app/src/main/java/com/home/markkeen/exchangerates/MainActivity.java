@@ -121,17 +121,17 @@ public class MainActivity extends ActionBarActivity {
         amountEditText = (EditText) findViewById(R.id.amountEditText);
 
         spinnerCurrencyList = new String[]{
-                "Choose a base currency",   "AUD\t\tAustralian Dollar",   "BGN\t\tBulgarian Lev",
-                "BRL\t\tBrazilian Real",     "CAD\t\tCanadian Dollar",   "CHF\t\tSwiss Franc",
-                "CNY\t\tChinese Yuan",      "CZK\t\tCzech Koruna",      "DKK\t\tDanish Krone",
-                "EUR\t\tEuro",              "GBP\t\tBritish Pound",     "HKD\t\tHong Kong Dollar",
-                "HRK\t\tCroatian Kuna",     "HUF\t\tHungarian Forint",  "IDR\t\tIndonesian Rupiah",
-                "ILS\t\tIsraeli Shekel",    "INR\t\tIndian Rupee",      "JPY\t\tJapanese Yen",
-                "KRW\t\tKorean Won",        "LTL\t\tLithuanian Litas",  "MXN\t\tMexican Peso",
-                "NOK\t\tNorwegian Krone",   "NZD\t\tNew Zealand Dollar","PHP\t\tPhilippine Peso",
-                "PLN\t\tPolish NEW Zloty",  "RON\t\tRomanian Leu",       "RUB\t\tRussian Rouble",
-                "SEK\t\tSwedish Krona",     "SGD\t\tSingapore Dollar",  "THB\t\tThai Baht",
-                "TRY\t\tNew Turkish Lira",  "USD\t\tUnited States Dollar","ZAR\t\tSouth African Rand"};
+                "Choose a base currency", "AUD\t\tAustralian Dollar", "BGN\t\tBulgarian Lev",
+                "BRL\t\tBrazilian Real", "CAD\t\tCanadian Dollar", "CHF\t\tSwiss Franc",
+                "CNY\t\tChinese Yuan", "CZK\t\tCzech Koruna", "DKK\t\tDanish Krone",
+                "EUR\t\tEuro", "GBP\t\tBritish Pound", "HKD\t\tHong Kong Dollar",
+                "HRK\t\tCroatian Kuna", "HUF\t\tHungarian Forint", "IDR\t\tIndonesian Rupiah",
+                "ILS\t\tIsraeli Shekel", "INR\t\tIndian Rupee", "JPY\t\tJapanese Yen",
+                "KRW\t\tSouth Korean Won", "LTL\t\tLithuanian Litas", "MXN\t\tMexican Peso",
+                "NOK\t\tNorwegian Krone", "NZD\t\tNew Zealand Dollar", "PHP\t\tPhilippine Peso",
+                "PLN\t\tPolish NEW Zloty", "RON\t\tRomanian Leu", "RUB\t\tRussian Rouble",
+                "SEK\t\tSwedish Krona", "SGD\t\tSingapore Dollar", "THB\t\tThai Baht",
+                "TRY\t\tNew Turkish Lira", "USD\t\tUnited States Dollar", "ZAR\t\tSouth African Rand"};
 
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
         spinnerArray = new ArrayAdapter<String>(this, R.layout.spinner_view, R.id.spinner_list_item, spinnerCurrencyList);
@@ -248,15 +248,13 @@ public class MainActivity extends ActionBarActivity {
                         for (int i = 0; i < pinnedPositions.length; i++) {
                             Log.v("SAVED POSITIONS", String.valueOf(pinnedPositions[i]));
                         }
-                    }
-
-                    else {
+                    } else {
 
                         pinnedPositions = new int[32];
                     }
-                        customAdapter.clear();
-                        populatedArrayList();
-                        customAdapter.notifyDataSetChanged();
+                    customAdapter.clear();
+                    populatedArrayList();
+                    customAdapter.notifyDataSetChanged();
                 }
 
                 if (!menuPinToggleButton.isChecked()) {
@@ -288,29 +286,29 @@ public class MainActivity extends ActionBarActivity {
 
         //if (id == R.id.action_choose_currencies) {
 
-         //   Intent intent = new Intent(this, CurrencyActivity.class);
-         //  startActivity(intent);
-         //   return true;
+        //   Intent intent = new Intent(this, CurrencyActivity.class);
+        //  startActivity(intent);
+        //   return true;
         //}
 
         if (id == R.id.action_reset_pinned) {
 
-        // reset the pinnedPositions int[]
-        pinnedPositions = new int[32];
+            // reset the pinnedPositions int[]
+            pinnedPositions = new int[32];
 
-        // remove the save pinned positions string from shared Prefs
-        sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
+            // remove the save pinned positions string from shared Prefs
+            sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
 
-        // reset the pinnedPositionsToKeep string from the customAdapter
-        customAdapter.pinnedPositionsToKeep = "";
+            // reset the pinnedPositionsToKeep string from the customAdapter
+            customAdapter.pinnedPositionsToKeep = "";
 
-        // reset the positionsToPin int[] from the customAdapter
-        customAdapter.positionsToPin = new int[32];
+            // reset the positionsToPin int[] from the customAdapter
+            customAdapter.positionsToPin = new int[32];
 
-        customAdapter.clear();
+            customAdapter.clear();
 
-        populatedArrayList();
-        customAdapter.notifyDataSetChanged();
+            populatedArrayList();
+            customAdapter.notifyDataSetChanged();
             return true;
         }
 
@@ -330,7 +328,6 @@ public class MainActivity extends ActionBarActivity {
                 // set flag according to spinner position and currency/country
                 flagBase.setImageResource(flags[position]);
                 flagBase.startAnimation(flagAnimation);
-
 
 
                 // position 0 is the initial 'Choose a base currency' - no action required, only do if it is not that one!
@@ -424,7 +421,6 @@ public class MainActivity extends ActionBarActivity {
         for (int i = 0; i < currencyFromSpinner.getCount(); i++) {
 
 
-
             spinnerItem = currencyFromSpinner.getItemAtPosition(i).toString();
 
             if (currency.equals(spinnerItem.substring(0, 3))) {
@@ -440,7 +436,7 @@ public class MainActivity extends ActionBarActivity {
     {
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
 
             progressBar.startAnimation(progressBarAnimation);
             progressBar.setVisibility(View.VISIBLE);
@@ -485,93 +481,111 @@ public class MainActivity extends ActionBarActivity {
             // Will hold all the data gathered from the URL
             String result = null;
 
-            try {
 
-                // Get a response if any from the web service
-                HttpResponse response = httpClient.execute(httpPost);
+            // simple for loop ro retry the connection/response/exceptions
+            // if try is successful use break; to exit loop
+            int tries;
+            final int RETRY_ATTEMPTS = 3;
 
-                // The content from the requested URL along with headers, etc.
-                HttpEntity entity = response.getEntity();
+            for (tries = 0; tries < RETRY_ATTEMPTS; tries++) {
 
-                // Get the main content from the URL
-                inputStream = entity.getContent();
-
-                Log.v("INPUT STREAM ", inputStream.toString());
-
-                // JSON is UTF-8 by default
-                // BufferedReader reads data from the InputStream until the Buffer is full
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-
-                //Store the data
-                StringBuilder theStringBuilder = new StringBuilder();
-
-                String line = null;
-
-                while ((line = reader.readLine()) != null) {
-
-                    theStringBuilder.append(line + "\n");
-                }
-
-                // Store the complete data in result
-                result = theStringBuilder.toString();
-
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Close the InputStream when you're done with it
-            finally {
 
                 try {
-                    if (inputStream != null) inputStream.close();
+
+                    // Get a response if any from the web service
+                    HttpResponse response = httpClient.execute(httpPost);
+
+                    // The content from the requested URL along with headers, etc.
+                    HttpEntity entity = response.getEntity();
+
+                    // Get the main content from the URL
+                    inputStream = entity.getContent();
+
+                    Log.v("INPUT STREAM ", inputStream.toString());
+
+                    // JSON is UTF-8 by default
+                    // BufferedReader reads data from the InputStream until the Buffer is full
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+
+                    //Store the data
+                    StringBuilder theStringBuilder = new StringBuilder();
+
+                    String line = null;
+
+                    while ((line = reader.readLine()) != null) {
+
+                        theStringBuilder.append(line + "\n");
+                    }
+
+                    // Store the complete data in result
+                    result = theStringBuilder.toString();
+
+                    break;
+
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
+                // Close the InputStream when you're done with it
+                finally {
+
+                    try {
+                        if (inputStream != null) inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
-            // Holds Key Value pairs from a JSON source
-            JSONObject jsonObject;
 
-            try {
+                // Holds Key Value pairs from a JSON source
+                JSONObject jsonObject;
 
-                Log.v("JSONParser RESULT ", result);
+                try {
 
-
-                // Get the root JSONObject
-                jsonObject = new JSONObject(result);
-
-                // Get the JSON object named query
-                JSONObject queryJSONObject = jsonObject.getJSONObject("query");
-
-                // Get the JSON object named results inside of the query object
-                JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
-
-                // Get the JSON object named rate inside of the results object
-                // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
+                    Log.v("JSONParser RESULT ", result);
 
 
-                // Get the JSON array named rate inside of the results object
-                JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
-                int arrayLength = jsonArray.length();
+                    // Get the root JSONObject
+                    jsonObject = new JSONObject(result);
 
-                for (int i = 0; i < arrayLength; i++) {
+                    // Get the JSON object named query
+                    JSONObject queryJSONObject = jsonObject.getJSONObject("query");
 
-                    JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
+                    // Get the JSON object named results inside of the query object
+                    JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
 
-                    rateArray[i] = currencyJSONObject.getString("Rate");
+                    // Get the JSON object named rate inside of the results object
+                    // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
 
-                    Log.v("CURRENCY FROM WEB ", rateArray[i]);
+
+                    // Get the JSON array named rate inside of the results object
+                    JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
+                    int arrayLength = jsonArray.length();
+
+                    for (int i = 0; i < arrayLength; i++) {
+
+                        JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
+
+                        rateArray[i] = currencyJSONObject.getString("Rate");
+
+                        Log.v("CURRENCY FROM WEB ", rateArray[i]);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
             return result;
+
+
         }
 
         @Override
@@ -702,7 +716,7 @@ public class MainActivity extends ActionBarActivity {
                 "14 Israeli Shekel",
                 "15 Indian Rupee",
                 "16 Japanese Yen",
-                "17 Korean Won",
+                "17 South Korean Won",
                 "18 Lithuanian Litas",
                 "19 Mexican Peso",
                 "20 Norwegian Krone",
@@ -728,7 +742,6 @@ public class MainActivity extends ActionBarActivity {
             currencyFlagList.put("currencyType", currency[i]);
             currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
             currencyFlagList.put("rateAmountText", finalRateArray[i]);
-
 
 
             flagAndCurrencyList.add(currencyFlagList);

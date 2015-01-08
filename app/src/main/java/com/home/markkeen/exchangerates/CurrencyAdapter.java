@@ -35,7 +35,7 @@ public class CurrencyAdapter extends BaseAdapter {
 
     }
 
-    public void SwitchButtonsOnOff () {
+    public void SwitchButtonsOnOff() {
 
         // initialise preferences
         this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
