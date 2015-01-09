@@ -56,8 +56,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
         removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
-        // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
-        pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
     }
 
 
@@ -157,12 +155,19 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
                                 if (positionsToPin.length > flagAndCurrencyList.size()) {
 
+
+
                                     // this state happens only when the pinToggleButton is ON - do not want ability to 'pin' when this state is enabled,
                                     // will only enable when list contains ALL currencies but then it doesn't matter!
 
                                 } else {
 
+                                    // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
+                                    pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
+
                                     if (pinnedPositionsToKeep.contains("[")) {
+
+                                        Log.v("SAVED PREFERENCE STRING", pinnedPositionsToKeep);
 
                                         // function to change string which contains list of number in format [1,2,3,4] back to int array
                                         // remove [ ] from beginning of string
@@ -190,7 +195,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                     }
 
                                     for (int i = 0; i < positionsToPin.length; i++) {
-                                        Log.v("POSITION", String.valueOf(positionsToPin[i]));
+                                        Log.v("POSITION TO ADD", String.valueOf(positionsToPin[i]));
                                     }
 
                                     // Cannot store int array in SharedPreferences - must be converted to String format
