@@ -2,6 +2,8 @@ package com.home.markkeen.exchangerates;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import org.apache.http.HttpEntity;
@@ -222,9 +225,9 @@ public class MainActivity extends ActionBarActivity {
 
                 if (menuPinToggleButton.isChecked()) {
 
-                    // get the listview first visible position (i will get the index position and not a partial position)
+                    // get the listView first visible position (i will get the index position and not a partial position)
                     indexPosition = listView.getFirstVisiblePosition();
-                    // to factor the listview for a partial scrolled position this works out the difference between
+                    // to factor the listView for a partial scrolled position this works out the difference between
                     // index item 0 and current top view - set when going back to  pinToggle OFF
                     top = listView.getChildAt(0).getTop();
 
@@ -349,7 +352,10 @@ public class MainActivity extends ActionBarActivity {
 
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
-                        new MyAsyncTask().execute();
+                        // check the internet connection and run MyAsyncTask if available
+                         if (checkConnection()){
+                             new MyAsyncTask().execute();
+                         }
 
                     } else {
 
@@ -357,8 +363,10 @@ public class MainActivity extends ActionBarActivity {
 
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
-                        new MyAsyncTask().execute();
-
+                        // check the internet connection and run MyAsyncTask if available
+                        if (checkConnection()){
+                            new MyAsyncTask().execute();
+                        }
                     }
                 }
 
@@ -397,7 +405,10 @@ public class MainActivity extends ActionBarActivity {
 
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
-                        new MyAsyncTask().execute();
+                        // check the internet connection and run MyAsyncTask if available
+                        if (checkConnection()){
+                            new MyAsyncTask().execute();
+                        }
 
                     } else {
 
@@ -405,7 +416,10 @@ public class MainActivity extends ActionBarActivity {
 
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
-                        new MyAsyncTask().execute();
+                        // check the internet connection and run MyAsyncTask if available
+                        if (checkConnection()){
+                            new MyAsyncTask().execute();
+                        }
                     }
                 }
 
@@ -430,6 +444,30 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    // create method to check connection status before executing MyAsyncTask
+    // return true if available
+    public boolean checkConnection() {
+
+        // system service connectivity manager
+        // include in manifest : <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+        ConnectivityManager checkNetworkStatus = (ConnectivityManager)
+                this.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // network info will get all the status
+        NetworkInfo networkInfo = checkNetworkStatus.getActiveNetworkInfo();
+
+        // check that the state is 'connected' (either wifi or phone network - only 1 connection type
+        // can exist at the same time
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+            
+        } else {
+
+            Toast.makeText(getApplication(), "No Internet Connection Available",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 
     private class MyAsyncTask extends AsyncTask<String, String, String>
 
@@ -520,6 +558,7 @@ public class MainActivity extends ActionBarActivity {
                     // Store the complete data in result
                     result = theStringBuilder.toString();
 
+                    Log.v("RETRY ATTEMPT", String.valueOf(tries));
                     break;
 
 
@@ -544,43 +583,43 @@ public class MainActivity extends ActionBarActivity {
             }
 
 
-                // Holds Key Value pairs from a JSON source
-                JSONObject jsonObject;
+            // Holds Key Value pairs from a JSON source
+            JSONObject jsonObject;
 
-                try {
+            try {
 
-                    Log.v("JSONParser RESULT ", result);
-
-
-                    // Get the root JSONObject
-                    jsonObject = new JSONObject(result);
-
-                    // Get the JSON object named query
-                    JSONObject queryJSONObject = jsonObject.getJSONObject("query");
-
-                    // Get the JSON object named results inside of the query object
-                    JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
-
-                    // Get the JSON object named rate inside of the results object
-                    // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
+                Log.v("JSONParser RESULT ", result);
 
 
-                    // Get the JSON array named rate inside of the results object
-                    JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
-                    int arrayLength = jsonArray.length();
+                // Get the root JSONObject
+                jsonObject = new JSONObject(result);
 
-                    for (int i = 0; i < arrayLength; i++) {
+                // Get the JSON object named query
+                JSONObject queryJSONObject = jsonObject.getJSONObject("query");
 
-                        JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
+                // Get the JSON object named results inside of the query object
+                JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
 
-                        rateArray[i] = currencyJSONObject.getString("Rate");
+                // Get the JSON object named rate inside of the results object
+                // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
 
-                        Log.v("CURRENCY FROM WEB ", rateArray[i]);
-                    }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                // Get the JSON array named rate inside of the results object
+                JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
+                int arrayLength = jsonArray.length();
+
+                for (int i = 0; i < arrayLength; i++) {
+
+                    JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
+
+                    rateArray[i] = currencyJSONObject.getString("Rate");
+
+                    Log.v("CURRENCY FROM WEB ", rateArray[i]);
                 }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
             return result;

@@ -154,9 +154,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                             case R.id.menu_pin_currency:
 
                                 if (positionsToPin.length > flagAndCurrencyList.size()) {
-
-
-
                                     // this state happens only when the pinToggleButton is ON - do not want ability to 'pin' when this state is enabled,
                                     // will only enable when list contains ALL currencies but then it doesn't matter!
 
