@@ -6,6 +6,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,8 @@ public class SettingsActivity extends ActionBarActivity {
     public int[] settingsFlags;
     public String[] settingsCountryCode;
     public String[] settingsCountry;
+    public ListView listView;
+    public SettingsAdapter settingsAdapter;
     public ArrayList<ListData> settingsListData;
 
     @Override
@@ -29,6 +32,17 @@ public class SettingsActivity extends ActionBarActivity {
         setSupportActionBar(toolBar);
 
         settingsListData = new ArrayList<ListData>();
+
+        // perform method to populate the ListData
+        settingsPopulatedListData();
+
+        // set the SettingsAdapter putting the populated ListData into it
+        settingsAdapter = new SettingsAdapter(getApplication(), settingsListData);
+        // initialise the ListView
+        listView = (ListView) findViewById(R.id.listViewSettings);
+        // set the listView with the Adapter
+        listView.setAdapter(settingsAdapter);
+
     }
 
 
@@ -108,7 +122,6 @@ public class SettingsActivity extends ActionBarActivity {
             settingsListData.add(listData);
         }
     }
-
 
 
         // create ListData CLASS with getters and setters to 'Get' and 'Set'

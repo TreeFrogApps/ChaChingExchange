@@ -54,8 +54,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         this.context = context;
         this.flagAndCurrencyList = flagAndCurrencyList;
 
-        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
-
     }
 
 
