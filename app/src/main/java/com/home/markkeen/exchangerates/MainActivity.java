@@ -1,6 +1,7 @@
 package com.home.markkeen.exchangerates;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -282,18 +283,6 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        // disabled along with menu item missing - will be used on v2? - need to work out how to use;
-        // will need to remove positions from the original String arrays in mainActivity, rather than using a new adapter
-        // this will remove positions before they are put in a ArrayList (so they weren't removed, they simply didn't exist)
-        // need to also reset pinned currencies before any are removed
-
-        //if (id == R.id.action_choose_currencies) {
-
-        //   Intent intent = new Intent(this, CurrencyActivity.class);
-        //  startActivity(intent);
-        //   return true;
-        //}
-
         if (id == R.id.action_reset_pinned) {
 
             // reset the pinnedPositions int[]
@@ -316,6 +305,9 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if (id == R.id.action_settings) {
+
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
