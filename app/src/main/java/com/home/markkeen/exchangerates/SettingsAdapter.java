@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +35,13 @@ public class SettingsAdapter extends BaseAdapter{
 
     }
 
+    private static class ViewHolder{
+        protected ImageView flagType;
+        protected TextView currencyCode;
+        protected TextView currencyType;
+        protected SwitchCompat switchOnOff;
+    }
+
     @Override
     public int getCount() {
         return settingsListData.size();
@@ -49,12 +57,18 @@ public class SettingsAdapter extends BaseAdapter{
         return 0;
     }
 
+    // forces no recycle of view
+    @Override
+    public int getViewTypeCount() {
+        //Count=Size of ArrayList.
+        return settingsListData.size();
+    }
 
-    private static class ViewHolder{
-        protected ImageView flagType;
-        protected TextView currencyCode;
-        protected TextView currencyType;
-        protected SwitchCompat switchOnOff;
+    // forces no recycle of view
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
     }
 
     @Override
@@ -86,6 +100,13 @@ public class SettingsAdapter extends BaseAdapter{
             viewHolder.currencyCode.setText(settingsListData.get(position).getCountryCodeId());
             viewHolder.currencyType.setText(settingsListData.get(position).getCountryId());
             viewHolder.switchOnOff = (SwitchCompat) convertView.findViewById(R.id.setOnOffSettingsActivity);
+
+            viewHolder.switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                }
+            });
 
 
 
