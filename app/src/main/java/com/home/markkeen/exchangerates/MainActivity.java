@@ -101,7 +101,7 @@ public class MainActivity extends ActionBarActivity {
     String[] currencyCode;
     String currencyFromType;
     String currencyFromSubsting;
-    ToggleButton menuPinToggleButton;
+    static ToggleButton menuPinToggleButton;
     ImageView pinToggle;
     ImageView progressBar;
     Animation progressBarAnimation;
@@ -256,6 +256,7 @@ public class MainActivity extends ActionBarActivity {
 
                         pinnedPositions = new int[32];
                     }
+                    customAdapter.pinToggleOn = true;
                     customAdapter.clear();
                     populatedArrayList();
                     customAdapter.notifyDataSetChanged();
@@ -263,6 +264,7 @@ public class MainActivity extends ActionBarActivity {
 
                 if (!menuPinToggleButton.isChecked()) {
 
+                    customAdapter.pinToggleOn = false;
                     customAdapter.clear();
                     populatedArrayList();
                     customAdapter.notifyDataSetChanged();
@@ -285,8 +287,12 @@ public class MainActivity extends ActionBarActivity {
 
         if (id == R.id.action_reset_pinned) {
 
+            // reset the pinToggle, if this is not done there is a outOfBounds error
+            menuPinToggleButton.setChecked(false);
+            // update customAdapter to tell is the toggles state for the pin image
+            customAdapter.pinToggleOn = false;
             // reset the pinnedPositions int[]
-            pinnedPositions = new int[32];
+            pinnedPositions = new int[flagAndCurrencyList.size()];
 
             // remove the save pinned positions string from shared Prefs
             sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
@@ -295,7 +301,7 @@ public class MainActivity extends ActionBarActivity {
             customAdapter.pinnedPositionsToKeep = "";
 
             // reset the positionsToPin int[] from the customAdapter
-            customAdapter.positionsToPin = new int[32];
+            customAdapter.positionsToPin = new int[flagAndCurrencyList.size()];
 
             customAdapter.clear();
 
@@ -783,12 +789,12 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        // Remove positions from currencyActivity from retrieved int[] positionsToRemove from onResume() and from menuPinToggle
+        // Remove positions from settingsActivity from retrieved int[] positionsToRemove from onResume() and from menuPinToggle
         // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception (try/catch)
         // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
 
         try {
-            for (int i = 31; i >= 0; i--) {
+            for (int i = (flagAndCurrencyList.size() -1); i >= 0; i--) {
 
                 // check to see if the menuToggle is checked
                 if (menuPinToggleButton.isChecked()) {

@@ -21,7 +21,10 @@ public class SettingsAdapter extends BaseAdapter{
     Context context;
     LayoutInflater inflater;
 
-    int[] positionsToRemove = new int[32];
+    String settingsRemovedPositionsString;
+    String[] settingsRemovedPositionsStringArray;
+    int[] settingsRemovedPosotionsIntArray = new int[32];
+
     SharedPreferences sharedPreferences;
 
     public SettingsAdapter(Context context, ArrayList<SettingsActivity.ListData> settingsListData){
@@ -30,10 +33,22 @@ public class SettingsAdapter extends BaseAdapter{
         this.context = context;
         inflater = LayoutInflater.from(this.context);
 
+        // run method to return a int[] of positions set as off
+        // when program is first run this will not contain anything as no currencies
+        // have been 'switched off
+        settingsSwitchOnOff();
+    }
+
+    public int[] settingsSwitchOnOff(){
+
         // initialise preferences
         this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+        // get the sharedPreference string
+        settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS TO REMOVE", "");
 
+        return settingsRemovedPosotionsIntArray;
     }
+
 
     private static class ViewHolder{
         protected ImageView flagType;

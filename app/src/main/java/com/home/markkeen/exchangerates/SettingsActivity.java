@@ -17,6 +17,7 @@ public class SettingsActivity extends ActionBarActivity {
 
     SwitchCompat switchToggle;
     SharedPreferences sharedPreferences;
+    String settingsRemovedPositionsString;
 
     public int[] settingsFlags;
     public String[] settingsCountryCode;
@@ -48,9 +49,7 @@ public class SettingsActivity extends ActionBarActivity {
 
         // get shared prefs to check if there is something there -  if so set the button off
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
-        String removedPositions;
-
-        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+        settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
     }
 
