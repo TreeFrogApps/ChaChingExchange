@@ -179,7 +179,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                         }
 
                                         for (int i = 0; i < positionsToPin.length; i++) {
-                                            Log.v("SAVED POSITIONS", String.valueOf(positionsToPin[i]));
+                                            Log.v("SAVED PINNED POSITIONS", String.valueOf(positionsToPin[i]));
                                         }
 
                                     }
@@ -193,7 +193,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                     }
 
                                     for (int i = 0; i < positionsToPin.length; i++) {
-                                        Log.v("POSITION TO ADD", String.valueOf(positionsToPin[i]));
+                                        Log.v("POSITION TO ADD TO PIN LIST", String.valueOf(positionsToPin[i]));
                                     }
 
                                     // Cannot store int array in SharedPreferences - must be converted to String format

@@ -642,7 +642,7 @@ public class MainActivity extends ActionBarActivity {
             for (int i = 0; i < rateArray.length; i++) {
 
                 // convert back the rate but to 2 decimal places in String format
-                finalRateArray[i] = String.valueOf((String.format("%.02f", convertedAmount[i])));
+                finalRateArray[i] = String.valueOf((String.format("%.03f", convertedAmount[i])));
                 // convert the rate amount to string 2 decimal places
                 finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
 

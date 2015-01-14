@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -49,7 +50,6 @@ public class SettingsActivity extends ActionBarActivity {
 
         // get shared prefs to check if there is something there -  if so set the button off
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
-        settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
     }
 
@@ -59,10 +59,19 @@ public class SettingsActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_settings, menu);
 
-        MenuItem pin_button = menu.findItem(R.id.menu_pin_button_id);
+        MenuItem pin_button = menu.findItem(R.id.menu_pin_button_id_settings);
         pin_button.setActionView(R.layout.menu_pin_button);
 
-        switchToggle = (SwitchCompat) menu.findItem(R.id.menu_pin_button_id).getActionView().findViewById(R.id.menu_pin_toggle_button);
+        switchToggle = (SwitchCompat) menu.findItem(R.id.menu_pin_button_id_settings).getActionView().findViewById(R.id.menu_pin_toggle_button);
+
+        settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+        Log.v("SETTINGS POSITIONS TO STRING", settingsRemovedPositionsString);
+        // set the master switch to 'on' of the sharesPreference string is set to 'all on', or if it doesn't hold anything, either first time use or string is reset
+        if (settingsRemovedPositionsString.equals("[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]") || settingsRemovedPositionsString.equals("")){
+            switchToggle.setChecked(true);
+        } else {
+            switchToggle.setChecked(false);
+        }
         return true;
     }
 
