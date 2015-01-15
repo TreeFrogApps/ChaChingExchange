@@ -87,8 +87,10 @@ public class MainActivity extends ActionBarActivity {
     String settingsRemovedPositionsString;
     // string array to hold the split string
     String[] settingsRemovedPositionsStringArray;
-    // int array to hold the positions to remove, 0 = keep (switch is on) / position number = remove (switch id off)
-    int[] settingsRemovedPositionsIntArray = new int[32];
+    // int array to hold the positions to remove, don't initialise with a size
+    // otherwise array out of bounds issue - try / catch in populatedList method will
+    // sort because it doesn't have a value on first start
+    int[] settingsRemovedPositionsIntArray;
 
     static String[] pinnedItems;
     static int[] pinnedPositions;
