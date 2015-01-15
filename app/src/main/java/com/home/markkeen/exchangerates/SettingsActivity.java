@@ -37,7 +37,7 @@ public class SettingsActivity extends ActionBarActivity {
         Toolbar toolBar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolBar);
 
-        settingsListData = new ArrayList<ListData>();
+        settingsListData = new ArrayList<>();
 
         // perform method to populate the ListData
         settingsPopulatedListData();
@@ -53,7 +53,6 @@ public class SettingsActivity extends ActionBarActivity {
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,12 +74,14 @@ public class SettingsActivity extends ActionBarActivity {
             switchToggle.setChecked(false);
         }
 
-
         switchToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked){
+
+                    // reset pinned currencies as something has been changed to the main results list
+                    MainActivity.resetPinnedCurrencies();
 
                     // set the string to have all buttons on
                     settingsRemovedPositionsString = "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]";
@@ -89,9 +90,14 @@ public class SettingsActivity extends ActionBarActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("POSITIONS TO REMOVE", settingsRemovedPositionsString);
                     editor.apply();
+
+
                 }
 
                 if (!isChecked){
+
+                    // reset pinned currencies as something has been changed to the main results list
+                    MainActivity.resetPinnedCurrencies();
 
                     // set the string to have all buttons off
                     settingsRemovedPositionsString = "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]";

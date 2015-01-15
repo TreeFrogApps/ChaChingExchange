@@ -155,10 +155,16 @@ public class SettingsAdapter extends BaseAdapter{
                     // into settingsRemovedPositionsIntArray
                     if (isChecked){
 
+                        // reset pinned currencies as something has been changed to the main results list
+                        MainActivity.resetPinnedCurrencies();
+
                         settingsRemovedPositionsIntArray[position] = 0;
                         Log.v("SETTINGS ADDED POSITION", String.valueOf(position));
                     }
                     else {
+
+                        // reset pinned currencies as something has been changed to the main results list
+                        MainActivity.resetPinnedCurrencies();
 
                         settingsRemovedPositionsIntArray[position] = (position + 1);
                         Log.v("SETTINGS REMOVED POSITION", String.valueOf(position + 1));

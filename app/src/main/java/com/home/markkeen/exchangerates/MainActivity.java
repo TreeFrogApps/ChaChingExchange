@@ -49,7 +49,7 @@ import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity {
 
-    EditText amountEditText;
+    static EditText amountEditText;
     static Spinner currencyFromSpinner;
     static String[] spinnerCurrencyList;
     static ArrayAdapter<String> spinnerArray;
@@ -71,25 +71,28 @@ public class MainActivity extends ActionBarActivity {
             R.drawable.flag_ic_usd_30, R.drawable.flag_ic_zar_31,
     };
 
-    SharedPreferences sharedPreferences;
+    static SharedPreferences sharedPreferences;
 
-    private CustomAdapter customAdapter;
-    private ListView listView;
+    static CustomAdapter customAdapter;
+    static ListView listView;
 
-    static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
-    static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-    static String getRatesLatest;
-    static String getRatesFinal;
-    static String getAmount;
-    double getAmountAsDouble;
+    private static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
+    private static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+    private static String getRatesLatest;
+    private static String getRatesFinal;
+    private static String getAmount;
+    private double getAmountAsDouble;
 
-    String[] items;
-    int[] positionsToRemove;
-    String removedPositions;
+    // string to hold the sharedPreference "POSITIONS TO REMOVE"
+    String settingsRemovedPositionsString;
+    // string array to hold the split string
+    String[] settingsRemovedPositionsStringArray;
+    // int array to hold the positions to remove, 0 = keep (switch is on) / position number = remove (switch id off)
+    int[] settingsRemovedPositionsIntArray = new int[32];
 
-    String[] pinnedItems;
-    int[] pinnedPositions;
-    String pinnedPositionsToKeep;
+    static String[] pinnedItems;
+    static int[] pinnedPositions;
+    static String pinnedPositionsToKeep;
 
     double[] convertedAmount = new double[32];
     double[] finalConvertedAmount = new double[32];
@@ -111,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
     int indexPosition;
     int top;
 
-    ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
+    static ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,30 +175,30 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-        // not used until currency removal is universal - see removed menu option below for details
-        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+        // get settings sharedPreferences string
+        settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS TO REMOVE", "");
 
-        if (removedPositions.contains("[")) {
+        // if it contains anything (it will always as soon as a switch is turned on/off for the first time
+        if (settingsRemovedPositionsString.contains("[")) {
 
             // function to change string which contains list of number in format [1,2,3,4] back to int array
             // remove [ ] from beginning of string
 
-            items = removedPositions.substring(1, removedPositions.length() - 1).split(",");
-            positionsToRemove = new int[items.length];
+            settingsRemovedPositionsStringArray = settingsRemovedPositionsString.substring(1, settingsRemovedPositionsString.length() - 1).split(",");
+            settingsRemovedPositionsIntArray = new int[settingsRemovedPositionsStringArray.length];
 
-            for (int i = 0; i < items.length; i++) {
+            for (int i = 0; i < settingsRemovedPositionsStringArray.length; i++) {
 
-                positionsToRemove[i] = Integer.parseInt(items[i].trim());
+                settingsRemovedPositionsIntArray[i] = Integer.parseInt(settingsRemovedPositionsStringArray[i].trim());
             }
 
-            for (int i = 0; i < positionsToRemove.length; i++) {
-                Log.v("SAVED POSITIONS", String.valueOf(positionsToRemove[i]));
-            }
+            Log.v("SAVED POSITIONS", Arrays.toString(settingsRemovedPositionsIntArray));
 
         }
 
-        items = new String[0];
         customAdapter.clear();
+
+        // get the updated list
         populatedArrayList();
         customAdapter.notifyDataSetChanged();
 
@@ -278,6 +281,7 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -287,24 +291,10 @@ public class MainActivity extends ActionBarActivity {
 
         if (id == R.id.action_reset_pinned) {
 
-            // reset the pinToggle, if this is not done there is a outOfBounds error
-            menuPinToggleButton.setChecked(false);
-            // update customAdapter to tell is the toggles state for the pin image
-            customAdapter.pinToggleOn = false;
-            // reset the pinnedPositions int[]
-            pinnedPositions = new int[flagAndCurrencyList.size()];
+            // run method to clear pinned positions
+            resetPinnedCurrencies();
 
-            // remove the save pinned positions string from shared Prefs
-            sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
-
-            // reset the pinnedPositionsToKeep string from the customAdapter
-            customAdapter.pinnedPositionsToKeep = "";
-
-            // reset the positionsToPin int[] from the customAdapter
-            customAdapter.positionsToPin = new int[flagAndCurrencyList.size()];
-
-            customAdapter.clear();
-
+            // get updated list and re-populate customerAdapter
             populatedArrayList();
             customAdapter.notifyDataSetChanged();
             return true;
@@ -317,6 +307,27 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public static void resetPinnedCurrencies() {
+
+        // reset the pinToggle, if this is not done there is a outOfBounds error
+        menuPinToggleButton.setChecked(false);
+        // update customAdapter to tell is the toggles state for the pin image
+        customAdapter.pinToggleOn = false;
+        // reset the pinnedPositions int[]
+        pinnedPositions = new int[flagAndCurrencyList.size()];
+
+        // remove the save pinned positions string from shared Prefs
+        sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
+
+        // reset the pinnedPositionsToKeep string from the customAdapter
+        customAdapter.pinnedPositionsToKeep = "";
+
+        // reset the positionsToPin int[] from the customAdapter
+        customAdapter.positionsToPin = new int[flagAndCurrencyList.size()];
+
+        customAdapter.clear();
     }
 
 
@@ -351,9 +362,9 @@ public class MainActivity extends ActionBarActivity {
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
                         // check the internet connection and run MyAsyncTask if available
-                         if (checkConnection()){
-                             new MyAsyncTask().execute();
-                         }
+                        if (checkConnection()) {
+                            new MyAsyncTask().execute();
+                        }
 
                     } else {
 
@@ -362,7 +373,7 @@ public class MainActivity extends ActionBarActivity {
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
                         // check the internet connection and run MyAsyncTask if available
-                        if (checkConnection()){
+                        if (checkConnection()) {
                             new MyAsyncTask().execute();
                         }
                     }
@@ -404,7 +415,7 @@ public class MainActivity extends ActionBarActivity {
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
                         // check the internet connection and run MyAsyncTask if available
-                        if (checkConnection()){
+                        if (checkConnection()) {
                             new MyAsyncTask().execute();
                         }
 
@@ -415,7 +426,7 @@ public class MainActivity extends ActionBarActivity {
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
                         // check the internet connection and run MyAsyncTask if available
-                        if (checkConnection()){
+                        if (checkConnection()) {
                             new MyAsyncTask().execute();
                         }
                     }
@@ -431,7 +442,6 @@ public class MainActivity extends ActionBarActivity {
         String spinnerItem;
 
         for (int i = 0; i < currencyFromSpinner.getCount(); i++) {
-
 
             spinnerItem = currencyFromSpinner.getItemAtPosition(i).toString();
 
@@ -458,7 +468,7 @@ public class MainActivity extends ActionBarActivity {
         // can exist at the same time
         if (networkInfo != null && networkInfo.isConnected()) {
             return true;
-            
+
         } else {
 
             Toast.makeText(getApplication(), "No Internet Connection Available",
@@ -789,12 +799,30 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        // Remove positions from settingsActivity from retrieved int[] positionsToRemove from onResume() and from menuPinToggle
-        // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception (try/catch)
+        // Remove positions from settingsActivity from retrieved int[] settingsRemovedPositionsIntArray from onResume() and from menuPinToggle
+        // Make sure there is something in the String passed from SettingsActivity otherwise null pointer exception (try/catch)
         // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
-
         try {
-            for (int i = (flagAndCurrencyList.size() -1); i >= 0; i--) {
+            for (int i = (flagAndCurrencyList.size() - 1); i >= 0; i--) {
+
+                if (settingsRemovedPositionsIntArray[i] != 0) {
+
+                    // remove position - minus 1 because array has ALL zero's in 32 holders (default),
+                    // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
+                    flagAndCurrencyList.remove((settingsRemovedPositionsIntArray[i] - 1));
+                }
+
+            }
+
+        } catch (NullPointerException e) {
+
+        }
+
+        // any 'Positions To Remove' from the settings activity been done so we have the new
+        // flagAndCurrencyList size, so anything that remove using the 'pinned positions' int array
+        // will be in relation to the correct result currencies list
+        try {
+            for (int i = (flagAndCurrencyList.size() - 1); i >= 0; i--) {
 
                 // check to see if the menuToggle is checked
                 if (menuPinToggleButton.isChecked()) {
@@ -802,18 +830,6 @@ public class MainActivity extends ActionBarActivity {
                     if (pinnedPositions[i] == 0) {
 
                         flagAndCurrencyList.remove(i);
-                    }
-
-                }
-
-                // if the menuToggle is NOT checked
-                else {
-
-                    if (positionsToRemove[i] != 0) {
-
-                        // remove position - minus 1 because array has ALL zero's in 32 holders (default),
-                        // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
-                        flagAndCurrencyList.remove((positionsToRemove[i] - 1));
                     }
                 }
             }
