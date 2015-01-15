@@ -1,6 +1,9 @@
 package com.home.markkeen.exchangerates;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -51,6 +54,21 @@ public class SettingsActivity extends ActionBarActivity {
 
         // get shared prefs to check if there is something there -  if so set the button off
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+
+        // Alert dialog to let user know that changing any currencies will reset/clear existing pinned currencies
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Please note");
+            alertDialogBuilder.setMessage("When changing any results currency any pinned currencies will automatically be cleared");
+            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
 
     }
 
@@ -150,7 +168,10 @@ public class SettingsActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about_settings) {
+
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
             return true;
         }
 

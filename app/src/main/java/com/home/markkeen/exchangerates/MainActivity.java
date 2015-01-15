@@ -172,7 +172,10 @@ public class MainActivity extends ActionBarActivity {
         listView.setAdapter(customAdapter);
     }
 
-
+    // NB: THIS IS CALLED WHEN THE ACTIVITY IS FIRST OPENED AFTER ONCREATE & ONSTART
+    // THIS MEANS THAT THE FULL FLAGANDCURRNCYLIST IS ALWAYS INITIALLY POPULATED
+    // HOWEVER IF ANY HAVE BEEN REMOVED THIS WILL BE REPLACED DURING ONRESUME THIS MEANS
+    // WHEN SHAREDPREFENCES IS CALLED ANY CHANGES WILL STILL BE THERE EVEN WHEN APP WAS CLOSED
     @Override
     protected void onResume() {
         super.onResume();
@@ -229,7 +232,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                if (menuPinToggleButton.isChecked()) {
+                if (menuPinToggleButton.isChecked() && flagAndCurrencyList.size() != 0) {
 
                     // get the listView first visible position (i will get the index position and not a partial position)
                     indexPosition = listView.getFirstVisiblePosition();
@@ -305,6 +308,13 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
 
             Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_about) {
+
+            Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
             return true;
         }
