@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -64,15 +65,75 @@ public class SettingsActivity extends ActionBarActivity {
 
         switchToggle = (SwitchCompat) menu.findItem(R.id.menu_pin_button_id_settings).getActionView().findViewById(R.id.menu_pin_toggle_button);
 
-        settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+        settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS TO REMOVE", "");
         Log.v("SETTINGS POSITIONS TO STRING", settingsRemovedPositionsString);
+
         // set the master switch to 'on' of the sharesPreference string is set to 'all on', or if it doesn't hold anything, either first time use or string is reset
         if (settingsRemovedPositionsString.equals("[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]") || settingsRemovedPositionsString.equals("")){
             switchToggle.setChecked(true);
         } else {
             switchToggle.setChecked(false);
         }
+
+
+        switchToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked){
+
+                    // set the string to have all buttons on
+                    settingsRemovedPositionsString = "[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]";
+
+                    // save that string in sharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("POSITIONS TO REMOVE", settingsRemovedPositionsString);
+                    editor.apply();
+                }
+
+                if (!isChecked){
+
+                    // set the string to have all buttons off
+                    settingsRemovedPositionsString = "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]";
+
+                    // save that string in sharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("POSITIONS TO REMOVE", settingsRemovedPositionsString);
+                    editor.apply();
+
+                }
+
+                // run method to get current listView position, then update buttons all on/off depending on switch position by initialising the settingsAdapter again
+                updateAdapter();
+
+            }
+        });
+
         return true;
+    }
+
+    public void updateAdapter() {
+
+        /*
+        ListView.getFirstVisiblePosition() returns the top visible list item.
+        But this item may be partially scrolled out of view, and if you want to
+        restore the exact scroll position of the list you need to get this offset.
+        So ListView.getChildAt(0) returns the View for the top list item, and then View.getTop()
+        returns its relative offset from the top of the ListView. Then, to restore the ListView's
+        scroll position, we call ListView.setSelectionFromTop() with the index of the item we want
+        and an offset to position its top edge from the top of the ListView.
+         */
+
+        // get the listView first visible position (i will get the index position and not a partial position
+        int indexPosition = settingsListView.getFirstVisiblePosition();
+
+        // to factor the listView for a partial scrolled position this works out the difference between index item 0 and current top view
+        int top = settingsListView.getChildAt(0).getTop();
+
+        settingsAdapter = new SettingsAdapter(this, settingsListData);
+        settingsListView.setAdapter(settingsAdapter);
+
+        settingsListView.setSelectionFromTop(indexPosition, top);
     }
 
     @Override
@@ -88,30 +149,6 @@ public class SettingsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void updateAdapter() {
-
-        /*
-        ListView.getFirstVisiblePosition() returns the top visible list item.
-        But this item may be partially scrolled out of view, and if you want to
-        restore the exact scroll position of the list you need to get this offset.
-        So ListView.getChildAt(0) returns the View for the top list item, and then View.getTop()
-        returns its relative offset from the top of the ListView. Then, to restore the ListView's
-        scroll position, we call ListView.setSelectionFromTop() with the index of the item we want
-        and an offset to position its top edge from the top of the ListView.
-         */
-
-        // get the listview first visible position (i will get the index position and not a partial position
-        int indexPosition = settingsListView.getFirstVisiblePosition();
-
-        // to factor the listview for a partial scrolled position this works out the difference between index item 0 and current top view
-        int top = settingsListView.getChildAt(0).getTop();
-
-        settingsAdapter = new SettingsAdapter(this, settingsListData);
-        settingsListView.setAdapter(settingsAdapter);
-
-        settingsListView.setSelectionFromTop(indexPosition, top);
     }
 
     public void settingsPopulatedListData(){

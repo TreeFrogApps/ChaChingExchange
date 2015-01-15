@@ -27,7 +27,7 @@ public class CurrencyActivity extends ActionBarActivity {
 
     SwitchCompat switchToggle;
     SharedPreferences sharedPreferences;
-    CurrencyAdapter currencyAdapter;
+    //CurrencyAdapter currencyAdapter;
 
 
     @Override
@@ -41,10 +41,10 @@ public class CurrencyActivity extends ActionBarActivity {
 
         populatedListData();
 
-        currencyAdapter = new CurrencyAdapter(this, arrayListData);
+       // currencyAdapter = new CurrencyAdapter(this, arrayListData);
 
         listview = (ListView) findViewById(R.id.listViewCurrency);
-        listview.setAdapter(currencyAdapter);
+       // listview.setAdapter(currencyAdapter);
 
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
 
@@ -68,8 +68,8 @@ public class CurrencyActivity extends ActionBarActivity {
         // to factor the listview for a partial scrolled position this works out the difference between index item 0 and current top view
         int top = listview.getChildAt(0).getTop();
 
-        currencyAdapter = new CurrencyAdapter(this, arrayListData);
-        listview.setAdapter(currencyAdapter);
+        //currencyAdapter = new CurrencyAdapter(this, arrayListData);
+        //listview.setAdapter(currencyAdapter);
 
         listview.setSelectionFromTop(indexPosition, top);
     }
