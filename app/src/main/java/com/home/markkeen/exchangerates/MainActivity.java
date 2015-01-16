@@ -72,6 +72,7 @@ public class MainActivity extends ActionBarActivity {
     };
 
     static SharedPreferences sharedPreferences;
+    private boolean pinToggleSavedState;
 
     static CustomAdapter customAdapter;
     static ListView listView;
@@ -162,8 +163,6 @@ public class MainActivity extends ActionBarActivity {
 
         setExchangeAmountOnTextChangeListener();
 
-        populatedArrayList();
-
         pinToggle = (ImageView) findViewById(R.id.list_view_pin);
 
         // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
@@ -175,7 +174,7 @@ public class MainActivity extends ActionBarActivity {
     // NB: THIS IS CALLED WHEN THE ACTIVITY IS FIRST OPENED AFTER ONCREATE & ONSTART
     // THIS MEANS THAT THE FULL FLAGANDCURRNCYLIST IS ALWAYS INITIALLY POPULATED
     // HOWEVER IF ANY HAVE BEEN REMOVED THIS WILL BE REPLACED DURING ONRESUME THIS MEANS
-    // WHEN SHAREDPREFENCES IS CALLED ANY CHANGES WILL STILL BE THERE EVEN WHEN APP WAS CLOSED
+    // WHEN SHAREDPREFERENCES IS CALLED ANY CHANGES WILL STILL BE THERE EVEN WHEN APP WAS CLOSED
     @Override
     protected void onResume() {
         super.onResume();
@@ -212,7 +211,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
     }
 
 
@@ -228,9 +226,34 @@ public class MainActivity extends ActionBarActivity {
         // initialise the ToggleButton which is in the menuItem, which has my inflated layout (which the button is in)
         menuPinToggleButton = (ToggleButton) menu.findItem(R.id.menu_pin_toggle_id).getActionView().findViewById(R.id.menu_main_activity_pin_toggle);
 
+        // get the sharedPreference for the ToggleButton state (if nothing exists then 'false' is default)
+        pinToggleSavedState = sharedPreferences.getBoolean("PIN CHECKED STATE", false);
+
+        // set the ToggleButton state according to the state in the sharedPreference
+        menuPinToggleButton.setChecked(pinToggleSavedState);
+
+        if (menuPinToggleButton.isChecked()) {
+
+            customAdapter.pinToggleOn = true;
+            customAdapter.clear();
+            populatedArrayList();
+            customAdapter.notifyDataSetChanged();
+        } else {
+
+            customAdapter.pinToggleOn = false;
+            customAdapter.clear();
+            populatedArrayList();
+            customAdapter.notifyDataSetChanged();
+        }
+
         menuPinToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // save the checked state of the ToggleButton
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("PIN CHECKED STATE", menuPinToggleButton.isChecked());
+                editor.apply();
 
                 if (menuPinToggleButton.isChecked() && flagAndCurrencyList.size() != 0) {
 
@@ -239,7 +262,6 @@ public class MainActivity extends ActionBarActivity {
                     // to factor the listView for a partial scrolled position this works out the difference between
                     // index item 0 and current top view - set when going back to  pinToggle OFF
                     top = listView.getChildAt(0).getTop();
-
 
                     // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
                     pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
@@ -257,12 +279,11 @@ public class MainActivity extends ActionBarActivity {
                             pinnedPositions[i] = Integer.parseInt(pinnedItems[i].trim());
                         }
 
-                        for (int i = 0; i < pinnedPositions.length; i++) {
-                            Log.v("SAVED POSITIONS", String.valueOf(pinnedPositions[i]));
-                        }
-                    } else {
+                        Log.v("SAVED POSITIONS", Arrays.toString(pinnedPositions));
 
+                    } else {
                         pinnedPositions = new int[32];
+
                     }
                     customAdapter.pinToggleOn = true;
                     customAdapter.clear();
