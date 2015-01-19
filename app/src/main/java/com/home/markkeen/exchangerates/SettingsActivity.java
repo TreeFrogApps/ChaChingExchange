@@ -23,6 +23,7 @@ public class SettingsActivity extends ActionBarActivity {
     SwitchCompat switchToggle;
     SharedPreferences sharedPreferences;
     String settingsRemovedPositionsString;
+    boolean okClicked;
 
     public int[] settingsFlags;
     public String[] settingsCountryCode;
@@ -55,19 +56,29 @@ public class SettingsActivity extends ActionBarActivity {
         // get shared prefs to check if there is something there -  if so set the button off
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
 
-        // Alert dialog to let user know that changing any currencies will reset/clear existing pinned currencies
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        okClicked = sharedPreferences.getBoolean("OK CLICKED", false);
+
+        if (!okClicked) {
+
+            // Alert dialog to let user know that changing any currencies will reset/clear existing pinned currencies
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle("Please note");
-            alertDialogBuilder.setMessage("When changing any results currency any pinned currencies will automatically be cleared");
+            alertDialogBuilder.setMessage("When changing any default currencies any pinned currencies will automatically be cleared");
             alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    okClicked = true;
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("OK CLICKED", okClicked);
+                    editor.apply();
+
                     dialog.cancel();
                 }
             });
 
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
 
 
     }
