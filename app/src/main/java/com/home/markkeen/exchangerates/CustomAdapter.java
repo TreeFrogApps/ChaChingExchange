@@ -26,7 +26,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
     int[] positionsToPin;
     String[] pinnedItems;
 
-    boolean pinToggleOn = false;
+    boolean pinToggleOn;
     String currencyCode;
 
     SharedPreferences sharedPreferences;
