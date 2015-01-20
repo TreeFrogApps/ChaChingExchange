@@ -26,7 +26,9 @@
         android:id="@+id/expandableListView"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp">
     </ExpandableListView>
 
 </LinearLayout>
