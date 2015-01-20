@@ -7,8 +7,26 @@
 
     <include layout="@layout/my_tool_action_bar"></include>
 
-    <TextView android:text="@string/hello_world"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/gradient"></LinearLayout>
+
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:text="@string/support_information"
+        android:textAlignment="gravity"
+        android:textColor="@color/myRed"
+        android:textSize="16sp" />
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    </ExpandableListView>
 
 </LinearLayout>

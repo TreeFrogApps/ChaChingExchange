@@ -21,7 +21,6 @@ public class AboutActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         return true;
     }
 
