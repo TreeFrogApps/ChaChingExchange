@@ -31,7 +31,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
     SharedPreferences sharedPreferences;
     String pinnedPositionsToKeep;
-    String removedPositions;
     private final Context context;
     private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
 

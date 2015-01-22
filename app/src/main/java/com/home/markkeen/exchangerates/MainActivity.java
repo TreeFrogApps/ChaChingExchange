@@ -45,6 +45,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -99,9 +101,9 @@ public class MainActivity extends ActionBarActivity {
 
     double[] convertedAmount = new double[32];
     double[] finalConvertedAmount = new double[32];
-    String[] rateArray = new String[32];
-    String[] finalRateArray = new String[32];
-    String[] finalConvertedAmountText = new String[32];
+    private String[] rateArray = new String[32];
+    private String[] finalRateArray = new String[32];
+    private String[] finalConvertedAmountText = new String[32];
     String[] currency;
     String[] flag;
     String[] currencyCode;
@@ -410,6 +412,13 @@ public class MainActivity extends ActionBarActivity {
                             new MyAsyncTask().execute();
                         }
                     }
+                } else {
+
+                    rateArray = new String[] {"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",};
+                    // dummy string just to put in the method as a requirement (not required as rateArray[] is used in onPostExecute)
+                    String result = "";
+                    new MyAsyncTask().onPostExecute(result);
+
                 }
 
             }
@@ -449,7 +458,10 @@ public class MainActivity extends ActionBarActivity {
 
                         // check the internet connection and run MyAsyncTask if available
                         if (checkConnection()) {
-                            new MyAsyncTask().execute();
+
+                            // dummy string just to put in the method as a requirement (not required as rateArray[] is used in onPostExecute)
+                            String result = "";
+                            new MyAsyncTask().onPostExecute(result);
                         }
 
                     } else {
@@ -460,10 +472,26 @@ public class MainActivity extends ActionBarActivity {
 
                         // check the internet connection and run MyAsyncTask if available
                         if (checkConnection()) {
-                            new MyAsyncTask().execute();
+
+                            // dummy string just to put in the method as a requirement (not required as rateArray[] is used in onPostExecute)
+                            String result = "";
+                            new MyAsyncTask().onPostExecute(result);
                         }
                     }
                 }
+
+                // delay the keyboard from disappearing
+                new Timer().schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+
+                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
+                            }
+                        },
+                        2000
+                );
 
             }
         });
@@ -524,7 +552,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String[] params) {
 
             // HTTP Client that supports streaming uploads and downloads
             DefaultHttpClient httpClient = new DefaultHttpClient(new BasicHttpParams());
@@ -663,8 +691,8 @@ public class MainActivity extends ActionBarActivity {
             }
 
 
-            return result;
 
+            return result;
 
         }
 
@@ -691,9 +719,6 @@ public class MainActivity extends ActionBarActivity {
 
                 Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
             }
-
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
 
             customAdapter.clear();
 

@@ -40,6 +40,8 @@ public class SettingsActivity extends ActionBarActivity {
         // added to every activity when including the Toolbar layout
         Toolbar toolBar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         settingsListData = new ArrayList<>();
 

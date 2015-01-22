@@ -12,6 +12,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:spinnerItemStyle">@style/mySpinnerItemStyle</item>
         <item name="android:windowContentOverlay">@color/black</item>
+        <!-- android:textColorPrimaryInverse is the  color of the title
+       text in the Toolbar, in the Theme.AppCompat.Light theme:  -->
+        <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>
+        <!-- android:textColorSecondary is the color of the menu
+             overflow icon (three vertical dots) -->
+        <item name="android:textColorSecondary">@color/abc_secondary_text_material_dark</item>
     </style>
 
     <style name="AppTheme.Base.PopUpMenu.Overlay" parent="ThemeOverlay.AppCompat">

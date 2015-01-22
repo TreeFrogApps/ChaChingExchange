@@ -28,6 +28,8 @@ public class AboutActivity extends ActionBarActivity {
         // added to every activity when including the Toolbar layout
         Toolbar actionBar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(actionBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         // run function to get the listViewGroups Array data
         createGroupData();

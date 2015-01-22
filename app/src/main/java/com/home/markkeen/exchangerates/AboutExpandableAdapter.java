@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AboutExpandableAdapter extends BaseExpandableListAdapter {
@@ -80,8 +81,17 @@ public class AboutExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         AboutActivity.ListViewGroup listViewDetailPosition = (AboutActivity.ListViewGroup) getGroup(groupPosition);
-        ((CheckedTextView) convertView).setText(listViewDetailPosition.listViewGroupText);
-        ((CheckedTextView) convertView).setChecked(isExpanded);
+        CheckedTextView checkedTextView = (CheckedTextView) convertView.findViewById(R.id.expandableListViewText);
+        checkedTextView.setText(listViewDetailPosition.listViewGroupText);
+        checkedTextView.setChecked(isExpanded);
+
+        ImageView groupIndicator = (ImageView) convertView.findViewById(R.id.expandableListViewIcon);
+
+        if (isExpanded){
+            groupIndicator.setImageResource(R.drawable.ic_minus);
+        } else {
+            groupIndicator.setImageResource(R.drawable.ic_plus);
+        }
 
 
         // set the drawable icon for each 'position' in relation to the SparseArray positions
@@ -90,15 +100,15 @@ public class AboutExpandableAdapter extends BaseExpandableListAdapter {
         switch (groupPosition){
 
             case 0: expandableListViewDrawable = parent.getContext().getResources().getDrawable(R.drawable.ic_help_fb);
-                    ((CheckedTextView) convertView).setCompoundDrawablesWithIntrinsicBounds(expandableListViewDrawable, null, null, null);
+                    checkedTextView.setCompoundDrawablesWithIntrinsicBounds(expandableListViewDrawable, null, null, null);
                     break;
 
             case 1: expandableListViewDrawable = parent.getContext().getResources().getDrawable(R.drawable.ic_tc);
-                ((CheckedTextView) convertView).setCompoundDrawablesWithIntrinsicBounds(expandableListViewDrawable, null, null, null);
+                checkedTextView.setCompoundDrawablesWithIntrinsicBounds(expandableListViewDrawable, null, null, null);
                 break;
 
             case 2: expandableListViewDrawable = parent.getContext().getResources().getDrawable(R.drawable.ic_privacy);
-                ((CheckedTextView) convertView).setCompoundDrawablesWithIntrinsicBounds(expandableListViewDrawable, null, null, null);
+                checkedTextView.setCompoundDrawablesWithIntrinsicBounds(expandableListViewDrawable, null, null, null);
                 break;
 
             default: break;

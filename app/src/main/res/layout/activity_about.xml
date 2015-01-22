@@ -24,6 +24,7 @@
 
     <ExpandableListView
         android:id="@+id/expandableListView"
+        android:groupIndicator="@null"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
