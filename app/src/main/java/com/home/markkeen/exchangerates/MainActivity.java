@@ -255,7 +255,7 @@ public class MainActivity extends ActionBarActivity {
                 // save the checked state of the ToggleButton
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("PIN CHECKED STATE", menuPinToggleButton.isChecked());
-                editor.apply();
+                editor.commit();
 
                 if (menuPinToggleButton.isChecked() && flagAndCurrencyList.size() != 0) {
 
