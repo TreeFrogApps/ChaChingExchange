@@ -31,8 +31,11 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +45,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -255,7 +259,7 @@ public class MainActivity extends ActionBarActivity {
                 // save the checked state of the ToggleButton
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("PIN CHECKED STATE", menuPinToggleButton.isChecked());
-                editor.commit();
+                editor.apply();
 
                 if (menuPinToggleButton.isChecked() && flagAndCurrencyList.size() != 0) {
 
@@ -307,6 +311,17 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         return true;
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+         menuPinToggleButton.setChecked(false);
+        // save the checked state of the ToggleButton
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("PIN CHECKED STATE", menuPinToggleButton.isChecked());
+        editor.apply();
     }
 
 
@@ -412,13 +427,6 @@ public class MainActivity extends ActionBarActivity {
                             new MyAsyncTask().execute();
                         }
                     }
-                } else {
-
-                    rateArray = new String[] {"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",};
-                    // dummy string just to put in the method as a requirement (not required as rateArray[] is used in onPostExecute)
-                    String result = "";
-                    new MyAsyncTask().onPostExecute(result);
-
                 }
 
             }
@@ -459,8 +467,10 @@ public class MainActivity extends ActionBarActivity {
                         // check the internet connection and run MyAsyncTask if available
                         if (checkConnection()) {
 
-                            // dummy string just to put in the method as a requirement (not required as rateArray[] is used in onPostExecute)
-                            String result = "";
+                            // no need to do internet lookup if a currency has been chosen
+                            // just pass in the 'result' from the last saved currency lookup
+                            // into the onPostExecute function from saved prefs
+                            String result = sharedPreferences.getString("JSONParser RESULT SAVED PREF", "");
                             new MyAsyncTask().onPostExecute(result);
                         }
 
@@ -474,7 +484,7 @@ public class MainActivity extends ActionBarActivity {
                         if (checkConnection()) {
 
                             // dummy string just to put in the method as a requirement (not required as rateArray[] is used in onPostExecute)
-                            String result = "";
+                            String result = sharedPreferences.getString("JSONParser RESULT ", "");
                             new MyAsyncTask().onPostExecute(result);
                         }
                     }
@@ -539,23 +549,28 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private class MyAsyncTask extends AsyncTask<String, String, String>
-
     {
-
         @Override
         protected void onPreExecute() {
 
             progressBar.startAnimation(progressBarAnimation);
             progressBar.setVisibility(View.VISIBLE);
-
-
         }
 
         @Override
         protected String doInBackground(String[] params) {
 
-            // HTTP Client that supports streaming uploads and downloads
-            DefaultHttpClient httpClient = new DefaultHttpClient(new BasicHttpParams());
+            // Get the standard parameters associated with the default http client
+            HttpParams httpParams = new BasicHttpParams();
+            // Set a parameter for Connection timeout set at 30 seconds
+            HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
+            // Set some parameters for Socket timeout set at 30 seconds
+            HttpConnectionParams.setSoTimeout(httpParams, 3000);
+
+            // HTTP Client that supports streaming uploads and downloads apply the adjusted
+            // httpParams to the client
+            DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
+
 
             // Define that I want to use the POST method to grab data from
             // the provided URL
@@ -565,7 +580,6 @@ public class MainActivity extends ActionBarActivity {
             for (int i = 0; i < currencyCode.length; i++) {
 
                 getRatesLatest = getRatesLatest + currencyFromSubsting + currencyCode[i] + "%22%2C%22";
-
             }
 
             // remove last "%22%2C%22" reassigning the string using substring to minus 9 characters
@@ -573,9 +587,7 @@ public class MainActivity extends ActionBarActivity {
 
             getRatesFinal = getRatesLatest + getGetRatesURLB;
 
-
             HttpPost httpPost = new HttpPost(getRatesFinal);
-
 
             Log.v("HTTPS Address ", getRatesFinal);
 
@@ -587,15 +599,6 @@ public class MainActivity extends ActionBarActivity {
 
             // Will hold all the data gathered from the URL
             String result = null;
-
-
-            // simple for loop ro retry the connection/response/exceptions
-            // if try is successful use break; to exit loop
-            int tries;
-            final int RETRY_ATTEMPTS = 3;
-
-            for (tries = 0; tries < RETRY_ATTEMPTS; tries++) {
-
 
                 try {
 
@@ -627,10 +630,6 @@ public class MainActivity extends ActionBarActivity {
                     // Store the complete data in result
                     result = theStringBuilder.toString();
 
-                    Log.v("RETRY ATTEMPT", String.valueOf(tries));
-                    break;
-
-
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 } catch (ClientProtocolException e) {
@@ -638,7 +637,6 @@ public class MainActivity extends ActionBarActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
                 // Close the InputStream when you're done with it
                 finally {
@@ -649,51 +647,8 @@ public class MainActivity extends ActionBarActivity {
                         e.printStackTrace();
                     }
                 }
-            }
-
-
-            // Holds Key Value pairs from a JSON source
-            JSONObject jsonObject;
-
-            try {
-
-                Log.v("JSONParser RESULT ", result);
-
-
-                // Get the root JSONObject
-                jsonObject = new JSONObject(result);
-
-                // Get the JSON object named query
-                JSONObject queryJSONObject = jsonObject.getJSONObject("query");
-
-                // Get the JSON object named results inside of the query object
-                JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
-
-                // Get the JSON object named rate inside of the results object
-                // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
-
-
-                // Get the JSON array named rate inside of the results object
-                JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
-                int arrayLength = jsonArray.length();
-
-                for (int i = 0; i < arrayLength; i++) {
-
-                    JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
-
-                    rateArray[i] = currencyJSONObject.getString("Rate");
-
-                    Log.v("CURRENCY FROM WEB ", rateArray[i]);
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
 
             return result;
-
         }
 
         @Override
@@ -702,30 +657,77 @@ public class MainActivity extends ActionBarActivity {
             progressBar.setVisibility(View.INVISIBLE);
             progressBar.clearAnimation();
 
-            for (int i = 0; i < rateArray.length; i++) {
+            // Holds Key Value pairs from a JSON source
+            JSONObject jsonObject;
 
-                // parse the String rateArray to double
-                convertedAmount[i] = Double.parseDouble(rateArray[i]);
+            if (result != null ) {
+                try {
 
-                finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
+                    Log.v("JSONParser RESULT ", result);
+
+                    // put the returned String result into sharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("JSONParser RESULT SAVED PREF", result);
+                    editor.apply();
+
+                    // Get the root JSONObject
+                    jsonObject = new JSONObject(result);
+
+                    // Get the JSON object named query
+                    JSONObject queryJSONObject = jsonObject.getJSONObject("query");
+
+                    // Get the JSON object named results inside of the query object
+                    JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
+
+                    // Get the JSON object named rate inside of the results object
+                    // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
+
+
+                    // Get the JSON array named rate inside of the results object
+                    JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
+                    int arrayLength = jsonArray.length();
+
+                    for (int i = 0; i < arrayLength; i++) {
+
+                        JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
+
+                        rateArray[i] = currencyJSONObject.getString("Rate");
+
+                        Log.v("CURRENCY FROM WEB ", rateArray[i]);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < rateArray.length; i++) {
+
+                    // parse the String rateArray to double
+                    convertedAmount[i] = Double.parseDouble(rateArray[i]);
+
+                    finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
+                }
+
+                for (int i = 0; i < rateArray.length; i++) {
+
+                    // convert back the rate but to 2 decimal places in String format
+                    finalRateArray[i] = String.valueOf((String.format("%.03f", convertedAmount[i])));
+                    // convert the rate amount to string 2 decimal places
+                    finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
+
+                    Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
+                }
+
+                customAdapter.clear();
+
+                populatedArrayList();
+
+                customAdapter.notifyDataSetChanged();
+
+            } else {
+                Toast.makeText(getApplication(), "Error : Connection Timeout",
+                        Toast.LENGTH_SHORT).show();
             }
-
-            for (int i = 0; i < rateArray.length; i++) {
-
-                // convert back the rate but to 2 decimal places in String format
-                finalRateArray[i] = String.valueOf((String.format("%.03f", convertedAmount[i])));
-                // convert the rate amount to string 2 decimal places
-                finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
-
-                Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
-            }
-
-            customAdapter.clear();
-
-            populatedArrayList();
-
-            customAdapter.notifyDataSetChanged();
-
         }
 
     }
