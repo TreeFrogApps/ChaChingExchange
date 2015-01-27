@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.view.LayoutInflater;
 <<<<<<< HEAD
 import android.view.View;
@@ -20,6 +21,9 @@ import android.view.LayoutInflater;
 =======
 import android.view.LayoutInflater;
 >>>>>>> context_menu_on_listview
+=======
+import android.view.LayoutInflater;
+>>>>>>> context_menu_on_listview
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,9 +36,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
 
@@ -48,6 +55,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     private  MainActivity mainActivity;
 =======
     private MainActivity mainActivity;
@@ -55,6 +63,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 =======
     private MainActivity mainActivity;
 >>>>>>> currencies_activity
+=======
+    private MainActivity mainActivity;
+>>>>>>> context_menu_on_listview
 =======
     private MainActivity mainActivity;
 >>>>>>> context_menu_on_listview
@@ -67,6 +78,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         protected ImageView context_menu;
 =======
         protected Button context_menu;
@@ -74,6 +86,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 =======
         protected Button context_menu;
 >>>>>>> currencies_activity
+=======
+        protected Button context_menu;
+>>>>>>> context_menu_on_listview
 =======
         protected Button context_menu;
 >>>>>>> context_menu_on_listview
@@ -92,6 +107,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     }
 
@@ -104,6 +120,8 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> context_menu_on_listview
     }
 
 
@@ -111,9 +129,12 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
     public View getView(final int position, View convertView, ViewGroup parent) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
 
@@ -135,6 +156,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             LayoutInflater inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 =======
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -142,6 +164,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 =======
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 >>>>>>> currencies_activity
+=======
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+>>>>>>> context_menu_on_listview
 =======
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 >>>>>>> context_menu_on_listview
@@ -155,6 +180,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             viewHolder.context_menu = (ImageView) convertView.findViewById(R.id.context_menu);
 =======
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
@@ -162,6 +188,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 =======
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 >>>>>>> currencies_activity
+=======
+            viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
+>>>>>>> context_menu_on_listview
 =======
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 >>>>>>> context_menu_on_listview
@@ -185,6 +214,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         viewHolder.convertedCurrencyAmount.setText("0.00");
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
         viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType"));
@@ -204,6 +234,11 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
         viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType"));
 >>>>>>> context_menu_on_listview
+=======
+        viewHolder.convertedCurrencyAmount.setText(flagAndCurrencyItem.get("finalConvertedAmountText"));
+        viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
+        viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType"));
+>>>>>>> context_menu_on_listview
         viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 
         // context menu for each row (3 dots menu)
@@ -215,12 +250,16 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                 //create popUpMenu (context menu)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 PopupMenu popUpMenu = new PopupMenu(getContext(), convertView);
 =======
                 Context style = new ContextThemeWrapper(getContext(), R.style.PopUpMenu);
 
                 PopupMenu popUpMenu = new PopupMenu(style, convertView);
 >>>>>>> currencies_activity
+=======
+                PopupMenu popUpMenu = new PopupMenu(getContext(), convertView);
+>>>>>>> context_menu_on_listview
 =======
                 PopupMenu popUpMenu = new PopupMenu(getContext(), convertView);
 >>>>>>> context_menu_on_listview
@@ -265,9 +304,12 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
 
@@ -277,6 +319,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 
 =======
@@ -285,6 +328,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 =======
 }
 >>>>>>> currencies_activity
+=======
+}
+>>>>>>> context_menu_on_listview
 =======
 }
 >>>>>>> context_menu_on_listview

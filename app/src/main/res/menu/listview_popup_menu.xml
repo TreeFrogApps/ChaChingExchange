@@ -4,11 +4,15 @@
     tools:context=".MainActivity"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     tools:style="AppTheme.Base.PopUpMenu.Overlay">
 =======
     tools:style="AppTheme.Base"
     >
 >>>>>>> currencies_activity
+=======
+    tools:style="AppTheme.Base.PopUpMenu.Overlay">
+>>>>>>> context_menu_on_listview
 =======
     tools:style="AppTheme.Base.PopUpMenu.Overlay">
 >>>>>>> context_menu_on_listview

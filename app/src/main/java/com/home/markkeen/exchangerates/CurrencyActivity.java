@@ -2,12 +2,16 @@ package com.home.markkeen.exchangerates;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import android.os.Bundle;
@@ -21,10 +25,13 @@ import java.util.ArrayList;
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> context_menu_on_listview
 
 
 public class CurrencyActivity extends ActionBarActivity {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -38,12 +45,17 @@ public class CurrencyActivity extends ActionBarActivity {
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> context_menu_on_listview
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
     }
@@ -51,6 +63,7 @@ public class CurrencyActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -73,6 +86,8 @@ public class CurrencyActivity extends ActionBarActivity {
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> context_menu_on_listview
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_currency, menu);
         return true;
@@ -92,6 +107,7 @@ public class CurrencyActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -237,6 +253,8 @@ public class CurrencyActivity extends ActionBarActivity {
         }
     }
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
 }

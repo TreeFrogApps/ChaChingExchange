@@ -24,11 +24,15 @@
             android:label="@string/title_activity_currency"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             android:parentActivityName=".MainActivity" >
 =======
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
 >>>>>>> currencies_activity
+=======
+            android:parentActivityName=".MainActivity" >
+>>>>>>> context_menu_on_listview
 =======
             android:parentActivityName=".MainActivity" >
 >>>>>>> context_menu_on_listview

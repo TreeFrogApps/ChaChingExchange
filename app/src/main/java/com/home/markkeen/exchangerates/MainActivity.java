@@ -4,6 +4,7 @@ import android.content.Context;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.content.SharedPreferences;
 =======
 >>>>>>> context_menu_on_listview
@@ -11,6 +12,8 @@ import android.content.SharedPreferences;
 import android.content.Intent;
 import android.content.SharedPreferences;
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
 import android.os.AsyncTask;
@@ -32,12 +35,15 @@ import android.widget.Spinner;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.widget.Toast;
 import android.widget.ToggleButton;
 =======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
 
@@ -60,12 +66,15 @@ import java.util.ArrayList;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.Arrays;
 =======
 >>>>>>> context_menu_on_listview
 =======
 import java.util.Arrays;
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
 import java.util.HashMap;
@@ -134,6 +143,7 @@ public class MainActivity extends ActionBarActivity {
             R.drawable.flag_ic_try_29,
             R.drawable.flag_ic_usd_30,
             R.drawable.flag_ic_zar_31,
+<<<<<<< HEAD
     };
 
     private CustomAdapter customAdapter;
@@ -149,6 +159,12 @@ public class MainActivity extends ActionBarActivity {
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
+=======
+    };
+
+    private CustomAdapter customAdapter;
+
+>>>>>>> context_menu_on_listview
     private ListView listView;
 
     static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
@@ -157,6 +173,7 @@ public class MainActivity extends ActionBarActivity {
     String getRatesFinal;
     String getAmount;
     double getAmountAsDouble;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -186,6 +203,10 @@ public class MainActivity extends ActionBarActivity {
     double [] convertedAmount = new double[32];
     double [] finalConvertedAmount = new double[32];
 >>>>>>> context_menu_on_listview
+=======
+    double [] convertedAmount = new double[32];
+    double [] finalConvertedAmount = new double[32];
+>>>>>>> context_menu_on_listview
     String[] rateArray = new String[32];
     String[] finalConvertedAmountText = new String[32];
     String[] currency;
@@ -193,6 +214,7 @@ public class MainActivity extends ActionBarActivity {
     String[] currencyCode;
     String currencyFromType;
     String currencyFromSubsting;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -204,6 +226,11 @@ public class MainActivity extends ActionBarActivity {
     int top;
 =======
     int test = 0;
+=======
+    int test = 0;
+
+    ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
+>>>>>>> context_menu_on_listview
 
     ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 >>>>>>> context_menu_on_listview
@@ -233,6 +260,7 @@ public class MainActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
@@ -256,10 +284,16 @@ public class MainActivity extends ActionBarActivity {
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
 >>>>>>> context_menu_on_listview
+=======
+
+        flagBase = (ImageView) findViewById(R.id.flag_base);
+
+>>>>>>> context_menu_on_listview
         addItemExchangeRateFromSpinner();
 
         setExchangeAmountOnTextChangeListener();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -333,6 +367,8 @@ public class MainActivity extends ActionBarActivity {
 =======
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> context_menu_on_listview
 
         new MyAsyncTask();
 >>>>>>> context_menu_on_listview
@@ -348,6 +384,16 @@ public class MainActivity extends ActionBarActivity {
         listView.setAdapter(customAdapter);
 =======
 >>>>>>> currencies_activity
+
+
+        populatedArrayList();
+
+
+        // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
+        customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
+        listView = (ListView) findViewById(R.id.listView);
+
+        listView.setAdapter(customAdapter);
 
 
         populatedArrayList();
@@ -479,6 +525,9 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_choose_currencies){
             return true;
         }
+        if (id == R.id.action_choose_currencies){
+            return true;
+        }
 
         if (id == R.id.action_settings) {
             return true;
@@ -496,9 +545,12 @@ public class MainActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 // set flag according to spinner position and currency/country
                 flagBase.setImageResource(flags[position]);
 =======
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
                 currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
@@ -519,14 +571,21 @@ public class MainActivity extends ActionBarActivity {
 >>>>>>> currencies_activity
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                     currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
                     currencyFromSubsting = currencyFromType.substring(0, 3);
+=======
+              if (!getAmount.equals("")) {
 =======
               if (!getAmount.equals("")) {
 
                     getAmountAsDouble = Double.parseDouble(getAmount);
 >>>>>>> context_menu_on_listview
 
+                    getAmountAsDouble = Double.parseDouble(getAmount);
+>>>>>>> context_menu_on_listview
+
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                     currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
@@ -592,6 +651,17 @@ public class MainActivity extends ActionBarActivity {
               }
 
 >>>>>>> context_menu_on_listview
+=======
+                } else {
+
+                  getAmount = "0.00";
+
+                  getAmountAsDouble = Double.parseDouble(getAmount);
+
+                  new MyAsyncTask().execute();
+              }
+
+>>>>>>> context_menu_on_listview
 
             }
 
@@ -625,7 +695,10 @@ public class MainActivity extends ActionBarActivity {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     getAmount = amountEditText.getText().toString();
+=======
+               if (!getAmount.equals("")) {
 =======
                if (!getAmount.equals("")) {
 =======
@@ -634,6 +707,10 @@ public class MainActivity extends ActionBarActivity {
                    getAmountAsDouble = Double.parseDouble(getAmount);
 >>>>>>> context_menu_on_listview
 
+                   getAmountAsDouble = Double.parseDouble(getAmount);
+>>>>>>> context_menu_on_listview
+
+<<<<<<< HEAD
                    getAmountAsDouble = Double.parseDouble(getAmount);
 >>>>>>> context_menu_on_listview
 
@@ -670,6 +747,8 @@ public class MainActivity extends ActionBarActivity {
 =======
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> context_menu_on_listview
                 } else {
 
                    getAmount = "0.00";
@@ -679,6 +758,9 @@ public class MainActivity extends ActionBarActivity {
                    new MyAsyncTask().execute();
                }
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> context_menu_on_listview
+=======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
@@ -706,6 +788,7 @@ public class MainActivity extends ActionBarActivity {
             getRatesLatest = getRatesURLA;
 
             // loop round all the country codes concatenating into one big URL string
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -766,6 +849,23 @@ public class MainActivity extends ActionBarActivity {
 =======
 >>>>>>> currencies_activity
 =======
+>>>>>>> context_menu_on_listview
+=======
+            for (int i = 0; i < currencyCode.length; i++){
+
+                getRatesLatest = getRatesLatest + currencyFromSubsting + currencyCode[i] + "%22%2C%22";
+
+            }
+
+            // remove last "%22%2C%22" reassigning the string using substring to minus 9 characters
+            getRatesLatest = getRatesLatest.substring(0, getRatesLatest.length() - 9);
+
+            getRatesFinal = getRatesLatest + getGetRatesURLB;
+
+
+            HttpPost httpPost = new HttpPost(getRatesFinal);
+
+
 >>>>>>> context_menu_on_listview
             Log.v("HTTPS Address ", getRatesFinal);
 
@@ -847,6 +947,9 @@ public class MainActivity extends ActionBarActivity {
                 // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
 
@@ -865,11 +968,15 @@ public class MainActivity extends ActionBarActivity {
                 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> context_menu_on_listview
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
+<<<<<<< HEAD
             return result;
         }
 
@@ -890,8 +997,25 @@ public class MainActivity extends ActionBarActivity {
                 Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
 =======
 =======
+=======
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
 
 
+
+            for (int i = 0; i < rateArray.length; i++){
+
+                convertedAmount[i] = Double.parseDouble(rateArray[i]);
+>>>>>>> context_menu_on_listview
+
+                finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
+            }
+
+<<<<<<< HEAD
                 // Get the JSON array named rate inside of the results object
                 JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
                 int arrayLength = jsonArray.length();
@@ -908,17 +1032,33 @@ public class MainActivity extends ActionBarActivity {
 
             } catch (JSONException e) {
                 e.printStackTrace();
+=======
+            for (int i = 0; i < rateArray.length; i++){
+
+                finalConvertedAmountText[i] = String.valueOf((String.format("%.02f",finalConvertedAmount[i])));
+
+                Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LISTVIEW", finalConvertedAmountText[i]);
+>>>>>>> context_menu_on_listview
             }
 
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
 
-            return result;
-        }
+            customAdapter.clear();
 
-        @Override
-        protected void onPostExecute(String result) {
+            populatedArrayList();
 
+<<<<<<< HEAD
+=======
+            customAdapter.notifyDataSetChanged();
+>>>>>>> context_menu_on_listview
 
+            // after initial populated list change test to 1, so that each time from now on it updates
+            // the amount to convert from the text, and spinner input (see 'if / else' statements)
+            // the only way to update the query/list is to change the input amount & spinner
+            test = 1;
 
+<<<<<<< HEAD
             for (int i = 0; i < rateArray.length; i++){
 
                 convertedAmount[i] = Double.parseDouble(rateArray[i]);
@@ -1198,6 +1338,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
 >>>>>>> context_menu_on_listview
+=======
+
+
+        }
+
+
+    }
+
+>>>>>>> context_menu_on_listview
 
 
     public ArrayList<HashMap<String, String>> populatedArrayList() {
@@ -1325,6 +1474,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
             flagAndCurrencyList.add(currencyFlagList);
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> context_menu_on_listview
 =======
@@ -1463,12 +1613,16 @@ public class MainActivity extends ActionBarActivity {
 =======
 >>>>>>> context_menu_on_listview
 
+=======
+
+>>>>>>> context_menu_on_listview
             Log.v("CURRENCY Code", currencyCode[i]);
             Log.v("CURRENCY TYPE", currency[i]);
             Log.v("FLAG TYPE", flag[i]);
             Log.v("RATE", finalConvertedAmountText[i]);
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         // Remove positions from currencyActivity from retrieved int[] positionsToRemove from onResume()
         // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception
@@ -1512,6 +1666,15 @@ public class MainActivity extends ActionBarActivity {
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> currencies_activity
+=======
+
+        return flagAndCurrencyList;
+
+
+    }
+
+
+>>>>>>> context_menu_on_listview
 =======
 
         return flagAndCurrencyList;

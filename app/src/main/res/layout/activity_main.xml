@@ -30,10 +30,14 @@
             android:contentDescription="@string/currency_Flag"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             android:src="@drawable/flag_ic_holder" />
 =======
             android:src="@drawable/flag_ic_00_empty" />
 >>>>>>> currencies_activity
+=======
+            android:src="@drawable/flag_ic_holder" />
+>>>>>>> context_menu_on_listview
 =======
             android:src="@drawable/flag_ic_holder" />
 >>>>>>> context_menu_on_listview

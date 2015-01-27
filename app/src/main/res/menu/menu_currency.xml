@@ -4,6 +4,7 @@
     tools:context="com.home.markkeen.exchangerates.CurrencyActivity">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 =======
@@ -27,6 +28,10 @@
         app:showAsAction="never" />
 
 >>>>>>> currencies_activity
+=======
+    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
+>>>>>>> context_menu_on_listview
 =======
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
