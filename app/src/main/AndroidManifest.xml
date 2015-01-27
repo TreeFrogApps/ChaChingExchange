@@ -23,11 +23,15 @@
             android:name=".CurrencyActivity"
             android:label="@string/title_activity_currency"
 <<<<<<< HEAD
+<<<<<<< HEAD
             android:parentActivityName=".MainActivity" >
 =======
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
 >>>>>>> currencies_activity
+=======
+            android:parentActivityName=".MainActivity" >
+>>>>>>> context_menu_on_listview
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.home.markkeen.exchangerates.MainActivity" />

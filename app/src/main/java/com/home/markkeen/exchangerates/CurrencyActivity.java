@@ -1,10 +1,14 @@
 package com.home.markkeen.exchangerates;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> context_menu_on_listview
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+<<<<<<< HEAD
 =======
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,10 +19,13 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 
 
 public class CurrencyActivity extends ActionBarActivity {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     ListView listview;
@@ -29,16 +36,22 @@ public class CurrencyActivity extends ActionBarActivity {
 
 
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> context_menu_on_listview
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+<<<<<<< HEAD
 =======
 
         invalidateOptionsMenu();
@@ -58,6 +71,8 @@ public class CurrencyActivity extends ActionBarActivity {
 
 
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_currency, menu);
         return true;
@@ -77,6 +92,7 @@ public class CurrencyActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -221,4 +237,6 @@ public class CurrencyActivity extends ActionBarActivity {
         }
     }
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 }

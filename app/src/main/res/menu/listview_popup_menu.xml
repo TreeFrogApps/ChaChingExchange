@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity"
 <<<<<<< HEAD
+<<<<<<< HEAD
     tools:style="AppTheme.Base.PopUpMenu.Overlay">
 =======
     tools:style="AppTheme.Base"
     >
 >>>>>>> currencies_activity
+=======
+    tools:style="AppTheme.Base.PopUpMenu.Overlay">
+>>>>>>> context_menu_on_listview
 
     <item android:id="@+id/menu_pin_currency"
         android:title="@string/popupmenu_pin_currency"

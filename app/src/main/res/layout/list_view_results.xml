@@ -46,6 +46,9 @@
                 android:orientation="horizontal">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> context_menu_on_listview
                 <TextView
                     android:id="@+id/convertedCurrencyCode"
                     android:layout_width="wrap_content"
@@ -56,6 +59,7 @@
                     android:text="@string/currency_code"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_bigger" />
+<<<<<<< HEAD
 =======
                 <LinearLayout
                     android:layout_width="0dp"
@@ -75,16 +79,22 @@
 
                 </LinearLayout>
 >>>>>>> currencies_activity
+=======
+>>>>>>> context_menu_on_listview
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
 <<<<<<< HEAD
                     android:layout_weight="5">
 =======
                     android:layout_weight="4.5"
                     android:orientation="horizontal">
 >>>>>>> currencies_activity
+=======
+                    android:layout_weight="5">
+>>>>>>> context_menu_on_listview
 
                     <TextView
 
@@ -105,12 +115,19 @@
 
         <Button
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> context_menu_on_listview
             android:onClick="showMenu"
             android:id="@+id/context_menu"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/spinner_menu"/>
+<<<<<<< HEAD
+=======
+
+>>>>>>> context_menu_on_listview
 
 =======
             android:id="@+id/context_menu"

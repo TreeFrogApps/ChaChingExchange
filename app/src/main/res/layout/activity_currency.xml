@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> context_menu_on_listview
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -87,6 +90,7 @@
     </LinearLayout>
 
 
+<<<<<<< HEAD
 </LinearLayout>
 =======
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -107,3 +111,6 @@
 
     </LinearLayout>
 >>>>>>> currencies_activity
+=======
+</LinearLayout>
+>>>>>>> context_menu_on_listview
