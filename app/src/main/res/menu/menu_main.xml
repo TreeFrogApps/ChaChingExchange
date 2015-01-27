@@ -3,12 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 
     <item android:id="@+id/action_choose_currencies"
         android:title="@string/choose_currencies"
         android:orderInCategory="1"
+<<<<<<< HEAD
 =======
     <item android:id="@+id/menu_pin_toggle_id"
         android:title=""
@@ -29,5 +33,7 @@
         android:title="@string/menu_about"
         android:orderInCategory="4"
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
         app:showAsAction="never" />
 </menu>

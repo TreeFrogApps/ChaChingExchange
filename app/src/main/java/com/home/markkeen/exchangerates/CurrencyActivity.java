@@ -3,6 +3,7 @@ package com.home.markkeen.exchangerates;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> context_menu_on_listview
 =======
@@ -14,6 +15,8 @@ import android.view.MenuItem;
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> currencies_activity
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -22,11 +25,14 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 
 
 public class CurrencyActivity extends ActionBarActivity {
@@ -34,7 +40,10 @@ public class CurrencyActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> currencies_activity
     ListView listview;
     ArrayList<ListData> arrayListData = new ArrayList<ListData>();
     int[] flags;
@@ -42,15 +51,19 @@ public class CurrencyActivity extends ActionBarActivity {
     String[] currency;
 
 
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -66,6 +79,8 @@ public class CurrencyActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> currencies_activity
 
         invalidateOptionsMenu();
 
@@ -83,11 +98,14 @@ public class CurrencyActivity extends ActionBarActivity {
         super.onCreateOptionsMenu(menu);
 
 
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_currency, menu);
         return true;
@@ -110,7 +128,10 @@ public class CurrencyActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> currencies_activity
 
 
     public void populatedListData() {
@@ -252,9 +273,12 @@ public class CurrencyActivity extends ActionBarActivity {
             this.country = country;
         }
     }
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 }

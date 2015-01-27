@@ -10,9 +10,13 @@
     app:theme="@style/AppTheme.Base"
     app:popupTheme="@style/AppTheme.Base.PopUpMenu.Overlay"
 <<<<<<< HEAD
+<<<<<<< HEAD
     app:title="@string/app_name"
 =======
 >>>>>>> Features
+=======
+    app:title="@string/app_name"
+>>>>>>> currencies_activity
 />
 
 

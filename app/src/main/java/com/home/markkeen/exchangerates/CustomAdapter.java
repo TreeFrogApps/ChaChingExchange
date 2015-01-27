@@ -3,6 +3,7 @@ package com.home.markkeen.exchangerates;
 
 import android.content.Context;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.graphics.drawable.Drawable;
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -32,6 +33,11 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 >>>>>>> Features
+=======
+import android.graphics.drawable.Drawable;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+>>>>>>> currencies_activity
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +47,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+<<<<<<< HEAD
 <<<<<<< HEAD
 import android.widget.Toast;
 <<<<<<< HEAD
@@ -60,10 +67,16 @@ import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.Arrays;
 >>>>>>> Features
+=======
+import android.widget.Toast;
+
+import java.util.ArrayList;
+>>>>>>> currencies_activity
 import java.util.HashMap;
 
 public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     private final Context context;
     private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
@@ -96,12 +109,18 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
     private final Context context;
     private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
 >>>>>>> Features
+=======
+    private final Context context;
+    private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
+    private MainActivity mainActivity;
+>>>>>>> currencies_activity
 
     private static class ViewHolder {
         protected ImageView flagType;
         protected TextView convertedCurrencyCode;
         protected TextView convertedCurrencyAmount;
         protected TextView convertedCurrencyType;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -125,6 +144,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         protected ImageView pinToggle;
         protected Button context_menu;
 >>>>>>> Features
+=======
+        protected Button context_menu;
+>>>>>>> currencies_activity
 
     }
 
@@ -133,11 +155,15 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         super(context, R.layout.list_view_results, flagAndCurrencyList);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
         this.context = context;
         this.flagAndCurrencyList = flagAndCurrencyList;
         this.mainActivity = new MainActivity();
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -163,11 +189,14 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
     }
 
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -188,6 +217,11 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
         final HashMap<String, String> flagAndCurrencyItem = flagAndCurrencyList.get(position);
 >>>>>>> Features
+=======
+
+
+        HashMap<String, String> flagAndCurrencyItem = flagAndCurrencyList.get(position);
+>>>>>>> currencies_activity
 
         final ViewHolder viewHolder;
 
@@ -201,6 +235,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
             viewHolder = new ViewHolder();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -222,6 +257,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 =======
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 >>>>>>> Features
+=======
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+>>>>>>> currencies_activity
 
             convertView = inflater.inflate(R.layout.list_view_results, parent, false);
 
@@ -229,6 +267,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             viewHolder.convertedCurrencyAmount = (TextView) convertView.findViewById(R.id.convertedCurrencyAmount);
             viewHolder.convertedCurrencyCode = (TextView) convertView.findViewById(R.id.convertedCurrencyCode);
             viewHolder.convertedCurrencyType = (TextView) convertView.findViewById(R.id.convertedCurrencyType);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -260,6 +299,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                 viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_off));
             }
 >>>>>>> Features
+=======
+            viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
+>>>>>>> currencies_activity
 
             // store the information in a tag
             convertView.setTag(viewHolder);
@@ -277,6 +319,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
         // Populate the data into the template view using the data object
         viewHolder.flagType.setBackground(flagImage);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -325,10 +368,18 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         }
 
 >>>>>>> Features
+=======
+        viewHolder.convertedCurrencyAmount.setText(flagAndCurrencyItem.get("finalConvertedAmountText"));
+        viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
+        viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType").substring(3));
+        viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
+
+>>>>>>> currencies_activity
         // context menu for each row (3 dots menu)
         // set setOnClickListener for button
         viewHolder.context_menu.setOnClickListener(new View.OnClickListener() {
             @Override
+<<<<<<< HEAD
 <<<<<<< HEAD
             public void onClick(View convertView) {
 
@@ -356,6 +407,14 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
                 PopupMenu popUpMenu = new PopupMenu(style, convertView);
 >>>>>>> Features
+=======
+            public void onClick(View convertView) {
+
+                //create popUpMenu (context menu)
+                Context style = new ContextThemeWrapper(getContext(), R.style.PopUpMenu);
+
+                PopupMenu popUpMenu = new PopupMenu(style, convertView);
+>>>>>>> currencies_activity
 
                 // inflate my context menu xml layout
                 MenuInflater inflater = popUpMenu.getMenuInflater();
@@ -370,6 +429,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                             case R.id.menu_pin_currency:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
                                 Toast.makeText(getContext(), "Pin currency selected", Toast.LENGTH_SHORT).show();
                                 return true;
 
@@ -381,6 +443,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                             case R.id.menu_move_to_top:
 
                                 Toast.makeText(getContext(), "Move to top selected", Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
 =======
                                 if (pinToggleOn == true) {
                                     // this state happens only when the pinToggleButton is ON - do not want ability to 'pin' when this state is enabled,
@@ -453,12 +516,17 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                 MainActivity.swapBaseCurrency(currencyCode);
 
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
                                 return true;
                             default:
                                 return false;
                         }
                     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
 
 
                 });
@@ -469,6 +537,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
 
         });
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -485,6 +554,8 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             }
         });
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 
         return convertView;
     }
@@ -494,6 +565,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 
 =======
@@ -511,3 +583,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 =======
 }
 >>>>>>> Features
+=======
+}
+>>>>>>> currencies_activity

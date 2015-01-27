@@ -5,8 +5,11 @@
     <dimen name="text_standard">14sp</dimen>
     <dimen name="text_bigger">16sp</dimen>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <dimen name="text_18sp">18sp</dimen>
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 
 </resources>

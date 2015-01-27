@@ -6,6 +6,7 @@ import android.content.Context;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.content.SharedPreferences;
 =======
 >>>>>>> context_menu_on_listview
@@ -23,6 +24,10 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 >>>>>>> Features
+=======
+import android.content.Intent;
+import android.content.SharedPreferences;
+>>>>>>> currencies_activity
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -34,10 +39,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,6 +53,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -64,6 +73,8 @@ import android.widget.ToggleButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -88,6 +99,7 @@ import java.util.ArrayList;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.Arrays;
 =======
 >>>>>>> context_menu_on_listview
@@ -105,6 +117,10 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 >>>>>>> Features
+=======
+import java.util.Arrays;
+import java.util.HashMap;
+>>>>>>> currencies_activity
 
 
 public class MainActivity extends ActionBarActivity {
@@ -127,7 +143,10 @@ public class MainActivity extends ActionBarActivity {
     static ImageView flagBase;
 
     int[] flags = {
+<<<<<<< HEAD
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
             // holder flag for 'Choose a base currency' position in Select currency from web spinner
             R.drawable.flag_ic_00_empty,
             R.drawable.flag_ic_aud_00, R.drawable.flag_ic_bgn_01, R.drawable.flag_ic_brl_02,
@@ -141,6 +160,7 @@ public class MainActivity extends ActionBarActivity {
             R.drawable.flag_ic_ron_24, R.drawable.flag_ic_rub_25, R.drawable.flag_ic_sek_26,
             R.drawable.flag_ic_sgd_27, R.drawable.flag_ic_thb_28, R.drawable.flag_ic_try_29,
             R.drawable.flag_ic_usd_30, R.drawable.flag_ic_zar_31,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     };
@@ -203,6 +223,13 @@ public class MainActivity extends ActionBarActivity {
     private CustomAdapter customAdapter;
 
 >>>>>>> context_menu_on_listview
+=======
+    };
+
+    SharedPreferences sharedPreferences;
+
+    private CustomAdapter customAdapter;
+>>>>>>> currencies_activity
     private ListView listView;
 
     static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
@@ -211,6 +238,7 @@ public class MainActivity extends ActionBarActivity {
     String getRatesFinal;
     String getAmount;
     double getAmountAsDouble;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -282,11 +310,21 @@ public class MainActivity extends ActionBarActivity {
     private String[] finalRateArray = new String[32];
     private String[] finalConvertedAmountText = new String[32];
 >>>>>>> Features
+=======
+    String[] items;
+    int[] positionsToRemove;
+    String removedPositions;
+    double[] convertedAmount = new double[32];
+    double[] finalConvertedAmount = new double[32];
+    String[] rateArray = new String[32];
+    String[] finalConvertedAmountText = new String[32];
+>>>>>>> currencies_activity
     String[] currency;
     String[] flag;
     String[] currencyCode;
     String currencyFromType;
     String currencyFromSubsting;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -331,6 +369,10 @@ public class MainActivity extends ActionBarActivity {
 
     static ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 >>>>>>> Features
+=======
+
+    ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
+>>>>>>> currencies_activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -357,6 +399,7 @@ public class MainActivity extends ActionBarActivity {
                 "TRY\t\tNew Turkish Lira", "USD\t\tUnited States Dollar", "ZAR\t\tSouth African Rand"};
 
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -406,10 +449,16 @@ public class MainActivity extends ActionBarActivity {
         pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
 
 >>>>>>> Features
+=======
+
+        flagBase = (ImageView) findViewById(R.id.flag_base);
+
+>>>>>>> currencies_activity
         addItemExchangeRateFromSpinner();
 
         setExchangeAmountOnTextChangeListener();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -422,12 +471,17 @@ public class MainActivity extends ActionBarActivity {
         // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
         customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
 =======
+=======
+>>>>>>> currencies_activity
         populatedArrayList();
 
         // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
         customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
 
 
+<<<<<<< HEAD
+>>>>>>> currencies_activity
+=======
 >>>>>>> currencies_activity
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(customAdapter);
@@ -439,6 +493,10 @@ public class MainActivity extends ActionBarActivity {
         super.onResume();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+>>>>>>> currencies_activity
 =======
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
 >>>>>>> currencies_activity
@@ -465,14 +523,20 @@ public class MainActivity extends ActionBarActivity {
 
         items = new String[0];
 <<<<<<< HEAD
+<<<<<<< HEAD
         customAdapter.clear();
         populatedArrayList();
 =======
+=======
+>>>>>>> currencies_activity
 
         customAdapter.clear();
 
         populatedArrayList();
 
+<<<<<<< HEAD
+>>>>>>> currencies_activity
+=======
 >>>>>>> currencies_activity
         customAdapter.notifyDataSetChanged();
 
@@ -481,6 +545,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -568,6 +633,8 @@ public class MainActivity extends ActionBarActivity {
         customAdapter.notifyDataSetChanged();
 
     }
+=======
+>>>>>>> currencies_activity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -784,6 +851,12 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_choose_currencies) {
+
+            Intent intent = new Intent(this, CurrencyActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         if (id == R.id.action_about) {
 
@@ -889,13 +962,24 @@ public class MainActivity extends ActionBarActivity {
 
                 // set flag according to spinner position and currency/country
                 flagBase.setImageResource(flags[position]);
+<<<<<<< HEAD
                 flagBase.startAnimation(flagAnimation);
-
+=======
+>>>>>>> currencies_activity
 
                 // position 0 is the initial 'Choose a base currency' - no action required, only do if it is not that one!
                 if (!currencyFromSpinner.getSelectedItem().toString().equals("Choose a base currency")) {
 
+<<<<<<< HEAD
+                // position 0 is the initial 'Choose a base currency' - no action required, only do if it is not that one!
+                if (!currencyFromSpinner.getSelectedItem().toString().equals("Choose a base currency")) {
+=======
+>>>>>>> currencies_activity
 
+                    currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
+                    currencyFromSubsting = currencyFromType.substring(0, 3);
+
+<<<<<<< HEAD
                     currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
                     currencyFromSubsting = currencyFromType.substring(0, 3);
 
@@ -986,6 +1070,31 @@ public class MainActivity extends ActionBarActivity {
                         if (checkConnection()) {
                             new MyAsyncTask().execute();
                         }
+=======
+
+
+                    Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
+
+
+                    getAmount = amountEditText.getText().toString();
+
+                    Log.v("GET AMOUNT", getAmount);
+
+                    if (!getAmount.equals("")) {
+
+                        getAmountAsDouble = Double.parseDouble(getAmount);
+
+                        new MyAsyncTask().execute();
+
+                    } else {
+
+                        getAmount = "0.00";
+
+                        getAmountAsDouble = Double.parseDouble(getAmount);
+
+                        new MyAsyncTask().execute();
+
+>>>>>>> currencies_activity
                     }
                 }
 >>>>>>> Features
@@ -1018,6 +1127,7 @@ public class MainActivity extends ActionBarActivity {
 
                 // check if a base currency has been set otherwise http: requests will be done against a 'null' currency - inefficient
                 if (!currencyFromSpinner.getSelectedItem().toString().equals("Choose a base currency")) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -1086,10 +1196,24 @@ public class MainActivity extends ActionBarActivity {
                     } else {
 
 >>>>>>> Features
+=======
+
+                    getAmount = amountEditText.getText().toString();
+
+                    if (!getAmount.equals("")) {
+
+                        getAmountAsDouble = Double.parseDouble(getAmount);
+
+                        new MyAsyncTask().execute();
+
+                    } else {
+
+>>>>>>> currencies_activity
                         getAmount = "0.00";
 
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
                         new MyAsyncTask().execute();
 =======
@@ -1101,6 +1225,9 @@ public class MainActivity extends ActionBarActivity {
                             new MyAsyncTask().onPostExecute(result);
                         }
 >>>>>>> Features
+=======
+                        new MyAsyncTask().execute();
+>>>>>>> currencies_activity
                     }
                 }
 =======
@@ -1221,6 +1348,9 @@ public class MainActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
             for (int i = 0; i < currencyCode.length; i++) {
@@ -1234,6 +1364,7 @@ public class MainActivity extends ActionBarActivity {
 
             getRatesFinal = getRatesLatest + getGetRatesURLB;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             for (int i = 0; i < currencyCode.length; i++){
 
@@ -1273,6 +1404,11 @@ public class MainActivity extends ActionBarActivity {
             HttpPost httpPost = new HttpPost(getRatesFinal);
 
 <<<<<<< HEAD
+=======
+
+
+            HttpPost httpPost = new HttpPost(getRatesFinal);
+>>>>>>> currencies_activity
 
 >>>>>>> context_menu_on_listview
 =======
@@ -1282,6 +1418,7 @@ public class MainActivity extends ActionBarActivity {
 =======
             for (int i = 0; i < currencyCode.length; i++){
 
+<<<<<<< HEAD
                 getRatesLatest = getRatesLatest + currencyFromSubsting + currencyCode[i] + "%22%2C%22";
 
             }
@@ -1310,6 +1447,8 @@ public class MainActivity extends ActionBarActivity {
             HttpPost httpPost = new HttpPost(getRatesFinal);
 
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
             Log.v("HTTPS Address ", getRatesFinal);
 
             // Web service used is defined
@@ -1343,9 +1482,12 @@ public class MainActivity extends ActionBarActivity {
 
                     String line = null;
 
+<<<<<<< HEAD
                     while ((line = reader.readLine()) != null) {
 
 <<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (ClientProtocolException e) {
@@ -1368,6 +1510,7 @@ public class MainActivity extends ActionBarActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+<<<<<<< HEAD
 <<<<<<< HEAD
             }
 
@@ -1400,6 +1543,15 @@ public class MainActivity extends ActionBarActivity {
                 try {
 
 <<<<<<< HEAD
+=======
+            }
+
+            // Holds Key Value pairs from a JSON source
+            JSONObject jsonObject;
+
+            try {
+
+>>>>>>> currencies_activity
                 Log.v("JSONParser RESULT ", result);
 =======
                     Log.v("JSONParser RESULT ", result);
@@ -1420,6 +1572,7 @@ public class MainActivity extends ActionBarActivity {
                     // Get the JSON object named results inside of the query object
                     JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
 
+<<<<<<< HEAD
                     // Get the JSON object named rate inside of the results object
                     // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
 
@@ -1451,6 +1604,22 @@ public class MainActivity extends ActionBarActivity {
 
                     rateArray[i] = currencyJSONObject.getString("Rate");
 
+=======
+                // Get the JSON object named rate inside of the results object
+                // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
+
+
+                // Get the JSON array named rate inside of the results object
+                JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
+                int arrayLength = jsonArray.length();
+
+                for (int i = 0; i < arrayLength; i++) {
+
+                    JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
+
+                    rateArray[i] = currencyJSONObject.getString("Rate");
+
+>>>>>>> currencies_activity
                     Log.v("CURRENCY FROM WEB ", rateArray[i]);
                 }
 <<<<<<< HEAD
@@ -1467,6 +1636,7 @@ public class MainActivity extends ActionBarActivity {
             return result;
         }
 
+<<<<<<< HEAD
         @Override
         protected void onPostExecute(String result) {
 
@@ -1551,9 +1721,34 @@ public class MainActivity extends ActionBarActivity {
                 convertedAmount[i] = Double.parseDouble(rateArray[i]);
 
                 finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
+=======
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            for (int i = 0; i < rateArray.length; i++) {
+
+                convertedAmount[i] = Double.parseDouble(rateArray[i]);
+
+                finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
+            }
+
+            for (int i = 0; i < rateArray.length; i++) {
+
+                finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
+
+                Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
+>>>>>>> currencies_activity
             }
 >>>>>>> context_menu_on_listview
 
+<<<<<<< HEAD
             for (int i = 0; i < rateArray.length; i++){
 
                 finalConvertedAmountText[i] = String.valueOf((String.format("%.02f",finalConvertedAmount[i])));
@@ -2337,6 +2532,170 @@ public class MainActivity extends ActionBarActivity {
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
+=======
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
+
+            customAdapter.clear();
+
+            populatedArrayList();
+
+            customAdapter.notifyDataSetChanged();
+
+        }
+
+    }
+
+
+    public ArrayList<HashMap<String, String>> populatedArrayList() {
+
+        flag = new String[]{
+                "flag_ic_aud_00",
+                "flag_ic_bgn_01",
+                "flag_ic_brl_02",
+                "flag_ic_cad_03",
+                "flag_ic_chf_04",
+                "flag_ic_cny_05",
+                "flag_ic_czk_06",
+                "flag_ic_dkk_07",
+                "flag_ic_eur_08",
+                "flag_ic_gbp_09",
+                "flag_ic_hkd_10",
+                "flag_ic_hrk_11",
+                "flag_ic_huf_12",
+                "flag_ic_idr_13",
+                "flag_ic_ils_14",
+                "flag_ic_inr_15",
+                "flag_ic_jpy_16",
+                "flag_ic_krw_17",
+                "flag_ic_ltl_18",
+                "flag_ic_mxn_19",
+                "flag_ic_nok_20",
+                "flag_ic_nzd_21",
+                "flag_ic_php_22",
+                "flag_ic_pln_23",
+                "flag_ic_ron_24",
+                "flag_ic_rub_25",
+                "flag_ic_sek_26",
+                "flag_ic_sgd_27",
+                "flag_ic_thb_28",
+                "flag_ic_try_29",
+                "flag_ic_usd_30",
+                "flag_ic_zar_31"};
+
+        Arrays.sort(flag);
+
+        currencyCode = new String[]{
+                "AUD",
+                "BGN",
+                "BRL",
+                "CAD",
+                "CHF",
+                "CNY",
+                "CZK",
+                "DKK",
+                "EUR",
+                "GBP",
+                "HKD",
+                "HRK",
+                "HUF",
+                "IDR",
+                "ILS",
+                "INR",
+                "JPY",
+                "KRW",
+                "LTL",
+                "MXN",
+                "NOK",
+                "NZD",
+                "PHP",
+                "PLN",
+                "RON",
+                "RUB",
+                "SEK",
+                "SGD",
+                "THB",
+                "TRY",
+                "USD",
+                "ZAR"};
+
+        Arrays.sort(currencyCode);
+
+        currency = new String[]{
+                "00 Australian Dollar",
+                "01 Bulgarian Lev",
+                "02 Brazilian Real",
+                "03 Canadian Dollar",
+                "04 CH Francs",
+                "05 Chinese Yuan",
+                "06 Czech Koruna",
+                "07 Danish Krone",
+                "08 Euro",
+                "09 British Pound",
+                "10 Hong Kong Dollar",
+                "11 Croatian Kuna",
+                "12 Hungarian Forint",
+                "13 Indonesian Rupiah",
+                "14 Israeli Shekel",
+                "15 Indian Rupee",
+                "16 Japanese Yen",
+                "17 Korean Won",
+                "18 Lithuanian Litas",
+                "19 Mexican Peso",
+                "20 Norwegian Krone",
+                "21 New Zealand Dollar",
+                "22 Philippine Peso",
+                "23 Polish NEW Zloty",
+                "24 Romanian Leu",
+                "25 Russian Rouble",
+                "26 Swedish Krona",
+                "27 Singapore Dollar",
+                "28 Thai Baht",
+                "29 New Turkish Lira",
+                "30 United States Dollar",
+                "31 South African Rand"};
+
+        Arrays.sort(currency);
+
+
+        for (int i = 0; i < flag.length; i++) {
+
+            HashMap<String, String> currencyFlagList = new HashMap<String, String>();
+
+            currencyFlagList.put("flagType", flag[i]);
+            currencyFlagList.put("currencyCode", currencyCode[i]);
+            currencyFlagList.put("currencyType", currency[i]);
+
+            // add the returned values from the http query, only if the populated rate array is the same
+
+                currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
+
+
+            flagAndCurrencyList.add(currencyFlagList);
+
+            Log.v("CURRENCY Code", currencyCode[i]);
+            Log.v("CURRENCY TYPE", currency[i]);
+            Log.v("FLAG TYPE", flag[i]);
+
+        }
+
+        // Remove positions from currencyActivity from retrieved int[] positionsToRemove from onResume()
+        // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception
+        // as the PositionsToRemove array won't have been initialised i.e. int[] myInt = new int[32]
+        // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
+        try {
+            for (int i = 31; i >= 0; i--) {
+
+                if (positionsToRemove[i] != 0) {
+
+                    // remove position - minus 1 because array has ALL zero's in 32 holders (default),
+                    // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
+                    flagAndCurrencyList.remove((positionsToRemove[i] - 1));
+                }
+            }
+
+        } catch (NullPointerException e) {
+>>>>>>> currencies_activity
 
             Log.v("CURRENCY Code", currencyCode[i]);
             Log.v("CURRENCY TYPE", currency[i]);
@@ -2356,8 +2715,11 @@ public class MainActivity extends ActionBarActivity {
 
         return flagAndCurrencyList;
 
+        return flagAndCurrencyList;
+
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 >>>>>>> context_menu_on_listview
@@ -2386,6 +2748,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 }
 
 

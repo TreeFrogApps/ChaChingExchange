@@ -13,6 +13,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="choose_currencies">0.00</string>
 =======
     <string name="choose_currencies">Currency selector</string>
@@ -23,6 +24,9 @@
 =======
     <string name="choose_currencies">0.00</string>
 >>>>>>> context_menu_on_listview
+=======
+    <string name="choose_currencies">Currency selector</string>
+>>>>>>> currencies_activity
 
     <string-array name="currency_spinner">
         <item>Choose a base currency</item>
@@ -77,11 +81,15 @@
     <string name="currency_results_amount">0.00</string>
     <string name="currency_results_code">Currency type</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
     <string name="currency_code">Code</string>
     <string name="popupmenu_pin_currency">Pin Currency</string>
     <string name="popupmenu_remove">Remove</string>
     <string name="popupmenu_move_to_top">Move to top</string>
     <string name="title_activity_currency">CurrencyActivity</string>
+<<<<<<< HEAD
 =======
     <string name="currency_results_rate">Rate</string>
     <string name="currency_code">Code</string>
@@ -93,5 +101,7 @@
     <string name="menu_about">About</string>
     <string name="support_information">Support and Information</string>
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 
 </resources>
