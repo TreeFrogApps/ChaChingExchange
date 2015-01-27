@@ -43,7 +43,12 @@ import android.content.SharedPreferences;
 =======
 import android.content.Intent;
 import android.content.SharedPreferences;
+<<<<<<< HEAD
 >>>>>>> currencies_activity
+=======
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+>>>>>>> Features
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -59,6 +64,7 @@ import android.view.View;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -73,6 +79,10 @@ import android.view.animation.AnimationUtils;
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
+=======
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+>>>>>>> Features
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -89,6 +99,7 @@ import android.widget.Spinner;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.widget.Toast;
 import android.widget.ToggleButton;
 =======
@@ -113,6 +124,10 @@ import android.widget.ToggleButton;
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
+=======
+import android.widget.Toast;
+import android.widget.ToggleButton;
+>>>>>>> Features
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -168,6 +183,7 @@ import java.util.HashMap;
 =======
 import java.util.Arrays;
 import java.util.HashMap;
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
@@ -175,10 +191,15 @@ import java.util.HashMap;
 import java.util.Arrays;
 import java.util.HashMap;
 >>>>>>> currencies_activity
+=======
+import java.util.Timer;
+import java.util.TimerTask;
+>>>>>>> Features
 
 
 public class MainActivity extends ActionBarActivity {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     EditText amountEditText;
@@ -191,6 +212,8 @@ public class MainActivity extends ActionBarActivity {
 =======
 >>>>>>> currencies_activity
 =======
+=======
+>>>>>>> Features
 =======
 >>>>>>> Features
     static EditText amountEditText;
@@ -304,8 +327,20 @@ public class MainActivity extends ActionBarActivity {
 >>>>>>> currencies_activity
     };
 
-    SharedPreferences sharedPreferences;
+    static SharedPreferences sharedPreferences;
+    private boolean pinToggleSavedState;
 
+    static CustomAdapter customAdapter;
+    static ListView listView;
+
+    private static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
+    private static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+    private static String getRatesLatest;
+    private static String getRatesFinal;
+    private static String getAmount;
+    private double getAmountAsDouble;
+
+<<<<<<< HEAD
     private CustomAdapter customAdapter;
 <<<<<<< HEAD
 >>>>>>> currencies_activity
@@ -419,6 +454,26 @@ public class MainActivity extends ActionBarActivity {
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
+=======
+    // string to hold the sharedPreference "POSITIONS TO REMOVE"
+    String settingsRemovedPositionsString;
+    // string array to hold the split string
+    String[] settingsRemovedPositionsStringArray;
+    // int array to hold the positions to remove, don't initialise with a size
+    // otherwise array out of bounds issue - try / catch in populatedList method will
+    // sort because it doesn't have a value on first start
+    int[] settingsRemovedPositionsIntArray;
+
+    static String[] pinnedItems;
+    static int[] pinnedPositions;
+    static String pinnedPositionsToKeep;
+
+    double[] convertedAmount = new double[32];
+    double[] finalConvertedAmount = new double[32];
+    private String[] rateArray = new String[32];
+    private String[] finalRateArray = new String[32];
+    private String[] finalConvertedAmountText = new String[32];
+>>>>>>> Features
     String[] currency;
     String[] flag;
     String[] currencyCode;
@@ -433,9 +488,12 @@ public class MainActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     ToggleButton menuPinToggleButton;
     ImageView pinToggle;
 =======
+=======
+>>>>>>> Features
 =======
 >>>>>>> Features
     static ToggleButton menuPinToggleButton;
@@ -444,6 +502,9 @@ public class MainActivity extends ActionBarActivity {
     Animation progressBarAnimation;
     Animation flagAnimation;
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> Features
+=======
 >>>>>>> Features
 =======
 >>>>>>> Features
@@ -453,6 +514,7 @@ public class MainActivity extends ActionBarActivity {
     int top;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     int test = 0;
 =======
@@ -494,6 +556,10 @@ public class MainActivity extends ActionBarActivity {
 
     ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 >>>>>>> currencies_activity
+=======
+
+    static ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
+>>>>>>> Features
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -529,7 +595,10 @@ public class MainActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> Features
 =======
 >>>>>>> Features
         spinnerArray = new ArrayAdapter<String>(this, R.layout.spinner_view, R.id.spinner_list_item, spinnerCurrencyList);
@@ -538,6 +607,7 @@ public class MainActivity extends ActionBarActivity {
 
         progressBar = (ImageView) findViewById(R.id.progress_bar);
         progressBarAnimation = AnimationUtils.loadAnimation(this, R.anim.progress_bar_rotate);
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> Features
 
@@ -561,6 +631,16 @@ public class MainActivity extends ActionBarActivity {
 
         flagBase = (ImageView) findViewById(R.id.flag_base);
 >>>>>>> currencies_activity
+=======
+
+        flagBase = (ImageView) findViewById(R.id.flag_base);
+        flagAnimation = AnimationUtils.loadAnimation(this, R.anim.flag_scale);
+
+
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+        // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
+        pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
+>>>>>>> Features
 
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
@@ -577,6 +657,7 @@ public class MainActivity extends ActionBarActivity {
 =======
 >>>>>>> currencies_activity
 
+<<<<<<< HEAD
         addItemExchangeRateFromSpinner();
 >>>>>>> Features
 
@@ -612,16 +693,30 @@ public class MainActivity extends ActionBarActivity {
     // WHEN SHARED PREFERENCES IS CALLED ANY CHANGES WILL STILL BE THERE EVEN WHEN APP WAS CLOSED
 =======
 
+=======
+        pinToggle = (ImageView) findViewById(R.id.list_view_pin);
+
+        // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
+        customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
+>>>>>>> Features
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(customAdapter);
     }
 
+<<<<<<< HEAD
 
 >>>>>>> currencies_activity
+=======
+    // NB: THIS IS CALLED WHEN THE ACTIVITY IS FIRST OPENED AFTER ONCREATE & ONSTART
+    // THIS MEANS THAT THE FULL FLAGANDCURRNCYLIST IS ALWAYS INITIALLY POPULATED
+    // HOWEVER IF ANY HAVE BEEN REMOVED THIS WILL BE REPLACED DURING ONRESUME THIS MEANS
+    // WHEN SHARED PREFERENCES IS CALLED ANY CHANGES WILL STILL BE THERE EVEN WHEN APP WAS CLOSED
+>>>>>>> Features
     @Override
     protected void onResume() {
         super.onResume();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         // get settings sharedPreferences string
         settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS TO REMOVE", "");
@@ -634,40 +729,16 @@ public class MainActivity extends ActionBarActivity {
 =======
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
         removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+=======
+        // get settings sharedPreferences string
+        settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS TO REMOVE", "");
+>>>>>>> Features
 
-        if (removedPositions.contains("[")) {
+        // if it contains anything (it will always as soon as a switch is turned on/off for the first time
+        if (settingsRemovedPositionsString.contains("[")) {
 
             // function to change string which contains list of number in format [1,2,3,4] back to int array
             // remove [ ] from beginning of string
-
-            items = removedPositions.substring(1, removedPositions.length() - 1).split(",");
-            positionsToRemove = new int[items.length];
-
-            for (int i = 0; i < items.length; i++) {
-
-                positionsToRemove[i] = Integer.parseInt(items[i].trim());
-            }
-
-            for (int i = 0; i < positionsToRemove.length; i++) {
-                Log.v("SAVED POSITIONS", String.valueOf(positionsToRemove[i]));
-            }
-
-        }
-
-        items = new String[0];
-
-        customAdapter.clear();
-
-        populatedArrayList();
-
-        customAdapter.notifyDataSetChanged();
-
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
->>>>>>> currencies_activity
 
             settingsRemovedPositionsStringArray = settingsRemovedPositionsString.substring(1, settingsRemovedPositionsString.length() - 1).split(",");
             settingsRemovedPositionsIntArray = new int[settingsRemovedPositionsStringArray.length];
@@ -692,43 +763,29 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
->>>>>>> Features
-    }
-
-
-    @Override
 <<<<<<< HEAD
-    protected void onResume() {
-        super.onResume();
+>>>>>>> currencies_activity
 
-        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
-        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+            settingsRemovedPositionsStringArray = settingsRemovedPositionsString.substring(1, settingsRemovedPositionsString.length() - 1).split(",");
+            settingsRemovedPositionsIntArray = new int[settingsRemovedPositionsStringArray.length];
+=======
+    }
+>>>>>>> Features
 
-        if (removedPositions.contains("[")) {
+            for (int i = 0; i < settingsRemovedPositionsStringArray.length; i++) {
 
-            // function to change string which contains list of number in format [1,2,3,4] back to int array
-            // remove [ ] from beginning of string
-
-            items = removedPositions.substring(1, removedPositions.length() - 1).split(",");
-            positionsToRemove = new int[items.length];
-
-            for (int i = 0; i < items.length; i++) {
-
-                positionsToRemove[i] = Integer.parseInt(items[i].trim());
+<<<<<<< HEAD
+                settingsRemovedPositionsIntArray[i] = Integer.parseInt(settingsRemovedPositionsStringArray[i].trim());
             }
 
-            for (int i = 0; i < positionsToRemove.length; i++) {
-                Log.v("SAVED POSITIONS", String.valueOf(positionsToRemove[i]));
-            }
+            Log.v("SAVED POSITIONS", Arrays.toString(settingsRemovedPositionsIntArray));
 
         }
 
-        items = new String[0];
-
         customAdapter.clear();
 
+        // get the updated list
         populatedArrayList();
-
         customAdapter.notifyDataSetChanged();
 
     }
@@ -736,20 +793,10 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
->>>>>>> currencies_activity
-
-        flagBase = (ImageView) findViewById(R.id.flag_base);
-
->>>>>>> currencies_activity
+>>>>>>> Features
+    }
 =======
-
-        flagBase = (ImageView) findViewById(R.id.flag_base);
-
->>>>>>> context_menu_on_listview
-=======
-
-        flagBase = (ImageView) findViewById(R.id.flag_base);
-=======
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -871,6 +918,353 @@ public class MainActivity extends ActionBarActivity {
             customAdapter.notifyDataSetChanged();
             return true;
         }
+
+        if (id == R.id.action_settings) {
+
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_about) {
+
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static void resetPinnedCurrencies() {
+
+        // reset the pinToggle, if this is not done there is a outOfBounds error
+        menuPinToggleButton.setChecked(false);
+        // update customAdapter to tell is the toggles state for the pin image
+        customAdapter.pinToggleOn = false;
+        // reset the pinnedPositions int[]
+        pinnedPositions = new int[flagAndCurrencyList.size()];
+
+        // remove the save pinned positions string from shared Prefs
+        sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
+
+        // reset the pinnedPositionsToKeep string from the customAdapter
+        customAdapter.pinnedPositionsToKeep = "";
+
+        // reset the positionsToPin int[] from the customAdapter
+        customAdapter.positionsToPin = new int[flagAndCurrencyList.size()];
+
+        customAdapter.clear();
+    }
+
+>>>>>>> Features
+
+
+    @Override
+<<<<<<< HEAD
+    protected void onResume() {
+        super.onResume();
+
+<<<<<<< HEAD
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+=======
+                // set flag according to spinner position and currency/country
+                flagBase.setImageResource(flags[position]);
+                flagBase.startAnimation(flagAnimation);
+
+>>>>>>> Features
+
+        if (removedPositions.contains("[")) {
+
+            // function to change string which contains list of number in format [1,2,3,4] back to int array
+            // remove [ ] from beginning of string
+
+            items = removedPositions.substring(1, removedPositions.length() - 1).split(",");
+            positionsToRemove = new int[items.length];
+
+            for (int i = 0; i < items.length; i++) {
+
+<<<<<<< HEAD
+                positionsToRemove[i] = Integer.parseInt(items[i].trim());
+            }
+
+            for (int i = 0; i < positionsToRemove.length; i++) {
+                Log.v("SAVED POSITIONS", String.valueOf(positionsToRemove[i]));
+            }
+=======
+                    Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
+>>>>>>> Features
+
+        }
+
+        items = new String[0];
+
+        customAdapter.clear();
+
+        populatedArrayList();
+
+        customAdapter.notifyDataSetChanged();
+
+<<<<<<< HEAD
+    }
+=======
+                        // check the internet connection and run MyAsyncTask if available
+                        if (checkConnection()) {
+                            new MyAsyncTask().execute();
+                        }
+>>>>>>> Features
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+>>>>>>> currencies_activity
+
+        flagBase = (ImageView) findViewById(R.id.flag_base);
+
+>>>>>>> currencies_activity
+=======
+
+<<<<<<< HEAD
+        flagBase = (ImageView) findViewById(R.id.flag_base);
+
+>>>>>>> context_menu_on_listview
+=======
+=======
+                        // check the internet connection and run MyAsyncTask if available
+                        if (checkConnection()) {
+                            new MyAsyncTask().execute();
+                        }
+                    }
+                }
+>>>>>>> Features
+
+        flagBase = (ImageView) findViewById(R.id.flag_base);
+=======
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // inflate my special menu toggle button, add item to menu, then set the layout xml file i've created to inflate into that menu posotion
+        MenuItem menuPinToggle = menu.findItem(R.id.menu_pin_toggle_id);
+        menuPinToggle.setActionView(R.layout.menu_pin_toggle_layout);
+
+        // initialise the ToggleButton which is in the menuItem, which has my inflated layout (which the button is in)
+        menuPinToggleButton = (ToggleButton) menu.findItem(R.id.menu_pin_toggle_id).getActionView().findViewById(R.id.menu_main_activity_pin_toggle);
+
+        // get the sharedPreference for the ToggleButton state (if nothing exists then 'false' is default)
+        pinToggleSavedState = sharedPreferences.getBoolean("PIN CHECKED STATE", false);
+
+        // set the ToggleButton state according to the state in the sharedPreference
+        menuPinToggleButton.setChecked(pinToggleSavedState);
+
+        if (menuPinToggleButton.isChecked()) {
+
+            customAdapter.pinToggleOn = true;
+            customAdapter.clear();
+            populatedArrayList();
+            customAdapter.notifyDataSetChanged();
+        } else {
+
+            customAdapter.pinToggleOn = false;
+            customAdapter.clear();
+            populatedArrayList();
+            customAdapter.notifyDataSetChanged();
+        }
+
+        menuPinToggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // save the checked state of the ToggleButton
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("PIN CHECKED STATE", menuPinToggleButton.isChecked());
+                editor.apply();
+
+                if (menuPinToggleButton.isChecked() && flagAndCurrencyList.size() != 0) {
+
+                    // get the listView first visible position (i will get the index position and not a partial position)
+                    indexPosition = listView.getFirstVisiblePosition();
+                    // to factor the listView for a partial scrolled position this works out the difference between
+                    // index item 0 and current top view - set when going back to  pinToggle OFF
+                    top = listView.getChildAt(0).getTop();
+
+                    // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
+                    pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
+
+                    if (pinnedPositionsToKeep.contains("[")) {
+
+                        // function to change string which contains list of number in format [1,2,3,4] back to int array
+                        // remove [ ] from beginning of string
+
+<<<<<<< HEAD
+                        pinnedItems = pinnedPositionsToKeep.substring(1, pinnedPositionsToKeep.length() - 1).split(",");
+                        pinnedPositions = new int[pinnedItems.length];
+=======
+                        // check the internet connection and run MyAsyncTask if available
+                        if (checkConnection()) {
+
+                            // no need to do internet lookup if a currency has been chosen
+                            // just pass in the 'result' from the last saved currency lookup
+                            // into the onPostExecute function from saved prefs
+                            String result = sharedPreferences.getString("JSONParser RESULT SAVED PREF", "");
+                            new MyAsyncTask().onPostExecute(result);
+                        }
+>>>>>>> Features
+
+                        for (int i = 0; i < pinnedItems.length; i++) {
+
+                            pinnedPositions[i] = Integer.parseInt(pinnedItems[i].trim());
+                        }
+
+                        Log.v("SAVED POSITIONS", Arrays.toString(pinnedPositions));
+
+                    } else {
+                        pinnedPositions = new int[32];
+
+<<<<<<< HEAD
+=======
+                        // check the internet connection and run MyAsyncTask if available
+                        if (checkConnection()) {
+
+                            // dummy string just to put in the method as a requirement (not required as rateArray[] is used in onPostExecute)
+                            String result = sharedPreferences.getString("JSONParser RESULT ", "");
+                            new MyAsyncTask().onPostExecute(result);
+                        }
+>>>>>>> Features
+                    }
+                    customAdapter.pinToggleOn = true;
+                    customAdapter.clear();
+                    populatedArrayList();
+                    customAdapter.notifyDataSetChanged();
+                }
+
+<<<<<<< HEAD
+                if (!menuPinToggleButton.isChecked()) {
+
+                    customAdapter.pinToggleOn = false;
+                    customAdapter.clear();
+                    populatedArrayList();
+                    customAdapter.notifyDataSetChanged();
+
+                    // get the previous listView position
+                    listView.setSelectionFromTop(indexPosition, top);
+                }
+                pinnedItems = new String[0];
+=======
+                // delay the keyboard from disappearing
+                new Timer().schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+
+                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
+                            }
+                        },
+                        2000
+                );
+
+>>>>>>> Features
+            }
+        });
+        return true;
+    }
+
+<<<<<<< HEAD
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+         menuPinToggleButton.setChecked(false);
+        // save the checked state of the ToggleButton
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("PIN CHECKED STATE", menuPinToggleButton.isChecked());
+        editor.apply();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.action_reset_pinned) {
+
+            // run method to clear pinned positions
+            resetPinnedCurrencies();
+
+            // get updated list and re-populate customerAdapter
+            populatedArrayList();
+            customAdapter.notifyDataSetChanged();
+            return true;
+        }
+=======
+    public static void swapBaseCurrency(String currency) {
+
+        String spinnerItem;
+
+        for (int i = 0; i < currencyFromSpinner.getCount(); i++) {
+
+            spinnerItem = currencyFromSpinner.getItemAtPosition(i).toString();
+
+            if (currency.equals(spinnerItem.substring(0, 3))) {
+
+                currencyFromSpinner.setSelection(i);
+            }
+        }
+    }
+
+    // create method to check connection status before executing MyAsyncTask
+    // return true if available
+    public boolean checkConnection() {
+
+        // system service connectivity manager
+        // include in manifest : <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+        ConnectivityManager checkNetworkStatus = (ConnectivityManager)
+                this.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // network info will get all the status
+        NetworkInfo networkInfo = checkNetworkStatus.getActiveNetworkInfo();
+
+        // check that the state is 'connected' (either wifi or phone network - only 1 connection type
+        // can exist at the same time
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+
+        } else {
+
+            Toast.makeText(getApplication(), "No Internet Connection Available",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    private class MyAsyncTask extends AsyncTask<String, String, String>
+    {
+        @Override
+        protected void onPreExecute() {
+
+            progressBar.startAnimation(progressBarAnimation);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String[] params) {
+
+            // Get the standard parameters associated with the default http client
+            HttpParams httpParams = new BasicHttpParams();
+            // Set a parameter for Connection timeout set at 30 seconds
+            HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
+            // Set some parameters for Socket timeout set at 30 seconds
+            HttpConnectionParams.setSoTimeout(httpParams, 3000);
+
+            // HTTP Client that supports streaming uploads and downloads apply the adjusted
+            // httpParams to the client
+            DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
+
+>>>>>>> Features
 
         if (id == R.id.action_settings) {
 
@@ -1159,7 +1553,6 @@ public class MainActivity extends ActionBarActivity {
             for (int i = 0; i < currencyCode.length; i++) {
 
                 getRatesLatest = getRatesLatest + currencyFromSubsting + currencyCode[i] + "%22%2C%22";
-
             }
 
             // remove last "%22%2C%22" reassigning the string using substring to minus 9 characters
@@ -1167,10 +1560,10 @@ public class MainActivity extends ActionBarActivity {
 
             getRatesFinal = getRatesLatest + getGetRatesURLB;
 
-
             HttpPost httpPost = new HttpPost(getRatesFinal);
 >>>>>>> currencies_activity
 
+<<<<<<< HEAD
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
 <<<<<<< HEAD
@@ -1179,6 +1572,8 @@ public class MainActivity extends ActionBarActivity {
                             new MyAsyncTask().execute();
                         }
 =======
+=======
+>>>>>>> Features
             Log.v("HTTPS Address ", getRatesFinal);
 >>>>>>> currencies_activity
 
@@ -1202,6 +1597,7 @@ public class MainActivity extends ActionBarActivity {
 
         listView.setAdapter(customAdapter);
 
+<<<<<<< HEAD
 
         populatedArrayList();
 
@@ -4126,13 +4522,137 @@ public class MainActivity extends ActionBarActivity {
 =======
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
+=======
+                try {
 
-            customAdapter.clear();
+                    // Get a response if any from the web service
+                    HttpResponse response = httpClient.execute(httpPost);
 
-            populatedArrayList();
+                    // The content from the requested URL along with headers, etc.
+                    HttpEntity entity = response.getEntity();
 
-            customAdapter.notifyDataSetChanged();
+                    // Get the main content from the URL
+                    inputStream = entity.getContent();
 
+                    Log.v("INPUT STREAM ", inputStream.toString());
+
+                    // JSON is UTF-8 by default
+                    // BufferedReader reads data from the InputStream until the Buffer is full
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+
+                    //Store the data
+                    StringBuilder theStringBuilder = new StringBuilder();
+
+                    String line = null;
+
+                    while ((line = reader.readLine()) != null) {
+
+                        theStringBuilder.append(line + "\n");
+                    }
+
+                    // Store the complete data in result
+                    result = theStringBuilder.toString();
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // Close the InputStream when you're done with it
+                finally {
+
+                    try {
+                        if (inputStream != null) inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            progressBar.setVisibility(View.INVISIBLE);
+            progressBar.clearAnimation();
+
+            // Holds Key Value pairs from a JSON source
+            JSONObject jsonObject;
+
+            if (result != null ) {
+                try {
+
+                    Log.v("JSONParser RESULT ", result);
+
+                    // put the returned String result into sharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("JSONParser RESULT SAVED PREF", result);
+                    editor.putString(currencyFromSpinner.getSelectedItem().toString(), result);
+                    editor.apply();
+
+                    // Get the root JSONObject
+                    jsonObject = new JSONObject(result);
+
+                    // Get the JSON object named query
+                    JSONObject queryJSONObject = jsonObject.getJSONObject("query");
+
+                    // Get the JSON object named results inside of the query object
+                    JSONObject resultsJSONObject = queryJSONObject.getJSONObject("results");
+
+                    // Get the JSON object named rate inside of the results object
+                    // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
+
+
+                    // Get the JSON array named rate inside of the results object
+                    JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
+                    int arrayLength = jsonArray.length();
+
+                    for (int i = 0; i < arrayLength; i++) {
+
+                        JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
+
+                        rateArray[i] = currencyJSONObject.getString("Rate");
+
+                        Log.v("CURRENCY FROM WEB ", rateArray[i]);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < rateArray.length; i++) {
+
+                    // parse the String rateArray to double
+                    convertedAmount[i] = Double.parseDouble(rateArray[i]);
+
+                    finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
+                }
+
+                for (int i = 0; i < rateArray.length; i++) {
+
+                    // convert back the rate but to 2 decimal places in String format
+                    finalRateArray[i] = String.valueOf((String.format("%.03f", convertedAmount[i])));
+                    // convert the rate amount to string 2 decimal places
+                    finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
+
+                    Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
+                }
+>>>>>>> Features
+
+                customAdapter.clear();
+
+                populatedArrayList();
+
+                customAdapter.notifyDataSetChanged();
+
+            } else {
+                Toast.makeText(getApplication(), "Error : Connection Timeout",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
@@ -4173,7 +4693,6 @@ public class MainActivity extends ActionBarActivity {
                 "flag_ic_try_29",
                 "flag_ic_usd_30",
                 "flag_ic_zar_31"};
-
         Arrays.sort(flag);
 
         currencyCode = new String[]{
@@ -4209,7 +4728,6 @@ public class MainActivity extends ActionBarActivity {
                 "TRY",
                 "USD",
                 "ZAR"};
-
         Arrays.sort(currencyCode);
 
         currency = new String[]{
@@ -4217,7 +4735,7 @@ public class MainActivity extends ActionBarActivity {
                 "01 Bulgarian Lev",
                 "02 Brazilian Real",
                 "03 Canadian Dollar",
-                "04 CH Francs",
+                "04 Swiss Franc",
                 "05 Chinese Yuan",
                 "06 Czech Koruna",
                 "07 Danish Krone",
@@ -4230,7 +4748,7 @@ public class MainActivity extends ActionBarActivity {
                 "14 Israeli Shekel",
                 "15 Indian Rupee",
                 "16 Japanese Yen",
-                "17 Korean Won",
+                "17 South Korean Won",
                 "18 Lithuanian Litas",
                 "19 Mexican Peso",
                 "20 Norwegian Krone",
@@ -4245,9 +4763,7 @@ public class MainActivity extends ActionBarActivity {
                 "29 New Turkish Lira",
                 "30 United States Dollar",
                 "31 South African Rand"};
-
         Arrays.sort(currency);
-
 
         for (int i = 0; i < flag.length; i++) {
 
@@ -4256,10 +4772,8 @@ public class MainActivity extends ActionBarActivity {
             currencyFlagList.put("flagType", flag[i]);
             currencyFlagList.put("currencyCode", currencyCode[i]);
             currencyFlagList.put("currencyType", currency[i]);
-
-            // add the returned values from the http query, only if the populated rate array is the same
-
-                currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
+            currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
+            currencyFlagList.put("rateAmountText", finalRateArray[i]);
 
 
             flagAndCurrencyList.add(currencyFlagList);
@@ -4270,19 +4784,19 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        // Remove positions from currencyActivity from retrieved int[] positionsToRemove from onResume()
-        // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception
-        // as the PositionsToRemove array won't have been initialised i.e. int[] myInt = new int[32]
+        // Remove positions from settingsActivity from retrieved int[] settingsRemovedPositionsIntArray from onResume() and from menuPinToggle
+        // Make sure there is something in the String passed from SettingsActivity otherwise null pointer exception (try/catch)
         // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
         try {
-            for (int i = 31; i >= 0; i--) {
+            for (int i = (flagAndCurrencyList.size() - 1); i >= 0; i--) {
 
-                if (positionsToRemove[i] != 0) {
+                if (settingsRemovedPositionsIntArray[i] != 0) {
 
                     // remove position - minus 1 because array has ALL zero's in 32 holders (default),
                     // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
-                    flagAndCurrencyList.remove((positionsToRemove[i] - 1));
+                    flagAndCurrencyList.remove((settingsRemovedPositionsIntArray[i] - 1));
                 }
+
             }
 
         } catch (NullPointerException e) {
@@ -4360,9 +4874,31 @@ public class MainActivity extends ActionBarActivity {
 }
 >>>>>>> Features
 
+<<<<<<< HEAD
 =======
         return flagAndCurrencyList;
+=======
+        // any 'Positions To Remove' from the settings activity been done so we have the new
+        // flagAndCurrencyList size, so anything that remove using the 'pinned positions' int array
+        // will be in relation to the correct result currencies list
+        try {
+            for (int i = (flagAndCurrencyList.size() - 1); i >= 0; i--) {
+>>>>>>> Features
 
+                // check to see if the menuToggle is checked
+                if (menuPinToggleButton.isChecked()) {
+
+                    if (pinnedPositions[i] == 0) {
+
+                        flagAndCurrencyList.remove(i);
+                    }
+                }
+            }
+
+        } catch (NullPointerException e) {
+
+        }
+        return flagAndCurrencyList;
     }
 
 }

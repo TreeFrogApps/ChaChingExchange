@@ -9,6 +9,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <dimen name="text_18sp">18sp</dimen>
 >>>>>>> Features
@@ -21,5 +22,8 @@
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
+=======
+    <dimen name="text_18sp">18sp</dimen>
+>>>>>>> Features
 
 </resources>

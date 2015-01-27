@@ -7,6 +7,7 @@ import android.content.Context;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.graphics.drawable.Drawable;
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -34,6 +35,10 @@ import android.view.LayoutInflater;
 >>>>>>> Features
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+=======
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+>>>>>>> Features
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -70,6 +75,7 @@ import android.widget.TextView;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.widget.Toast;
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -108,10 +114,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 >>>>>>> currencies_activity
+=======
+
+import java.util.ArrayList;
+import java.util.Arrays;
+>>>>>>> Features
 import java.util.HashMap;
 
 public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -139,6 +151,8 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 =======
 =======
 >>>>>>> Features
+=======
+>>>>>>> Features
     int[] positionsToPin;
     String[] pinnedItems;
 
@@ -147,6 +161,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
     SharedPreferences sharedPreferences;
     String pinnedPositionsToKeep;
+<<<<<<< HEAD
     private final Context context;
     private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
 <<<<<<< HEAD
@@ -168,12 +183,17 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
     private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
     private MainActivity mainActivity;
 >>>>>>> currencies_activity
+=======
+    private final Context context;
+    private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
+>>>>>>> Features
 
     private static class ViewHolder {
         protected ImageView flagType;
         protected TextView convertedCurrencyCode;
         protected TextView convertedCurrencyAmount;
         protected TextView convertedCurrencyType;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -197,6 +217,8 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         protected Button context_menu;
 >>>>>>> context_menu_on_listview
 =======
+=======
+>>>>>>> Features
         protected TextView currencyRateText;
         protected ImageView pinToggle;
         protected Button context_menu;
@@ -227,16 +249,19 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
+=======
+        // initialise preferences
+        this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+>>>>>>> Features
         this.context = context;
         this.flagAndCurrencyList = flagAndCurrencyList;
-        this.mainActivity = new MainActivity();
-
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -326,10 +351,13 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
 
         final HashMap<String, String> flagAndCurrencyItem = flagAndCurrencyList.get(position);
+<<<<<<< HEAD
 >>>>>>> Features
 =======
         HashMap<String, String> flagAndCurrencyItem = flagAndCurrencyList.get(position);
 >>>>>>> currencies_activity
+=======
+>>>>>>> Features
 
         final ViewHolder viewHolder;
 
@@ -396,6 +424,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             viewHolder.context_menu = (ImageView) convertView.findViewById(R.id.context_menu);
 =======
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
@@ -440,6 +469,20 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 
 >>>>>>> currencies_activity
+=======
+            viewHolder.currencyRateText = (TextView) convertView.findViewById(R.id.currencyRateText);
+            viewHolder.pinToggle = (ImageView) convertView.findViewById(R.id.list_view_pin);
+            viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
+
+            // check the menuPinToggleState and put in relevant pin on / off
+            if (pinToggleOn == true)
+                viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_on));
+            else {
+
+                viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_off));
+            }
+
+>>>>>>> Features
             // store the information in a tag
             convertView.setTag(viewHolder);
 
@@ -510,6 +553,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Features
 =======
 =======
@@ -530,10 +574,13 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> Features
         // context menu for each row (3 dots menu)
         // set setOnClickListener for button
         viewHolder.context_menu.setOnClickListener(new View.OnClickListener() {
             @Override
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -574,6 +621,9 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 =======
 >>>>>>> currencies_activity
             public void onClick(View convertView) {
+=======
+            public void onClick(final View convertView) {
+>>>>>>> Features
 
                 //create popUpMenu (context menu)
                 Context style = new ContextThemeWrapper(getContext(), R.style.PopUpMenu);
@@ -606,6 +656,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> currencies_activity
 =======
@@ -614,14 +665,79 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 >>>>>>> currencies_activity
                                 Toast.makeText(getContext(), "Pin currency selected", Toast.LENGTH_SHORT).show();
                                 return true;
+=======
+                                if (pinToggleOn == true) {
+                                    // this state happens only when the pinToggleButton is ON - do not want ability to 'pin' when this state is enabled,
+                                    // will only enable when list contains ALL currencies but then it doesn't matter!
 
-                            case R.id.menu_remove:
+                                } else {
 
-                                Toast.makeText(getContext(), "Remove selected", Toast.LENGTH_SHORT).show();
+                                    // initialise positionsToPin in case the 'if' statement is invalid and skipped
+                                    // otherwise nullPointerException
+                                    positionsToPin = new int[flagAndCurrencyList.size()];
+
+                                    // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
+                                    pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
+
+                                    if (pinnedPositionsToKeep.contains("[")) {
+
+                                        Log.v("SAVED PREFERENCE STRING", pinnedPositionsToKeep);
+
+                                        // function to change string which contains list of number in format [1,2,3,4] back to int array
+                                        // remove [ ] from beginning of string
+
+                                        pinnedItems = pinnedPositionsToKeep.substring(1, pinnedPositionsToKeep.length() - 1).split(",");
+                                        positionsToPin = new int[pinnedItems.length];
+>>>>>>> Features
+
+                                        for (int i = 0; i < pinnedItems.length; i++) {
+
+                                            positionsToPin[i] = Integer.parseInt(pinnedItems[i].trim());
+                                        }
+
+                                        for (int i = 0; i < positionsToPin.length; i++) {
+                                            Log.v("SAVED PINNED POSITIONS", String.valueOf(positionsToPin[i]));
+                                        }
+
+                                    }
+                                    // loop through entire list checking to pinned positions
+                                    for (int i = 0; i < positionsToPin.length; i++) {
+
+                                        if (position == i) {
+
+                                            positionsToPin[i] = (position + 1);
+                                        }
+                                    }
+
+                                    for (int i = 0; i < positionsToPin.length; i++) {
+                                        Log.v("POSITION TO ADD TO PIN LIST", String.valueOf(positionsToPin[i]));
+                                    }
+
+                                    // Cannot store int array in SharedPreferences - must be converted to String format
+                                    String positionsToString = Arrays.toString(positionsToPin);
+
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    // Get SharedPreferences and store as a string - NO NEED TO CLEAR WHEN SWAPPING ACTIVITIES!
+                                    // It is overwritten each time 'putString' 'apply' is used (not appended as its a concatenated single string!)
+                                    editor.putString("PINNED_POSITIONS_TO_KEEP", positionsToString);
+                                    editor.apply();
+
+                                }
                                 return true;
 
-                            case R.id.menu_move_to_top:
+                            case R.id.menu_swap_to_base_currency:
 
+                                // Toast.makeText(getContext(), "Set as base selected", Toast.LENGTH_SHORT).show();
+
+                                currencyCode = viewHolder.convertedCurrencyCode.getText().toString();
+
+                                // pass in the 3 letter currency code for the appropriate listItem
+                                // DIRECTLY reference the method as it is static
+                                // any reference inside the method to variables used elsewhere also have to be classed as static
+                                // variables declared in the class don't
+                                MainActivity.swapBaseCurrency(currencyCode);
+
+<<<<<<< HEAD
                                 Toast.makeText(getContext(), "Move to top selected", Toast.LENGTH_SHORT).show();
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -709,6 +825,8 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> Features
                                 return true;
                             default:
                                 return false;
@@ -719,6 +837,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> currencies_activity
 =======
@@ -727,13 +846,11 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 >>>>>>> currencies_activity
 
 
+=======
+>>>>>>> Features
                 });
-
                 popUpMenu.show();
-
             }
-
-
         });
 <<<<<<< HEAD
 <<<<<<< HEAD
