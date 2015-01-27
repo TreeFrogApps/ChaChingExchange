@@ -5,23 +5,36 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <include layout="@layout/my_tool_action_bar"></include>
+    <include layout="@layout/my_tool_action_bar"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="3dp"
+<<<<<<< HEAD
         android:background="@drawable/gradient"></LinearLayout>
+=======
+        android:background="@drawable/gradient"/>
+>>>>>>> Features
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_horizontal_margin"
+=======
+        android:orientation="horizontal"
+>>>>>>> Features
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_vertical_margin"
         android:paddingTop="@dimen/activity_horizontal_margin">
 
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
 
+<<<<<<< HEAD
         <ImageView
             android:id="@+id/flag_base"
             android:layout_width="wrap_content"
@@ -41,12 +54,73 @@
 =======
             android:src="@drawable/flag_ic_holder" />
 >>>>>>> context_menu_on_listview
+=======
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/enter_amount"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:textAlignment="gravity"
+            android:textColor="@color/myRed"
+            android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+        <EditText
+            android:paddingBottom="0dp"
+            android:id="@+id/amountEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColorHint="@color/colorAccent"
+            android:layout_marginStart="4dp"
+            android:inputType="numberDecimal"
+            android:imeOptions="actionDone"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="32sp"/>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="end|center_vertical">
+
+        <ImageView
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:background="@drawable/progress_bar_00"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin">
+>>>>>>> Features
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+<<<<<<< HEAD
             android:paddingTop="12dp"
             android:focusable="false"
             android:focusableInTouchMode="true"
@@ -63,10 +137,34 @@
                 android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_bigger" />
+=======
+            android:paddingTop="12dp">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/flag_base"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/currency_Flag"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/flag_ic_00_empty" />
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+>>>>>>> Features
 
             <Spinner
                 android:id="@+id/spinnerCurrencyFrom"
                 android:layout_width="0dp"
+<<<<<<< HEAD
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -76,6 +174,14 @@
                 android:entries="@array/currency_spinner"
                 android:spinnerMode="dropdown"
                 />
+=======
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:background="@drawable/spinner_menu"
+                 />
+                </LinearLayout>
+>>>>>>> Features
 
 
         </LinearLayout>
@@ -87,9 +193,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:orientation="vertical"
-
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -113,7 +217,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@null"
+<<<<<<< HEAD
                 android:dividerHeight="0dp" />
+=======
+                android:dividerHeight="0dp"
+                android:smoothScrollbar="true" />
+>>>>>>> Features
         </LinearLayout>
 
 

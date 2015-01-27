@@ -5,6 +5,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     tools:style="AppTheme.Base.PopUpMenu.Overlay">
 =======
     tools:style="AppTheme.Base"
@@ -16,11 +17,16 @@
 =======
     tools:style="AppTheme.Base.PopUpMenu.Overlay">
 >>>>>>> context_menu_on_listview
+=======
+    tools:style="AppTheme.Base"
+    >
+>>>>>>> Features
 
     <item android:id="@+id/menu_pin_currency"
         android:title="@string/popupmenu_pin_currency"
         android:orderInCategory="1"
         app:showAsAction="never"
+<<<<<<< HEAD
 
         />
 
@@ -35,4 +41,13 @@
         android:orderInCategory="3"
         app:showAsAction="never"
         />
+=======
+        />
+
+    <item android:id="@+id/menu_swap_to_base_currency"
+        android:title="@string/popupmenu_swap_to_base"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        />
+>>>>>>> Features
 </menu>
