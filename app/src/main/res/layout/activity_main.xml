@@ -12,10 +12,14 @@
         android:layout_height="3dp"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:background="@drawable/gradient"></LinearLayout>
 =======
         android:background="@drawable/gradient"/>
 >>>>>>> Features
+=======
+        android:background="@drawable/gradient"></LinearLayout>
+>>>>>>> currencies_activity
 =======
         android:background="@drawable/gradient"></LinearLayout>
 >>>>>>> currencies_activity
@@ -25,11 +29,16 @@
         android:layout_height="wrap_content"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_horizontal_margin"
 =======
         android:orientation="horizontal"
 >>>>>>> Features
+=======
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+>>>>>>> currencies_activity
 =======
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_horizontal_margin"
@@ -50,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/currency_Flag"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -127,6 +137,9 @@
 =======
             android:src="@drawable/flag_ic_00_empty" />
 >>>>>>> currencies_activity
+=======
+            android:src="@drawable/flag_ic_00_empty" />
+>>>>>>> currencies_activity
 
 
         <LinearLayout
@@ -135,6 +148,9 @@
             android:orientation="horizontal"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
             android:paddingTop="12dp"
@@ -153,6 +169,7 @@
                 android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_bigger" />
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
             android:paddingTop="12dp">
@@ -179,12 +196,17 @@
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> currencies_activity
 
             <Spinner
                 android:id="@+id/spinnerCurrencyFrom"
                 android:layout_width="0dp"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
                 android:layout_weight="2"
@@ -197,6 +219,7 @@
                 android:spinnerMode="dropdown"
                 />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -205,6 +228,8 @@
                  />
                 </LinearLayout>
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 
@@ -244,11 +269,15 @@
                 android:divider="@null"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 android:dividerHeight="0dp" />
 =======
                 android:dividerHeight="0dp"
                 android:smoothScrollbar="true" />
 >>>>>>> Features
+=======
+                android:dividerHeight="0dp" />
+>>>>>>> currencies_activity
 =======
                 android:dividerHeight="0dp" />
 >>>>>>> currencies_activity

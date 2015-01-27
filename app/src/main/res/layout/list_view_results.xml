@@ -19,6 +19,9 @@
             android:id="@+id/flagType"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
             android:layout_width="wrap_content"
@@ -51,6 +54,7 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
+<<<<<<< HEAD
 <<<<<<< HEAD
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -281,6 +285,50 @@
 
             </LinearLayout>
 
+=======
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/activity_vertical_margin">
+
+                    <TextView
+                        android:id="@+id/convertedCurrencyCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/currency_code"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_bigger" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:id="@+id/convertedCurrencyType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="@string/currency_results_code"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_bigger" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+>>>>>>> currencies_activity
         </LinearLayout>
 
         <Button
@@ -290,6 +338,9 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/spinner_menu"
             android:onClick="showMenu" />
+<<<<<<< HEAD
+>>>>>>> currencies_activity
+=======
 >>>>>>> currencies_activity
 
                 <TableRow
@@ -313,6 +364,7 @@
 <<<<<<< HEAD
             </TableRow>
 
+<<<<<<< HEAD
         </TableLayout>
 
         <ImageView
@@ -356,6 +408,8 @@
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> currencies_activity
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -379,11 +433,15 @@
 <<<<<<< HEAD
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 </LinearLayout>
 =======
 </LinearLayout>
     
 >>>>>>> Features
+=======
+</LinearLayout>
+>>>>>>> currencies_activity
 =======
 </LinearLayout>
 >>>>>>> currencies_activity
