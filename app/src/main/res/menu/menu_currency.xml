@@ -7,9 +7,12 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 =======
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -35,6 +38,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
@@ -44,6 +48,8 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======

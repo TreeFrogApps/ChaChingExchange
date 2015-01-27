@@ -6,6 +6,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -16,6 +19,7 @@
     <item android:id="@+id/action_choose_currencies"
         android:title="@string/choose_currencies"
         android:orderInCategory="1"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -47,5 +51,7 @@
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
         app:showAsAction="never" />
 </menu>

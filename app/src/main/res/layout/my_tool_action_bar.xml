@@ -13,6 +13,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     app:title="@string/app_name"
 =======
 >>>>>>> Features
@@ -24,6 +25,9 @@
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
+=======
+    app:title="@string/app_name"
+>>>>>>> currencies_activity
 />
 
 

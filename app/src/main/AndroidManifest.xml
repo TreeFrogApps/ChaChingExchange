@@ -17,6 +17,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             android:screenOrientation="portrait">
 =======
             android:launchMode="singleTop"
@@ -34,6 +35,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
 >>>>>>> Features
+=======
+            android:screenOrientation="portrait">
+>>>>>>> currencies_activity
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,6 +45,7 @@
             </intent-filter>
         </activity>
         <activity
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -93,6 +98,12 @@
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
+=======
+            android:name=".CurrencyActivity"
+            android:label="@string/title_activity_currency"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+>>>>>>> currencies_activity
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.home.markkeen.exchangerates.MainActivity" />

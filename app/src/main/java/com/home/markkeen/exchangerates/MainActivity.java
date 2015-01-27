@@ -9,6 +9,7 @@ import android.content.Context;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.content.SharedPreferences;
 =======
 >>>>>>> context_menu_on_listview
@@ -39,6 +40,10 @@ import android.content.SharedPreferences;
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
+=======
+import android.content.Intent;
+import android.content.SharedPreferences;
+>>>>>>> currencies_activity
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -53,6 +58,7 @@ import android.view.View;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -65,6 +71,8 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -80,6 +88,7 @@ import android.widget.Spinner;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import android.widget.Toast;
 import android.widget.ToggleButton;
 =======
@@ -102,6 +111,8 @@ import android.widget.ToggleButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -121,6 +132,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -159,6 +171,10 @@ import java.util.HashMap;
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
+=======
+import java.util.Arrays;
+import java.util.HashMap;
+>>>>>>> currencies_activity
 
 
 public class MainActivity extends ActionBarActivity {
@@ -187,6 +203,7 @@ public class MainActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
@@ -194,6 +211,8 @@ public class MainActivity extends ActionBarActivity {
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
             // holder flag for 'Choose a base currency' position in Select currency from web spinner
             R.drawable.flag_ic_00_empty,
             R.drawable.flag_ic_aud_00, R.drawable.flag_ic_bgn_01, R.drawable.flag_ic_brl_02,
@@ -207,6 +226,7 @@ public class MainActivity extends ActionBarActivity {
             R.drawable.flag_ic_ron_24, R.drawable.flag_ic_rub_25, R.drawable.flag_ic_sek_26,
             R.drawable.flag_ic_sgd_27, R.drawable.flag_ic_thb_28, R.drawable.flag_ic_try_29,
             R.drawable.flag_ic_usd_30, R.drawable.flag_ic_zar_31,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -280,11 +300,16 @@ public class MainActivity extends ActionBarActivity {
     private CustomAdapter customAdapter;
 >>>>>>> currencies_activity
 =======
+=======
+>>>>>>> currencies_activity
     };
 
     SharedPreferences sharedPreferences;
 
     private CustomAdapter customAdapter;
+<<<<<<< HEAD
+>>>>>>> currencies_activity
+=======
 >>>>>>> currencies_activity
     private ListView listView;
 
@@ -294,6 +319,7 @@ public class MainActivity extends ActionBarActivity {
     String getRatesFinal;
     String getAmount;
     double getAmountAsDouble;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -375,6 +401,8 @@ public class MainActivity extends ActionBarActivity {
 =======
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> currencies_activity
     String[] items;
     int[] positionsToRemove;
     String removedPositions;
@@ -383,16 +411,20 @@ public class MainActivity extends ActionBarActivity {
     String[] rateArray = new String[32];
     String[] finalConvertedAmountText = new String[32];
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
     String[] currency;
     String[] flag;
     String[] currencyCode;
     String currencyFromType;
     String currencyFromSubsting;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -458,6 +490,10 @@ public class MainActivity extends ActionBarActivity {
 
     static ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
 >>>>>>> Features
+=======
+
+    ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
+>>>>>>> currencies_activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -484,6 +520,7 @@ public class MainActivity extends ActionBarActivity {
                 "TRY\t\tNew Turkish Lira", "USD\t\tUnited States Dollar", "ZAR\t\tSouth African Rand"};
 
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -520,11 +557,16 @@ public class MainActivity extends ActionBarActivity {
 
 =======
 =======
+=======
+
+        flagBase = (ImageView) findViewById(R.id.flag_base);
+>>>>>>> currencies_activity
 
         flagBase = (ImageView) findViewById(R.id.flag_base);
 
 <<<<<<< HEAD
         addItemExchangeRateFromSpinner();
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 
         flagBase = (ImageView) findViewById(R.id.flag_base);
@@ -532,19 +574,25 @@ public class MainActivity extends ActionBarActivity {
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
         // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
         pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
+=======
+>>>>>>> currencies_activity
 
         addItemExchangeRateFromSpinner();
 >>>>>>> Features
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> context_menu_on_listview
 =======
 =======
+=======
+>>>>>>> currencies_activity
         populatedArrayList();
 
         // create instance of customAdapter which extends ArrayAdapter (CustomAdapter.java)
         customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         listView = (ListView) findViewById(R.id.listView);
@@ -562,10 +610,19 @@ public class MainActivity extends ActionBarActivity {
     // THIS MEANS THAT THE FULL FLAGANDCURRNCYLIST IS ALWAYS INITIALLY POPULATED
     // HOWEVER IF ANY HAVE BEEN REMOVED THIS WILL BE REPLACED DURING ONRESUME THIS MEANS
     // WHEN SHARED PREFERENCES IS CALLED ANY CHANGES WILL STILL BE THERE EVEN WHEN APP WAS CLOSED
+=======
+
+        listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(customAdapter);
+    }
+
+
+>>>>>>> currencies_activity
     @Override
     protected void onResume() {
         super.onResume();
 
+<<<<<<< HEAD
         // get settings sharedPreferences string
         settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS TO REMOVE", "");
 
@@ -574,6 +631,43 @@ public class MainActivity extends ActionBarActivity {
 
             // function to change string which contains list of number in format [1,2,3,4] back to int array
             // remove [ ] from beginning of string
+=======
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
+        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
+
+        if (removedPositions.contains("[")) {
+
+            // function to change string which contains list of number in format [1,2,3,4] back to int array
+            // remove [ ] from beginning of string
+
+            items = removedPositions.substring(1, removedPositions.length() - 1).split(",");
+            positionsToRemove = new int[items.length];
+
+            for (int i = 0; i < items.length; i++) {
+
+                positionsToRemove[i] = Integer.parseInt(items[i].trim());
+            }
+
+            for (int i = 0; i < positionsToRemove.length; i++) {
+                Log.v("SAVED POSITIONS", String.valueOf(positionsToRemove[i]));
+            }
+
+        }
+
+        items = new String[0];
+
+        customAdapter.clear();
+
+        populatedArrayList();
+
+        customAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+>>>>>>> currencies_activity
 
             settingsRemovedPositionsStringArray = settingsRemovedPositionsString.substring(1, settingsRemovedPositionsString.length() - 1).split(",");
             settingsRemovedPositionsIntArray = new int[settingsRemovedPositionsStringArray.length];
@@ -784,6 +878,12 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_choose_currencies) {
+
+            Intent intent = new Intent(this, CurrencyActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         if (id == R.id.action_about) {
 
@@ -806,6 +906,7 @@ public class MainActivity extends ActionBarActivity {
         // remove the save pinned positions string from shared Prefs
         sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
 
+<<<<<<< HEAD
         // reset the pinnedPositionsToKeep string from the customAdapter
         customAdapter.pinnedPositionsToKeep = "";
 
@@ -910,6 +1011,43 @@ public class MainActivity extends ActionBarActivity {
 =======
 =======
 >>>>>>> currencies_activity
+=======
+                // set flag according to spinner position and currency/country
+                flagBase.setImageResource(flags[position]);
+
+                // position 0 is the initial 'Choose a base currency' - no action required, only do if it is not that one!
+                if (!currencyFromSpinner.getSelectedItem().toString().equals("Choose a base currency")) {
+
+
+                    currencyFromType = (currencyFromSpinner.getSelectedItem().toString());
+                    currencyFromSubsting = currencyFromType.substring(0, 3);
+
+
+
+                    Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
+
+
+                    getAmount = amountEditText.getText().toString();
+
+                    Log.v("GET AMOUNT", getAmount);
+
+                    if (!getAmount.equals("")) {
+
+                        getAmountAsDouble = Double.parseDouble(getAmount);
+
+                        new MyAsyncTask().execute();
+
+                    } else {
+
+                        getAmount = "0.00";
+
+                        getAmountAsDouble = Double.parseDouble(getAmount);
+
+                        new MyAsyncTask().execute();
+
+                    }
+                }
+>>>>>>> currencies_activity
 
         customAdapter.clear();
 
@@ -957,6 +1095,7 @@ public class MainActivity extends ActionBarActivity {
 =======
 >>>>>>> currencies_activity
 
+<<<<<<< HEAD
 
         populatedArrayList();
 
@@ -966,6 +1105,28 @@ public class MainActivity extends ActionBarActivity {
         currencyFromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+=======
+                // check if a base currency has been set otherwise http: requests will be done against a 'null' currency - inefficient
+                if (!currencyFromSpinner.getSelectedItem().toString().equals("Choose a base currency")) {
+
+                    getAmount = amountEditText.getText().toString();
+
+                    if (!getAmount.equals("")) {
+
+                        getAmountAsDouble = Double.parseDouble(getAmount);
+
+                        new MyAsyncTask().execute();
+
+                    } else {
+
+                        getAmount = "0.00";
+
+                        getAmountAsDouble = Double.parseDouble(getAmount);
+
+                        new MyAsyncTask().execute();
+                    }
+                }
+>>>>>>> currencies_activity
 
                 // set flag according to spinner position and currency/country
                 flagBase.setImageResource(flags[position]);
@@ -983,18 +1144,43 @@ public class MainActivity extends ActionBarActivity {
                     Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
 
 
+<<<<<<< HEAD
                     getAmount = amountEditText.getText().toString();
 
                     Log.v("GET AMOUNT", getAmount);
 
                     if (!getAmount.equals("")) {
+=======
+            // Define that I want to use the POST method to grab data from
+            // the provided URL
+            getRatesLatest = getRatesURLA;
+
+            // loop round all the country codes concatenating into one big URL string
+            for (int i = 0; i < currencyCode.length; i++) {
+
+                getRatesLatest = getRatesLatest + currencyFromSubsting + currencyCode[i] + "%22%2C%22";
+
+            }
+
+            // remove last "%22%2C%22" reassigning the string using substring to minus 9 characters
+            getRatesLatest = getRatesLatest.substring(0, getRatesLatest.length() - 9);
+
+            getRatesFinal = getRatesLatest + getGetRatesURLB;
+
+
+            HttpPost httpPost = new HttpPost(getRatesFinal);
+>>>>>>> currencies_activity
 
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
+<<<<<<< HEAD
                         // check the internet connection and run MyAsyncTask if available
                         if (checkConnection()) {
                             new MyAsyncTask().execute();
                         }
+=======
+            Log.v("HTTPS Address ", getRatesFinal);
+>>>>>>> currencies_activity
 
                     } else {
 
@@ -1046,15 +1232,26 @@ public class MainActivity extends ActionBarActivity {
         // get settings sharedPreferences string
         settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS TO REMOVE", "");
 
+<<<<<<< HEAD
         // if it contains anything (it will always as soon as a switch is turned on/off for the first time
         if (settingsRemovedPositionsString.contains("[")) {
 
             // function to change string which contains list of number in format [1,2,3,4] back to int array
             // remove [ ] from beginning of string
+=======
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+>>>>>>> currencies_activity
 
             settingsRemovedPositionsStringArray = settingsRemovedPositionsString.substring(1, settingsRemovedPositionsString.length() - 1).split(",");
             settingsRemovedPositionsIntArray = new int[settingsRemovedPositionsStringArray.length];
 
+<<<<<<< HEAD
             for (int i = 0; i < settingsRemovedPositionsStringArray.length; i++) {
 =======
 
@@ -1063,11 +1260,26 @@ public class MainActivity extends ActionBarActivity {
 
 <<<<<<< HEAD
 
+=======
+                try {
+                    if (inputStream != null) inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Holds Key Value pairs from a JSON source
+            JSONObject jsonObject;
+>>>>>>> currencies_activity
 
                     Log.v("SELECT FROM SPINNER ", currencyFromSubsting);
 
+<<<<<<< HEAD
 
                     getAmount = amountEditText.getText().toString();
+=======
+                Log.v("JSONParser RESULT ", result);
+>>>>>>> currencies_activity
 
                     Log.v("GET AMOUNT", getAmount);
 
@@ -1077,6 +1289,7 @@ public class MainActivity extends ActionBarActivity {
 
                         new MyAsyncTask().execute();
 
+<<<<<<< HEAD
 =======
                 // check if a base currency has been set otherwise http: requests will be done against a 'null' currency - inefficient
                 if (!currencyFromSpinner.getSelectedItem().toString().equals("Choose a base currency")) {
@@ -1204,6 +1417,211 @@ public class MainActivity extends ActionBarActivity {
         String spinnerItem;
 
         for (int i = 0; i < currencyFromSpinner.getCount(); i++) {
+=======
+                // Get the JSON object named rate inside of the results object
+                // JSONObject currencyJSONObject = resultsJSONObject.getJSONObject("rate");
+
+
+                // Get the JSON array named rate inside of the results object
+                JSONArray jsonArray = resultsJSONObject.getJSONArray("rate");
+                int arrayLength = jsonArray.length();
+
+                for (int i = 0; i < arrayLength; i++) {
+
+                    JSONObject currencyJSONObject = jsonArray.getJSONObject(i);
+
+                    rateArray[i] = currencyJSONObject.getString("Rate");
+
+                    Log.v("CURRENCY FROM WEB ", rateArray[i]);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            for (int i = 0; i < rateArray.length; i++) {
+
+                convertedAmount[i] = Double.parseDouble(rateArray[i]);
+
+                finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
+            }
+
+            for (int i = 0; i < rateArray.length; i++) {
+
+                finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
+
+                Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
+            }
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
+
+            customAdapter.clear();
+
+            populatedArrayList();
+
+            customAdapter.notifyDataSetChanged();
+
+        }
+
+    }
+
+
+    public ArrayList<HashMap<String, String>> populatedArrayList() {
+
+        flag = new String[]{
+                "flag_ic_aud_00",
+                "flag_ic_bgn_01",
+                "flag_ic_brl_02",
+                "flag_ic_cad_03",
+                "flag_ic_chf_04",
+                "flag_ic_cny_05",
+                "flag_ic_czk_06",
+                "flag_ic_dkk_07",
+                "flag_ic_eur_08",
+                "flag_ic_gbp_09",
+                "flag_ic_hkd_10",
+                "flag_ic_hrk_11",
+                "flag_ic_huf_12",
+                "flag_ic_idr_13",
+                "flag_ic_ils_14",
+                "flag_ic_inr_15",
+                "flag_ic_jpy_16",
+                "flag_ic_krw_17",
+                "flag_ic_ltl_18",
+                "flag_ic_mxn_19",
+                "flag_ic_nok_20",
+                "flag_ic_nzd_21",
+                "flag_ic_php_22",
+                "flag_ic_pln_23",
+                "flag_ic_ron_24",
+                "flag_ic_rub_25",
+                "flag_ic_sek_26",
+                "flag_ic_sgd_27",
+                "flag_ic_thb_28",
+                "flag_ic_try_29",
+                "flag_ic_usd_30",
+                "flag_ic_zar_31"};
+
+        Arrays.sort(flag);
+
+        currencyCode = new String[]{
+                "AUD",
+                "BGN",
+                "BRL",
+                "CAD",
+                "CHF",
+                "CNY",
+                "CZK",
+                "DKK",
+                "EUR",
+                "GBP",
+                "HKD",
+                "HRK",
+                "HUF",
+                "IDR",
+                "ILS",
+                "INR",
+                "JPY",
+                "KRW",
+                "LTL",
+                "MXN",
+                "NOK",
+                "NZD",
+                "PHP",
+                "PLN",
+                "RON",
+                "RUB",
+                "SEK",
+                "SGD",
+                "THB",
+                "TRY",
+                "USD",
+                "ZAR"};
+
+        Arrays.sort(currencyCode);
+
+        currency = new String[]{
+                "00 Australian Dollar",
+                "01 Bulgarian Lev",
+                "02 Brazilian Real",
+                "03 Canadian Dollar",
+                "04 CH Francs",
+                "05 Chinese Yuan",
+                "06 Czech Koruna",
+                "07 Danish Krone",
+                "08 Euro",
+                "09 British Pound",
+                "10 Hong Kong Dollar",
+                "11 Croatian Kuna",
+                "12 Hungarian Forint",
+                "13 Indonesian Rupiah",
+                "14 Israeli Shekel",
+                "15 Indian Rupee",
+                "16 Japanese Yen",
+                "17 Korean Won",
+                "18 Lithuanian Litas",
+                "19 Mexican Peso",
+                "20 Norwegian Krone",
+                "21 New Zealand Dollar",
+                "22 Philippine Peso",
+                "23 Polish NEW Zloty",
+                "24 Romanian Leu",
+                "25 Russian Rouble",
+                "26 Swedish Krona",
+                "27 Singapore Dollar",
+                "28 Thai Baht",
+                "29 New Turkish Lira",
+                "30 United States Dollar",
+                "31 South African Rand"};
+
+        Arrays.sort(currency);
+
+
+        for (int i = 0; i < flag.length; i++) {
+
+            HashMap<String, String> currencyFlagList = new HashMap<String, String>();
+
+            currencyFlagList.put("flagType", flag[i]);
+            currencyFlagList.put("currencyCode", currencyCode[i]);
+            currencyFlagList.put("currencyType", currency[i]);
+
+            // add the returned values from the http query, only if the populated rate array is the same
+
+                currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
+
+
+            flagAndCurrencyList.add(currencyFlagList);
+
+            Log.v("CURRENCY Code", currencyCode[i]);
+            Log.v("CURRENCY TYPE", currency[i]);
+            Log.v("FLAG TYPE", flag[i]);
+
+        }
+
+        // Remove positions from currencyActivity from retrieved int[] positionsToRemove from onResume()
+        // Make sure there is something in the String passed from CurrencyActivity otherwise null pointer exception
+        // as the PositionsToRemove array won't have been initialised i.e. int[] myInt = new int[32]
+        // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
+        try {
+            for (int i = 31; i >= 0; i--) {
+
+                if (positionsToRemove[i] != 0) {
+
+                    // remove position - minus 1 because array has ALL zero's in 32 holders (default),
+                    // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
+                    flagAndCurrencyList.remove((positionsToRemove[i] - 1));
+                }
+            }
+
+        } catch (NullPointerException e) {
+>>>>>>> currencies_activity
 
             spinnerItem = currencyFromSpinner.getItemAtPosition(i).toString();
 
@@ -1233,6 +1651,7 @@ public class MainActivity extends ActionBarActivity {
 
         } else {
 
+<<<<<<< HEAD
             Toast.makeText(getApplication(), "No Internet Connection Available",
                     Toast.LENGTH_SHORT).show();
             return false;
@@ -3940,6 +4359,14 @@ public class MainActivity extends ActionBarActivity {
 
 }
 >>>>>>> Features
+
+=======
+        return flagAndCurrencyList;
+
+    }
+
+}
+>>>>>>> currencies_activity
 
 
 

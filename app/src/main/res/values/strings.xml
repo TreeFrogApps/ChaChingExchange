@@ -16,6 +16,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="choose_currencies">0.00</string>
 =======
     <string name="choose_currencies">Currency selector</string>
@@ -26,6 +27,9 @@
 =======
     <string name="choose_currencies">0.00</string>
 >>>>>>> context_menu_on_listview
+=======
+    <string name="choose_currencies">Currency selector</string>
+>>>>>>> currencies_activity
 =======
     <string name="choose_currencies">Currency selector</string>
 >>>>>>> currencies_activity
@@ -94,6 +98,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -103,6 +110,7 @@
     <string name="popupmenu_remove">Remove</string>
     <string name="popupmenu_move_to_top">Move to top</string>
     <string name="title_activity_currency">CurrencyActivity</string>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -125,5 +133,7 @@
 >>>>>>> currencies_activity
 =======
 >>>>>>> Features
+=======
+>>>>>>> currencies_activity
 
 </resources>

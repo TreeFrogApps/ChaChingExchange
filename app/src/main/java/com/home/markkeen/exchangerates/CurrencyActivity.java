@@ -5,6 +5,7 @@ package com.home.markkeen.exchangerates;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> context_menu_on_listview
 =======
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -30,11 +33,14 @@ import android.widget.ListView;
 import java.util.ArrayList;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -48,7 +54,10 @@ public class CurrencyActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -62,11 +71,14 @@ public class CurrencyActivity extends ActionBarActivity {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -75,6 +87,7 @@ public class CurrencyActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -92,6 +105,8 @@ public class CurrencyActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -115,11 +130,14 @@ public class CurrencyActivity extends ActionBarActivity {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -148,7 +166,10 @@ public class CurrencyActivity extends ActionBarActivity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
@@ -296,11 +317,14 @@ public class CurrencyActivity extends ActionBarActivity {
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> currencies_activity
 =======
 >>>>>>> context_menu_on_listview
 =======
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
 =======
