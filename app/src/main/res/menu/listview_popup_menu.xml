@@ -8,6 +8,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     tools:style="AppTheme.Base.PopUpMenu.Overlay">
 =======
     tools:style="AppTheme.Base"
@@ -31,11 +32,16 @@
     tools:style="AppTheme.Base"
     >
 >>>>>>> currencies_activity
+=======
+    tools:style="AppTheme.Base"
+    >
+>>>>>>> Features
 
     <item android:id="@+id/menu_pin_currency"
         android:title="@string/popupmenu_pin_currency"
         android:orderInCategory="1"
         app:showAsAction="never"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -60,6 +66,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> Features
         />
 
     <item android:id="@+id/menu_swap_to_base_currency"
@@ -67,9 +75,12 @@
         android:orderInCategory="2"
         app:showAsAction="never"
         />
+<<<<<<< HEAD
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> Features
 </menu>

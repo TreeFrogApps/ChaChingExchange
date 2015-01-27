@@ -13,6 +13,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:background="@drawable/gradient"></LinearLayout>
 =======
         android:background="@drawable/gradient"/>
@@ -23,6 +24,9 @@
 =======
         android:background="@drawable/gradient"></LinearLayout>
 >>>>>>> currencies_activity
+=======
+        android:background="@drawable/gradient"/>
+>>>>>>> Features
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -30,9 +34,12 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_horizontal_margin"
 =======
+=======
+>>>>>>> Features
         android:orientation="horizontal"
 >>>>>>> Features
 =======
@@ -52,6 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         <ImageView
             android:id="@+id/flag_base"
@@ -79,6 +87,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+=======
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+>>>>>>> Features
             android:text="@string/enter_amount"
             android:layout_marginEnd="@dimen/activity_vertical_margin"
             android:textAlignment="gravity"
@@ -133,6 +147,7 @@
         android:paddingBottom="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_vertical_margin">
+<<<<<<< HEAD
 >>>>>>> Features
 =======
             android:src="@drawable/flag_ic_00_empty" />
@@ -140,12 +155,15 @@
 =======
             android:src="@drawable/flag_ic_00_empty" />
 >>>>>>> currencies_activity
+=======
+>>>>>>> Features
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -172,6 +190,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> Features
             android:paddingTop="12dp">
 
             <LinearLayout
@@ -193,15 +213,19 @@
                 android:layout_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
+<<<<<<< HEAD
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> Features
 
             <Spinner
                 android:id="@+id/spinnerCurrencyFrom"
                 android:layout_width="0dp"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -221,17 +245,22 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> Features
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="2"
                 android:background="@drawable/spinner_menu"
                  />
                 </LinearLayout>
+<<<<<<< HEAD
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> Features
 
 
         </LinearLayout>
@@ -270,6 +299,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 android:dividerHeight="0dp" />
 =======
                 android:dividerHeight="0dp"
@@ -281,6 +311,10 @@
 =======
                 android:dividerHeight="0dp" />
 >>>>>>> currencies_activity
+=======
+                android:dividerHeight="0dp"
+                android:smoothScrollbar="true" />
+>>>>>>> Features
         </LinearLayout>
 
 

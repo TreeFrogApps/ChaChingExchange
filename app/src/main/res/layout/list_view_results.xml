@@ -20,6 +20,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> currencies_activity
 =======
@@ -30,10 +31,15 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
 >>>>>>> Features
+=======
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+>>>>>>> Features
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/currency_Flag"
              />
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         <LinearLayout
             android:layout_width="fill_parent"
@@ -95,6 +101,17 @@
             <TableRow
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+=======
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+>>>>>>> Features
                 android:layout_weight="3"
                 android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/activity_vertical_margin">
@@ -169,6 +186,9 @@
                     android:layout_weight="2"
                     android:orientation="horizontal">
 
+<<<<<<< HEAD
+>>>>>>> Features
+=======
 >>>>>>> Features
 
                     <TextView
@@ -179,6 +199,7 @@
                         android:text="@string/currency_code"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_bigger" />
+<<<<<<< HEAD
 <<<<<<< HEAD
 
                 </LinearLayout>
@@ -331,17 +352,8 @@
 >>>>>>> currencies_activity
         </LinearLayout>
 
-        <Button
-            android:id="@+id/context_menu"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/spinner_menu"
-            android:onClick="showMenu" />
-<<<<<<< HEAD
->>>>>>> currencies_activity
 =======
->>>>>>> currencies_activity
+                </TableRow>
 
                 <TableRow
                     android:layout_width="0dp"
@@ -361,9 +373,61 @@
                         android:layout_marginRight="@dimen/activity_vertical_margin"/>
                 </TableRow>
 
+            </TableRow>
+
+        </TableLayout>
+
+        <ImageView
+            android:id="@+id/list_view_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/pin_button_off"
+            android:clickable="false"
+            android:textOff=""
+            android:textOn="" />
+
+>>>>>>> Features
+        <Button
+            android:id="@+id/context_menu"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+<<<<<<< HEAD
+            android:background="@drawable/spinner_menu"
+            android:onClick="showMenu" />
+<<<<<<< HEAD
+>>>>>>> currencies_activity
+=======
+>>>>>>> currencies_activity
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:orientation="horizontal">
+=======
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/spinner_menu"
+            android:onClick="showMenu" />
+>>>>>>> Features
+
+                    <TextView
+                        android:id="@+id/convertedCurrencyType"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/currency_results_code"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_bigger"
+                        android:gravity="end"
+                        android:layout_marginRight="@dimen/activity_vertical_margin"/>
+                </TableRow>
+
 <<<<<<< HEAD
             </TableRow>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         </TableLayout>
 
@@ -410,6 +474,8 @@
 >>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> Features
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -431,6 +497,7 @@
     </LinearLayout>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -445,3 +512,7 @@
 =======
 </LinearLayout>
 >>>>>>> currencies_activity
+=======
+</LinearLayout>
+    
+>>>>>>> Features

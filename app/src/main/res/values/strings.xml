@@ -15,6 +15,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="choose_currencies">0.00</string>
 =======
     <string name="choose_currencies">Currency selector</string>
@@ -79,11 +80,17 @@
     <string name="base_currency_layout_enter_amount">0.00</string>
     <string name="enter_amount">Amount</string>
 >>>>>>> Features
+=======
+    <string name="choose_currencies">Currency selector</string>
+    <string name="base_currency_layout_enter_amount">0.00</string>
+    <string name="enter_amount">Amount</string>
+>>>>>>> Features
     <string name="currency_GBP">GBP British Pound</string>
     <string name="currency_Flag">Flag</string>
     <string name="currency_results">Results</string>
     <string name="currency_results_amount">0.00</string>
     <string name="currency_results_code">Currency type</string>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -99,6 +106,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> Features
     <string name="currency_results_rate">Rate</string>
     <string name="currency_code">Code</string>
     <string name="popupmenu_pin_currency">Pin Currency</string>
@@ -108,10 +117,13 @@
     <string name="title_activity_about">About</string>
     <string name="menu_about">About</string>
     <string name="support_information">Support and Information</string>
+<<<<<<< HEAD
 >>>>>>> Features
 =======
 >>>>>>> currencies_activity
 =======
 >>>>>>> currencies_activity
+=======
+>>>>>>> Features
 
 </resources>
