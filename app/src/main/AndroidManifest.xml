@@ -13,37 +13,9 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            android:screenOrientation="portrait">
-=======
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
->>>>>>> Features
-=======
-            android:screenOrientation="portrait">
->>>>>>> currencies_activity
-=======
-            android:screenOrientation="portrait">
->>>>>>> currencies_activity
-=======
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
->>>>>>> Features
-=======
-            android:screenOrientation="portrait">
->>>>>>> currencies_activity
-=======
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
->>>>>>> Features
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,33 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            android:name=".CurrencyActivity"
-            android:label="@string/title_activity_currency"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            android:parentActivityName=".MainActivity" >
-=======
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
->>>>>>> currencies_activity
-=======
-            android:parentActivityName=".MainActivity" >
->>>>>>> context_menu_on_listview
-=======
-            android:parentActivityName=".MainActivity" >
->>>>>>> context_menu_on_listview
-=======
-=======
->>>>>>> Features
-=======
->>>>>>> Features
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait"
@@ -91,31 +36,6 @@
             android:label="@string/title_activity_about"
             android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" >
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Features
-=======
-            android:name=".CurrencyActivity"
-            android:label="@string/title_activity_currency"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
->>>>>>> currencies_activity
-=======
-            android:name=".CurrencyActivity"
-            android:label="@string/title_activity_currency"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
->>>>>>> currencies_activity
-=======
->>>>>>> Features
-=======
-            android:name=".CurrencyActivity"
-            android:label="@string/title_activity_currency"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
->>>>>>> currencies_activity
-=======
->>>>>>> Features
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.home.markkeen.exchangerates.MainActivity" />

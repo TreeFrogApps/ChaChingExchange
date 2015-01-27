@@ -131,57 +131,57 @@ public class SettingsAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-            viewHolder.flagType.setImageResource(settingsListData.get(position).getFlagNumberId());
-            viewHolder.currencyCode.setText(settingsListData.get(position).getCountryCodeId());
-            viewHolder.currencyType.setText(settingsListData.get(position).getCountryId());
-            viewHolder.switchOnOff = (SwitchCompat) convertView.findViewById(R.id.setOnOffSettingsActivity);
+        viewHolder.flagType.setImageResource(settingsListData.get(position).getFlagNumberId());
+        viewHolder.currencyCode.setText(settingsListData.get(position).getCountryCodeId());
+        viewHolder.currencyType.setText(settingsListData.get(position).getCountryId());
+        viewHolder.switchOnOff = (SwitchCompat) convertView.findViewById(R.id.setOnOffSettingsActivity);
 
-            // set the switch on/off according to the settingsRemovedPositionsIntArray if it has never been used before it will be on (true)
-            // because it will be 0 by default, and if it has been used already switched on and off it value you will be set from the returned
-            // int array from settingsSwitchOnOff() method above (zero = on / position number = off)
-            if (settingsRemovedPositionsIntArray[position] == 0){
+        // set the switch on/off according to the settingsRemovedPositionsIntArray if it has never been used before it will be on (true)
+        // because it will be 0 by default, and if it has been used already switched on and off it value you will be set from the returned
+        // int array from settingsSwitchOnOff() method above (zero = on / position number = off)
+        if (settingsRemovedPositionsIntArray[position] == 0){
 
-                viewHolder.switchOnOff.setChecked(true);
-            } else {
+            viewHolder.switchOnOff.setChecked(true);
+        } else {
 
-                viewHolder.switchOnOff.setChecked(false);
-            }
+            viewHolder.switchOnOff.setChecked(false);
+        }
 
-            viewHolder.switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        viewHolder.switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                    // place the position (either as 0 = on, or position number = off)
-                    // into settingsRemovedPositionsIntArray
-                    if (isChecked){
+                // place the position (either as 0 = on, or position number = off)
+                // into settingsRemovedPositionsIntArray
+                if (isChecked){
 
-                        // reset pinned currencies as something has been changed to the main results list
-                        MainActivity.resetPinnedCurrencies();
+                    // reset pinned currencies as something has been changed to the main results list
+                    MainActivity.resetPinnedCurrencies();
 
-                        settingsRemovedPositionsIntArray[position] = 0;
-                        Log.v("SETTINGS ADDED POSITION", String.valueOf(position));
-                    }
-                    else {
-
-                        // reset pinned currencies as something has been changed to the main results list
-                        MainActivity.resetPinnedCurrencies();
-
-                        settingsRemovedPositionsIntArray[position] = (position + 1);
-                        Log.v("SETTINGS REMOVED POSITION", String.valueOf(position + 1));
-                    }
-
-                    // store the int array holding all data about positions to keep/remove in a string (can't save int arrays in sharedPreferences)
-                    String settingsPositionsToString = Arrays.toString(settingsRemovedPositionsIntArray);
-                    // see the string list (should have 32 entries, either 0 or the position number
-                    Log.v("SETTINGS POSITIONS TO STRING", settingsPositionsToString);
-
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    // Get SharedPreferences and store as a string - NO NEED TO CLEAR WHEN SWAPPING ACTIVITIES!
-                    // It is overwritten each time 'putString' 'apply' is used (not appended as its a concatenated single string!)
-                    editor.putString("POSITIONS TO REMOVE", settingsPositionsToString);
-                    editor.apply();
+                    settingsRemovedPositionsIntArray[position] = 0;
+                    Log.v("SETTINGS ADDED POSITION", String.valueOf(position));
                 }
-            });
+                else {
+
+                    // reset pinned currencies as something has been changed to the main results list
+                    MainActivity.resetPinnedCurrencies();
+
+                    settingsRemovedPositionsIntArray[position] = (position + 1);
+                    Log.v("SETTINGS REMOVED POSITION", String.valueOf(position + 1));
+                }
+
+                // store the int array holding all data about positions to keep/remove in a string (can't save int arrays in sharedPreferences)
+                String settingsPositionsToString = Arrays.toString(settingsRemovedPositionsIntArray);
+                // see the string list (should have 32 entries, either 0 or the position number
+                Log.v("SETTINGS POSITIONS TO STRING", settingsPositionsToString);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                // Get SharedPreferences and store as a string - NO NEED TO CLEAR WHEN SWAPPING ACTIVITIES!
+                // It is overwritten each time 'putString' 'apply' is used (not appended as its a concatenated single string!)
+                editor.putString("POSITIONS TO REMOVE", settingsPositionsToString);
+                editor.apply();
+            }
+        });
 
 
         return convertView;

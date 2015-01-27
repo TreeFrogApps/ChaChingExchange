@@ -17,95 +17,12 @@
 
         <ImageView
             android:id="@+id/flagType"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-=======
             android:layout_width="40dp"
             android:layout_height="40dp"
->>>>>>> Features
-=======
-            android:layout_width="40dp"
-            android:layout_height="40dp"
->>>>>>> Features
-=======
-            android:layout_width="40dp"
-            android:layout_height="40dp"
->>>>>>> Features
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/currency_Flag"
-             />
+            />
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <LinearLayout
-            android:layout_width="fill_parent"
-=======
-        <TableLayout
-            android:layout_width="0dp"
->>>>>>> Features
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TableRow
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:paddingBottom="6dp"
-                android:text="@string/currency_results_amount"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_bigger" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> context_menu_on_listview
-=======
->>>>>>> context_menu_on_listview
-                <TextView
-                    android:id="@+id/convertedCurrencyCode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:paddingLeft="@dimen/activity_vertical_margin"
-                    android:text="@string/currency_code"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_bigger" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/activity_vertical_margin">
-=======
         <TableLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -115,19 +32,6 @@
             <TableRow
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-=======
-        <TableLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TableRow
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
->>>>>>> Features
-=======
->>>>>>> Features
                 android:layout_weight="3"
                 android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/activity_vertical_margin">
@@ -191,141 +95,6 @@
 
             <TableRow
                 android:layout_width="0dp"
-<<<<<<< HEAD
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/activity_vertical_margin">
-
-                <TableRow
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="horizontal">
-
-<<<<<<< HEAD
->>>>>>> Features
-=======
->>>>>>> Features
-
-                    <TextView
-                        android:id="@+id/convertedCurrencyCode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/currency_code"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_bigger" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-                </LinearLayout>
->>>>>>> currencies_activity
-=======
->>>>>>> context_menu_on_listview
-=======
->>>>>>> context_menu_on_listview
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    android:layout_weight="5">
-=======
-                    android:layout_weight="4.5"
-                    android:orientation="horizontal">
->>>>>>> currencies_activity
-=======
-                    android:layout_weight="5">
->>>>>>> context_menu_on_listview
-=======
-                    android:layout_weight="5">
->>>>>>> context_menu_on_listview
-
-                    <TextView
-
-                        android:id="@+id/convertedCurrencyType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="@string/currency_results_code"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_bigger" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <Button
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> context_menu_on_listview
-=======
->>>>>>> context_menu_on_listview
-            android:onClick="showMenu"
-            android:id="@+id/context_menu"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/spinner_menu"/>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-                </TableRow>
-=======
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/activity_vertical_margin">
-
-                    <TextView
-                        android:id="@+id/convertedCurrencyCode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/currency_code"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_bigger" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4.5"
-                    android:orientation="horizontal">
-
-                    <TextView
-
-                        android:id="@+id/convertedCurrencyType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="@string/currency_results_code"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_bigger" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-=======
-=======
->>>>>>> Features
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
@@ -370,155 +139,6 @@
 
         </TableLayout>
 
-<<<<<<< HEAD
->>>>>>> currencies_activity
-        </LinearLayout>
-=======
-        <ImageView
-            android:id="@+id/list_view_pin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/pin_button_off"
-            android:clickable="false"
-            android:textOff=""
-            android:textOn="" />
->>>>>>> Features
-
-=======
-                </TableRow>
-=======
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/activity_vertical_margin">
-
-                    <TextView
-                        android:id="@+id/convertedCurrencyCode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/currency_code"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_bigger" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4.5"
-                    android:orientation="horizontal">
-
-                    <TextView
-
-                        android:id="@+id/convertedCurrencyType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="@string/currency_results_code"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_bigger" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/context_menu"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/spinner_menu"
-            android:onClick="showMenu" />
->>>>>>> currencies_activity
-
-                <TableRow
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/convertedCurrencyType"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/currency_results_code"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_bigger"
-                        android:gravity="end"
-                        android:layout_marginRight="@dimen/activity_vertical_margin"/>
-                </TableRow>
-
-            </TableRow>
-
-<<<<<<< HEAD
-        </TableLayout>
-
-        <ImageView
-            android:id="@+id/list_view_pin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/pin_button_off"
-            android:clickable="false"
-            android:textOff=""
-            android:textOn="" />
-
->>>>>>> Features
-        <Button
-            android:id="@+id/context_menu"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-<<<<<<< HEAD
-<<<<<<< HEAD
-            android:background="@drawable/spinner_menu"
-            android:onClick="showMenu" />
-<<<<<<< HEAD
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-
-                <TableRow
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:orientation="horizontal">
-=======
-            android:layout_marginLeft="6dp"
-            android:background="@drawable/spinner_menu"
-            android:onClick="showMenu" />
->>>>>>> Features
-
-                    <TextView
-                        android:id="@+id/convertedCurrencyType"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/currency_results_code"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_bigger"
-                        android:gravity="end"
-                        android:layout_marginRight="@dimen/activity_vertical_margin"/>
-                </TableRow>
-
-<<<<<<< HEAD
-            </TableRow>
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-        </TableLayout>
-
         <ImageView
             android:id="@+id/list_view_pin"
             android:layout_width="wrap_content"
@@ -537,38 +157,9 @@
             android:layout_marginLeft="6dp"
             android:background="@drawable/spinner_menu"
             android:onClick="showMenu" />
->>>>>>> Features
-
->>>>>>> context_menu_on_listview
-=======
-
-<<<<<<< HEAD
->>>>>>> context_menu_on_listview
-
-=======
-            android:id="@+id/context_menu"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-=======
-            android:layout_marginLeft="6dp"
->>>>>>> Features
-            android:background="@drawable/spinner_menu"
-            android:onClick="showMenu" />
->>>>>>> currencies_activity
 
     </LinearLayout>
 
-=======
->>>>>>> Features
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> Features
-=======
->>>>>>> currencies_activity
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -589,32 +180,5 @@
 
     </LinearLayout>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-</LinearLayout>
-=======
 </LinearLayout>
     
->>>>>>> Features
-=======
-</LinearLayout>
->>>>>>> currencies_activity
-=======
-</LinearLayout>
->>>>>>> currencies_activity
-=======
-</LinearLayout>
-    
->>>>>>> Features
-=======
-</LinearLayout>
->>>>>>> currencies_activity
-=======
-</LinearLayout>
-    
->>>>>>> Features

@@ -3,35 +3,13 @@
     android:id="@+id/my_toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" 
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     app:theme="@style/AppTheme.Base"
     app:popupTheme="@style/AppTheme.Base.PopUpMenu.Overlay"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    app:title="@string/app_name"
-=======
->>>>>>> Features
-=======
-    app:title="@string/app_name"
->>>>>>> currencies_activity
-=======
-    app:title="@string/app_name"
->>>>>>> currencies_activity
-=======
->>>>>>> Features
-=======
-    app:title="@string/app_name"
->>>>>>> currencies_activity
-=======
->>>>>>> Features
-/>
+    />
 
 
 

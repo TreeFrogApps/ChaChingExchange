@@ -2,65 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    tools:style="AppTheme.Base.PopUpMenu.Overlay">
-=======
     tools:style="AppTheme.Base"
     >
->>>>>>> currencies_activity
-=======
-    tools:style="AppTheme.Base.PopUpMenu.Overlay">
->>>>>>> context_menu_on_listview
-=======
-    tools:style="AppTheme.Base.PopUpMenu.Overlay">
->>>>>>> context_menu_on_listview
-=======
-    tools:style="AppTheme.Base"
-    >
->>>>>>> Features
-=======
-    tools:style="AppTheme.Base"
-    >
->>>>>>> currencies_activity
-=======
-    tools:style="AppTheme.Base"
-    >
->>>>>>> currencies_activity
-=======
-    tools:style="AppTheme.Base"
-    >
->>>>>>> Features
-=======
-    tools:style="AppTheme.Base"
-    >
->>>>>>> currencies_activity
 
     <item android:id="@+id/menu_pin_currency"
         android:title="@string/popupmenu_pin_currency"
         android:orderInCategory="1"
         app:showAsAction="never"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-
-=======
->>>>>>> Features
         />
 
     <item android:id="@+id/menu_swap_to_base_currency"
@@ -68,36 +16,4 @@
         android:orderInCategory="2"
         app:showAsAction="never"
         />
-<<<<<<< HEAD
-
-    <item android:id="@+id/menu_move_to_top"
-        android:title="@string/popupmenu_move_to_top"
-        android:orderInCategory="3"
-        app:showAsAction="never"
-        />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> Features
-        />
-
-    <item android:id="@+id/menu_swap_to_base_currency"
-        android:title="@string/popupmenu_swap_to_base"
-        android:orderInCategory="2"
-        app:showAsAction="never"
-        />
-<<<<<<< HEAD
->>>>>>> Features
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> Features
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> Features
 </menu>

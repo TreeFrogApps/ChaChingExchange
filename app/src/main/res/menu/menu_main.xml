@@ -2,38 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
-
-    <item android:id="@+id/action_choose_currencies"
-        android:title="@string/choose_currencies"
-        android:orderInCategory="1"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> Features
     <item android:id="@+id/menu_pin_toggle_id"
         android:title=""
         android:orderInCategory="1"
-=======
-    <item android:id="@+id/menu_pin_toggle_id"
-        android:title=""
-        android:orderInCategory="1"
->>>>>>> Features
         app:showAsAction="always" />
 
     <item android:id="@+id/action_reset_pinned"
@@ -49,18 +20,5 @@
     <item android:id="@+id/action_about"
         android:title="@string/menu_about"
         android:orderInCategory="4"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Features
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> Features
-=======
->>>>>>> currencies_activity
-=======
->>>>>>> Features
         app:showAsAction="never" />
 </menu>
