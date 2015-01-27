@@ -8,8 +8,7 @@
     <string name="currency_to">TARGET CURRENCY</string>
     <string name="button_exchange">GET EXCHANGE RATE</string>
     <string name="zero_amount">0.00</string>
-
-
+    <string name="choose_currencies">0.00</string>
 
     <string-array name="currency_spinner">
         <item>AUD   Australian Dollar</item>
@@ -44,14 +43,11 @@
         <item>TRY	New Turkish Lira</item>
         <item>USD	United States Dollar</item>
         <item>ZAR	South African Rand</item>
-
     </string-array>
-
     <string-array name="listView_spinner_menu">
         <item>Pin Currency</item>
         <item>Remove</item>
         <item>Move to top</item>
-
     </string-array>
 
     <string name="base_currency_layout_enter_amount">Amount</string>
@@ -60,15 +56,10 @@
     <string name="currency_results">Results</string>
     <string name="currency_results_amount">0.00</string>
     <string name="currency_results_code">Currency type</string>
-
-
-
-
-
+    <string name="currency_code">Code</string>
+    <string name="popupmenu_pin_currency">Pin Currency</string>
+    <string name="popupmenu_remove">Remove</string>
+    <string name="popupmenu_move_to_top">Move to top</string>
+    <string name="title_activity_currency">CurrencyActivity</string>
 
 </resources>
-
-
-
-
-

@@ -21,24 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/currency_Flag"
-            android:src="@drawable/flag_ic_00_empty" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/convertedCurrencyAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:paddingBottom="6dp"
-                android:text="@string/currency_results_amount"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_bigger" />
+            android:src="@drawable/flag_ic_aud_00" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -76,15 +59,7 @@
 
             </LinearLayout>
 
-        </LinearLayout>
 
-        <Button
-            android:onClick="showMenu"
-            android:id="@+id/context_menu"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/spinner_menu"/>
 
 
     </LinearLayout>

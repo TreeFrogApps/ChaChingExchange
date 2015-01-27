@@ -23,7 +23,7 @@
 
     <style name="mySpinnerItemStyle" parent="">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/text_standard</item>
+        <item name="android:textSize">@dimen/text_bigger</item>
     </style>
 
 
