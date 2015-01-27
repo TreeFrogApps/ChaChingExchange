@@ -3,6 +3,7 @@ package com.home.markkeen.exchangerates;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+<<<<<<< HEAD
 import android.view.LayoutInflater;
 <<<<<<< HEAD
 import android.view.View;
@@ -11,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 =======
+=======
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+>>>>>>> currencies_activity
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +26,10 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+<<<<<<< HEAD
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,10 +39,14 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
     private final Context context;
     private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
 <<<<<<< HEAD
+<<<<<<< HEAD
     private  MainActivity mainActivity;
 =======
     private MainActivity mainActivity;
 >>>>>>> context_menu_on_listview
+=======
+    private MainActivity mainActivity;
+>>>>>>> currencies_activity
 
     private static class ViewHolder {
         protected ImageView flagType;
@@ -42,10 +54,14 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         protected TextView convertedCurrencyAmount;
         protected TextView convertedCurrencyType;
 <<<<<<< HEAD
+<<<<<<< HEAD
         protected ImageView context_menu;
 =======
         protected Button context_menu;
 >>>>>>> context_menu_on_listview
+=======
+        protected Button context_menu;
+>>>>>>> currencies_activity
 
     }
 
@@ -59,6 +75,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     }
 
@@ -67,12 +84,17 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
 =======
+=======
+>>>>>>> currencies_activity
     }
 
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+<<<<<<< HEAD
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 
 
         HashMap<String, String> flagAndCurrencyItem = flagAndCurrencyList.get(position);
@@ -90,10 +112,14 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             viewHolder = new ViewHolder();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             LayoutInflater inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 =======
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 >>>>>>> context_menu_on_listview
+=======
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+>>>>>>> currencies_activity
 
             convertView = inflater.inflate(R.layout.list_view_results, parent, false);
 
@@ -102,10 +128,14 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             viewHolder.convertedCurrencyCode = (TextView) convertView.findViewById(R.id.convertedCurrencyCode);
             viewHolder.convertedCurrencyType = (TextView) convertView.findViewById(R.id.convertedCurrencyType);
 <<<<<<< HEAD
+<<<<<<< HEAD
             viewHolder.context_menu = (ImageView) convertView.findViewById(R.id.context_menu);
 =======
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 >>>>>>> context_menu_on_listview
+=======
+            viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
+>>>>>>> currencies_activity
 
             // store the information in a tag
             convertView.setTag(viewHolder);
@@ -124,6 +154,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         // Populate the data into the template view using the data object
         viewHolder.flagType.setBackground(flagImage);
 <<<<<<< HEAD
+<<<<<<< HEAD
         viewHolder.convertedCurrencyAmount.setText("0.00");
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
         viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType"));
@@ -133,6 +164,11 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         viewHolder.convertedCurrencyAmount.setText(flagAndCurrencyItem.get("finalConvertedAmountText"));
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
         viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType"));
+=======
+        viewHolder.convertedCurrencyAmount.setText(flagAndCurrencyItem.get("finalConvertedAmountText"));
+        viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
+        viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType").substring(3));
+>>>>>>> currencies_activity
         viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 
         // context menu for each row (3 dots menu)
@@ -142,7 +178,13 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             public void onClick(View convertView) {
 
                 //create popUpMenu (context menu)
+<<<<<<< HEAD
                 PopupMenu popUpMenu = new PopupMenu(getContext(), convertView);
+=======
+                Context style = new ContextThemeWrapper(getContext(), R.style.PopUpMenu);
+
+                PopupMenu popUpMenu = new PopupMenu(style, convertView);
+>>>>>>> currencies_activity
 
                 // inflate my context menu xml layout
                 MenuInflater inflater = popUpMenu.getMenuInflater();
@@ -182,14 +224,21 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
 
         });
+<<<<<<< HEAD
 >>>>>>> context_menu_on_listview
+=======
+>>>>>>> currencies_activity
 
         return convertView;
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
 =======
 }
 >>>>>>> context_menu_on_listview
+=======
+}
+>>>>>>> currencies_activity

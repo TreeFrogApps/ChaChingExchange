@@ -8,9 +8,14 @@
     <string name="currency_to">TARGET CURRENCY</string>
     <string name="button_exchange">GET EXCHANGE RATE</string>
     <string name="zero_amount">0.00</string>
+<<<<<<< HEAD
     <string name="choose_currencies">0.00</string>
+=======
+    <string name="choose_currencies">Currency selector</string>
+>>>>>>> currencies_activity
 
     <string-array name="currency_spinner">
+        <item>Choose a base currency</item>
         <item>AUD   Australian Dollar</item>
         <item>BGN   Bulgarian Lev</item>
         <item>BRL   Brazilian Real</item>
