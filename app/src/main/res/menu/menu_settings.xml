@@ -1,25 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.home.markkeen.exchangerates.CurrencyActivity">
+    tools:context="com.home.markkeen.exchangerates.SettingsActivity">
 
     <item
-        android:id="@+id/menu_pin_button_id"
+        android:id="@+id/menu_pin_button_id_settings"
         android:title=""
         android:orderInCategory="1"
         app:showAsAction="always"
         />
 
     <item
-        android:id="@+id/action_settings2"
-        android:title="@string/action_settings"
+        android:id="@+id/action_about_settings"
+        android:title="@string/menu_about"
         android:orderInCategory="2"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_settings3"
-        android:title="@string/action_settings"
-        android:orderInCategory="3"
         app:showAsAction="never" />
 
 </menu>

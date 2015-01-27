@@ -17,11 +17,11 @@
 
         <ImageView
             android:id="@+id/flagType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/currency_Flag"
-            android:src="@drawable/flag_ic_00_empty" />
+             />
 
         <TableLayout
             android:layout_width="0dp"

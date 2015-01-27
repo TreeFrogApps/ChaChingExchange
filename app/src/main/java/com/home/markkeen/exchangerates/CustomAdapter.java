@@ -23,14 +23,14 @@ import java.util.HashMap;
 
 public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
-    int[] positionsToPin = new int[32];
+    int[] positionsToPin;
     String[] pinnedItems;
 
+    boolean pinToggleOn;
     String currencyCode;
 
     SharedPreferences sharedPreferences;
     String pinnedPositionsToKeep;
-    String removedPositions;
     private final Context context;
     private final ArrayList<HashMap<String, String>> flagAndCurrencyList;
 
@@ -53,8 +53,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         this.sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_MULTI_PROCESS);
         this.context = context;
         this.flagAndCurrencyList = flagAndCurrencyList;
-
-        removedPositions = sharedPreferences.getString("POSITIONS_TO_REMOVE", "");
 
     }
 
@@ -89,11 +87,10 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             viewHolder.pinToggle = (ImageView) convertView.findViewById(R.id.list_view_pin);
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 
-            if (positionsToPin.length > flagAndCurrencyList.size()) {
-
+            // check the menuPinToggleState and put in relevant pin on / off
+            if (pinToggleOn == true)
                 viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_on));
-
-            } else {
+            else {
 
                 viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_off));
             }
@@ -121,11 +118,10 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         viewHolder.pinToggle = (ImageView) convertView.findViewById(R.id.list_view_pin);
         viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
 
-        if (positionsToPin.length > flagAndCurrencyList.size()) {
-
+        // check the menuPinToggleState and put in relevant pin on / off
+        if (pinToggleOn == true)
             viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_on));
-
-        } else {
+        else {
 
             viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_off));
         }
@@ -153,11 +149,15 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                         switch (item.getItemId()) {
                             case R.id.menu_pin_currency:
 
-                                if (positionsToPin.length > flagAndCurrencyList.size()) {
+                                if (pinToggleOn == true) {
                                     // this state happens only when the pinToggleButton is ON - do not want ability to 'pin' when this state is enabled,
                                     // will only enable when list contains ALL currencies but then it doesn't matter!
 
                                 } else {
+
+                                    // initialise positionsToPin in case the 'if' statement is invalid and skipped
+                                    // otherwise nullPointerException
+                                    positionsToPin = new int[flagAndCurrencyList.size()];
 
                                     // get shared prefs for pinned positions string (shared preferences were initialised onCreate all these key pairs come under "MyPrefs"
                                     pinnedPositionsToKeep = sharedPreferences.getString("PINNED_POSITIONS_TO_KEEP", "");
@@ -178,7 +178,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                         }
 
                                         for (int i = 0; i < positionsToPin.length; i++) {
-                                            Log.v("SAVED POSITIONS", String.valueOf(positionsToPin[i]));
+                                            Log.v("SAVED PINNED POSITIONS", String.valueOf(positionsToPin[i]));
                                         }
 
                                     }
@@ -192,7 +192,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                     }
 
                                     for (int i = 0; i < positionsToPin.length; i++) {
-                                        Log.v("POSITION TO ADD", String.valueOf(positionsToPin[i]));
+                                        Log.v("POSITION TO ADD TO PIN LIST", String.valueOf(positionsToPin[i]));
                                     }
 
                                     // Cannot store int array in SharedPreferences - must be converted to String format
