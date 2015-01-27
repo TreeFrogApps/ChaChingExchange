@@ -31,7 +31,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -45,7 +44,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -668,6 +666,7 @@ public class MainActivity extends ActionBarActivity {
                     // put the returned String result into sharedPreferences
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("JSONParser RESULT SAVED PREF", result);
+                    editor.putString(currencyFromSpinner.getSelectedItem().toString(), result);
                     editor.apply();
 
                     // Get the root JSONObject
