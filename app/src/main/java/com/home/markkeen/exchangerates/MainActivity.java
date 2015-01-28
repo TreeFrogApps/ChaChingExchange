@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -47,8 +46,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -509,6 +506,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
 
+                /*
                 // delay the keyboard from disappearing
                 new Timer().schedule(
                         new TimerTask() {
@@ -521,7 +519,7 @@ public class MainActivity extends ActionBarActivity {
                         },
                         2000
                 );
-
+                */
             }
         });
 
@@ -580,10 +578,10 @@ public class MainActivity extends ActionBarActivity {
 
             // Get the standard parameters associated with the default http client
             HttpParams httpParams = new BasicHttpParams();
-            // Set a parameter for Connection timeout set at 30 seconds
-            HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
-            // Set some parameters for Socket timeout set at 30 seconds
-            HttpConnectionParams.setSoTimeout(httpParams, 3000);
+            // Set a parameter for Connection timeout set at 8 seconds
+            HttpConnectionParams.setConnectionTimeout(httpParams, 8000);
+            // Set some parameters for Socket timeout set at 8 seconds
+            HttpConnectionParams.setSoTimeout(httpParams, 8000);
 
             // HTTP Client that supports streaming uploads and downloads apply the adjusted
             // httpParams to the client

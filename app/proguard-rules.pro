@@ -15,3 +15,10 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# use in final build to disable logging
+#
+#-assumenosideeffects class android.util.Log {
+#    public static *** v(...);
+#    public static *** d(...);
+#}
