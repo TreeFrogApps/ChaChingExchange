@@ -7,8 +7,10 @@
         android:orderInCategory="1"
         app:showAsAction="always" />
 
-    <item android:id="@+id/action_reset_pinned"
-        android:title="@string/reset_pinned_currencies"
+    <item android:id="@+id/action_offline_mode"
+        android:title="@string/offline_mode"
+        android:checkable="true"
+        android:checked="false"
         android:orderInCategory="2"
         app:showAsAction="never" />
 
@@ -17,8 +19,13 @@
         android:orderInCategory="3"
         app:showAsAction="never" />
 
+    <item android:id="@+id/action_reset_pinned"
+        android:title="@string/reset_pinned_currencies"
+        android:orderInCategory="4"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_about"
         android:title="@string/menu_about"
-        android:orderInCategory="4"
+        android:orderInCategory="5"
         app:showAsAction="never" />
 </menu>
