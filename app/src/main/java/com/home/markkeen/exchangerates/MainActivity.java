@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -399,6 +400,10 @@ public class MainActivity extends ActionBarActivity {
                 // set flag according to spinner position and currency/country
                 flagBase.setImageResource(flags[position]);
                 flagBase.startAnimation(flagAnimation);
+
+                // hide the keyboard if visible
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
 
 
                 // position 0 is the initial 'Choose a base currency' - no action required, only do if it is not that one!
