@@ -41,6 +41,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         protected TextView convertedCurrencyType;
         protected TextView currencyRateText;
         protected ImageView pinToggle;
+        protected ImageView offlineToggle;
         protected Button context_menu;
 
     }
@@ -85,15 +86,8 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             viewHolder.convertedCurrencyType = (TextView) convertView.findViewById(R.id.convertedCurrencyType);
             viewHolder.currencyRateText = (TextView) convertView.findViewById(R.id.currencyRateText);
             viewHolder.pinToggle = (ImageView) convertView.findViewById(R.id.list_view_pin);
+            viewHolder.offlineToggle = (ImageView) convertView.findViewById(R.id.list_view_offline);
             viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
-
-            // check the menuPinToggleState and put in relevant pin on / off
-            if (pinToggleOn == true)
-                viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_on));
-            else {
-
-                viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_off));
-            }
 
             // store the information in a tag
             convertView.setTag(viewHolder);
@@ -115,14 +109,22 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         viewHolder.convertedCurrencyCode.setText(flagAndCurrencyItem.get("currencyCode"));
         viewHolder.convertedCurrencyType.setText(flagAndCurrencyItem.get("currencyType").substring(3));
         viewHolder.currencyRateText.setText(flagAndCurrencyItem.get("rateAmountText"));
-        viewHolder.pinToggle = (ImageView) convertView.findViewById(R.id.list_view_pin);
-        viewHolder.context_menu = (Button) convertView.findViewById(R.id.context_menu);
+
+        // get sharedPrefs using currency code as the key - if something exists
+        // then there will be a string result for the current position currency
+        // in the listView (test for string 'result' below)
+        String result = sharedPreferences.getString(flagAndCurrencyItem.get("currencyCode"), "");
+        // set the icon based on the result currency - all updating of listView handled in MainActivity
+        if (!result.equals("")){
+            viewHolder.offlineToggle.setBackground(getContext().getResources().getDrawable(R.drawable.ic_button_down_y));
+        } else {
+            viewHolder.offlineToggle.setBackground(getContext().getResources().getDrawable(R.drawable.ic_button_down_n));
+        }
 
         // check the menuPinToggleState and put in relevant pin on / off
-        if (pinToggleOn == true)
+        if (pinToggleOn)
             viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_on));
         else {
-
             viewHolder.pinToggle.setBackground(getContext().getResources().getDrawable(R.drawable.pin_button_off));
         }
 
@@ -149,7 +151,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                         switch (item.getItemId()) {
                             case R.id.menu_pin_currency:
 
-                                if (pinToggleOn == true) {
+                                if (pinToggleOn) {
                                     // this state happens only when the pinToggleButton is ON - do not want ability to 'pin' when this state is enabled,
                                     // will only enable when list contains ALL currencies but then it doesn't matter!
 
@@ -220,6 +222,22 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                 MainActivity.swapBaseCurrency(currencyCode);
 
                                 return true;
+
+                            case R.id.menu_remove_cache:
+
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                // get the current positions currency code from the ArrayList HashMap
+                                String code = flagAndCurrencyItem.get("currencyCode");
+
+                                // test if it present in sharedPrefs, if so remove it and update adapter
+                                if (sharedPreferences.contains(code)){
+                                    editor.remove(code);
+                                    editor.apply();
+                                    notifyDataSetChanged();
+
+                                }
+                                return true;
+
                             default:
                                 return false;
                         }

@@ -3,9 +3,10 @@
 
     <string name="app_name">Exchange Rates</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Currencies</string>
-    <string name="reset_pinned_currencies">Clear pins</string>
+    <string name="action_settings">Currency chooser</string>
+    <string name="reset_pinned_currencies">Clear pinned currencies</string>
     <string name="offline_mode">Offline mode</string>
+    <string name="clear_cached">Clear offline cache</string>
     <string name="currency_from">FROM</string>
     <string name="currency_to">TARGET CURRENCY</string>
     <string name="button_exchange">GET EXCHANGE RATE</string>
@@ -22,6 +23,7 @@
     <string name="currency_code">Code</string>
     <string name="popupmenu_pin_currency">Pin Currency</string>
     <string name="popupmenu_swap_to_base">Set as base currency</string>
+    <string name="popupmenu_remove_cache">Remove offline cache</string>
     <string name="title_activity_settings">Currencies</string>
     <string name="settings_results">Choose currency results</string>
     <string name="title_activity_about">About</string>

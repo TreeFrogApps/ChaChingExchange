@@ -85,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
     private static String getRatesFinal;
     private static String getAmount;
     private double getAmountAsDouble;
-    private static boolean offlineState = false;
+    private static boolean offlineState;
 
     // string to hold the sharedPreference "POSITIONS TO REMOVE"
     String settingsRemovedPositionsString;
@@ -319,6 +319,8 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("PIN CHECKED STATE", menuPinToggleButton.isChecked());
         editor.apply();
+
+        offlineState = false;
     }
 
 
@@ -327,46 +329,70 @@ public class MainActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
 
-        if (id == R.id.action_offline_mode) {
+            case R.id.action_offline_mode:
 
-            if (item.isChecked()) {
-                // set a boolean to 'false' to use in other functions
-                offlineState = false;
-                item.setChecked(false);
-            } else {
-                // set a boolean to 'true' to use in other functions
-                offlineState = true;
-                item.setChecked(true);
-            }
+                if (item.isChecked()) {
+                    // set a boolean to 'false' to use in other functions
+
+                    offlineState = false;
+
+                    item.setChecked(false);
+                } else {
+                    // set a boolean to 'true' to use in other functions
+                    offlineState = true;
+                    item.setChecked(true);
+                }
+                return true;
+
+            case R.id.action_clear_cached:
+                //get sharedPreferences to clear ALL cached results
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                for (int i = 1; i < spinnerCurrencyList.length; i++){
+
+                    // use the spinner string array for cycling through sharedPrefs
+                    // check if that 'key' is present, if so remove it
+                    String code = spinnerCurrencyList[i].substring(0, 3);
+
+                    if (sharedPreferences.contains(code)) {
+                        editor.remove(code);
+                        editor.apply();
+                    }
+                }
+
+                // update listView to update icon (will try to get a null or "" sharedPref key
+                customAdapter.notifyDataSetChanged();
+                return true;
+
+            case R.id.action_reset_pinned:
+
+                // run method to clear pinned positions
+                resetPinnedCurrencies();
+
+                // get updated list and re-populate customerAdapter
+                populatedArrayList();
+                customAdapter.notifyDataSetChanged();
+                return true;
+
+
+            case R.id.action_settings:
+
+                Intent intentSettings = new Intent(this, SettingsActivity.class);
+                startActivity(intentSettings);
+                return true;
+
+
+            case R.id.action_about:
+
+                Intent intentAbout = new Intent(this, AboutActivity.class);
+                startActivity(intentAbout);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        if (id == R.id.action_reset_pinned) {
-
-            // run method to clear pinned positions
-            resetPinnedCurrencies();
-
-            // get updated list and re-populate customerAdapter
-            populatedArrayList();
-            customAdapter.notifyDataSetChanged();
-            return true;
-        }
-
-        if (id == R.id.action_settings) {
-
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        if (id == R.id.action_about) {
-
-            Intent intent = new Intent(this, AboutActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public static void resetPinnedCurrencies() {
@@ -425,7 +451,7 @@ public class MainActivity extends ActionBarActivity {
                         // if the menu 'offline mode' is checked then get the sharedPreferences 'result' (if there is one)
                         if (offlineState) {
 
-                            String offlineResult = sharedPreferences.getString(currencyFromSpinner.getSelectedItem().toString(), "not available");
+                            String offlineResult = sharedPreferences.getString(currencyFromSpinner.getSelectedItem().toString().substring(0, 3), "not available");
                             // pass the offlineResult into onPostExecute - handle for "not available" there
                             new MyAsyncTask().onPostExecute(offlineResult);
                         }
@@ -443,7 +469,9 @@ public class MainActivity extends ActionBarActivity {
                         // if the menu 'offline mode' is checked then get the sharedPreferences 'result' (if there is one)
                         if (offlineState) {
 
-                            String offlineResult = sharedPreferences.getString(currencyFromSpinner.getSelectedItem().toString(), "not available");
+
+                            String offlineResult =
+                                    sharedPreferences.getString(currencyFromSpinner.getSelectedItem().toString().substring(0, 3), "not available");
 
                             // pass the offlineResult into onPostExecute - handle for "not available" there
                             new MyAsyncTask().onPostExecute(offlineResult);
@@ -495,9 +523,9 @@ public class MainActivity extends ActionBarActivity {
                         // into the onPostExecute function from saved prefs
 
                         // get shared preferences result for each currency - handle not available (offline mode) in onPostExecute
-                        String result = sharedPreferences.getString(currencyFromSpinner.getSelectedItem().toString(), "not available");
+                        String result = sharedPreferences.getString(currencyFromSpinner.getSelectedItem().toString().substring(0, 3), "not available");
 
-                            new MyAsyncTask().onPostExecute(result);
+                        new MyAsyncTask().onPostExecute(result);
 
                     } else {
 
@@ -505,9 +533,9 @@ public class MainActivity extends ActionBarActivity {
                         getAmountAsDouble = Double.parseDouble(getAmount);
 
                         // get shared preferences result for each currency - handle not available (offline mode) in onPostExecute
-                        String result = sharedPreferences.getString(currencyFromSpinner.getSelectedItem().toString(), "not available");
+                        String result = sharedPreferences.getString(currencyFromSpinner.getSelectedItem().toString().substring(0, 3), "not available");
 
-                            new MyAsyncTask().onPostExecute(result);
+                        new MyAsyncTask().onPostExecute(result);
                     }
                 }
 
@@ -583,10 +611,10 @@ public class MainActivity extends ActionBarActivity {
 
             // Get the standard parameters associated with the default http client
             HttpParams httpParams = new BasicHttpParams();
-            // Set a parameter for Connection timeout set at 8 seconds
-            HttpConnectionParams.setConnectionTimeout(httpParams, 8000);
-            // Set some parameters for Socket timeout set at 8 seconds
-            HttpConnectionParams.setSoTimeout(httpParams, 8000);
+            // Set a parameter for Connection timeout set at 9 seconds
+            HttpConnectionParams.setConnectionTimeout(httpParams, 9000);
+            // Set some parameters for Socket timeout set at 9 seconds
+            HttpConnectionParams.setSoTimeout(httpParams, 9000);
 
             // HTTP Client that supports streaming uploads and downloads apply the adjusted
             // httpParams to the client
@@ -684,7 +712,7 @@ public class MainActivity extends ActionBarActivity {
             if (result != null) {
 
                 //  if the result string has been passed from offline mode check if offline information is available
-                if (result == "not available"){
+                if (result.equals("not available")) {
 
                     // clear the currency adapter and change any populated text fields containing data
                     // back to nothing before doing populatedArrayList and notifyDataSetChanged
@@ -702,9 +730,10 @@ public class MainActivity extends ActionBarActivity {
 
                         Log.v("JSONParser RESULT ", result);
 
-                        // put the returned String result into sharedPreferences
+                        // put the returned String result into sharedPreferences using the currency 3 letter code
+                        // as the sharedPreferences key
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(currencyFromSpinner.getSelectedItem().toString(), result);
+                        editor.putString(currencyFromSpinner.getSelectedItem().toString().substring(0, 3), result);
                         editor.apply();
 
                         // Get the root JSONObject
@@ -878,7 +907,7 @@ public class MainActivity extends ActionBarActivity {
 
         for (int i = 0; i < flag.length; i++) {
 
-            HashMap<String, String> currencyFlagList = new HashMap<String, String>();
+            HashMap<String, String> currencyFlagList = new HashMap<>();
 
             currencyFlagList.put("flagType", flag[i]);
             currencyFlagList.put("currencyCode", currencyCode[i]);

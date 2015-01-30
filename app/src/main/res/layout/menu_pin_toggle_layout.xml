@@ -11,6 +11,7 @@
         android:layout_width="40dp"
         android:layout_height="23dp"
         android:background="@drawable/pin_menu_toggle"
+        android:layout_marginEnd="@dimen/activity_vertical_margin"
         />
 
 </RelativeLayout>

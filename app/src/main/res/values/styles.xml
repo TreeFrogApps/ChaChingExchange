@@ -29,6 +29,7 @@
     <style name="PopUpMenu" parent="AppTheme.Base">
         <item name="android:popupBackground">@color/actionBarTextWhite</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/abc_text_size_menu_material</item>
     </style>
 
     <style name="mySpinnerItemStyle" parent="">

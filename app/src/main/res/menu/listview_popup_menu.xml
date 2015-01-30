@@ -16,4 +16,10 @@
         android:orderInCategory="2"
         app:showAsAction="never"
         />
+
+    <item android:id="@+id/menu_remove_cache"
+        android:title="@string/popupmenu_remove_cache"
+        android:orderInCategory="3"
+        app:showAsAction="never"
+        />
 </menu>
