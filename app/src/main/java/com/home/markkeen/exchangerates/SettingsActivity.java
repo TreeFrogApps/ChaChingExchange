@@ -99,7 +99,7 @@ public class SettingsActivity extends ActionBarActivity {
         Log.v("SETTINGS POSITIONS TO STRING", settingsRemovedPositionsString);
 
         // set the master switch to 'on' of the sharesPreference string is set to 'all on', or if it doesn't hold anything, either first time use or string is reset
-        if (settingsRemovedPositionsString.equals("[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]") || settingsRemovedPositionsString.equals("")){
+        if (settingsRemovedPositionsString.equals("[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]") || settingsRemovedPositionsString.equals("")) {
             switchToggle.setChecked(true);
         } else {
             switchToggle.setChecked(false);
@@ -109,7 +109,7 @@ public class SettingsActivity extends ActionBarActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if (isChecked){
+                if (isChecked) {
 
                     // reset pinned currencies as something has been changed to the main results list
                     MainActivity.resetPinnedCurrencies();
@@ -125,7 +125,7 @@ public class SettingsActivity extends ActionBarActivity {
 
                 }
 
-                if (!isChecked){
+                if (!isChecked) {
 
                     // reset pinned currencies as something has been changed to the main results list
                     MainActivity.resetPinnedCurrencies();
@@ -191,7 +191,7 @@ public class SettingsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void settingsPopulatedListData(){
+    public void settingsPopulatedListData() {
 
         settingsFlags = new int[]{
                 R.drawable.flag_ic_aud_00, R.drawable.flag_ic_bgn_01, R.drawable.flag_ic_brl_02,
@@ -207,25 +207,25 @@ public class SettingsActivity extends ActionBarActivity {
                 R.drawable.flag_ic_usd_30, R.drawable.flag_ic_zar_31,
         };
 
-        settingsCountryCode = new String[] {
-                "AUD","BGN", "BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HKD","HRK",
-                "HUF","IDR","ILS","INR","JPY","KRW","LTL","MXN","NOK","NZD","PHP","PLN",
-                "RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"
+        settingsCountryCode = new String[]{
+                "AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HRK",
+                "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "LTL", "MXN", "NOK", "NZD", "PHP", "PLN",
+                "RON", "RUB", "SEK", "SGD", "THB", "TRY", "USD", "ZAR"
         };
 
         settingsCountry = new String[]{
-                "Australian Dollar","Bulgarian Lev","Brazilian Real","Canadian Dollar",
-                "Swiss Franc","Chinese Yuan","Czech Koruna","Danish Krone","Euro",
-                "British Pound","Hong Kong Dollar","Croatian Kuna","Hungarian Forint",
-                "Indonesian Rupiah","Israeli Shekel","Indian Rupee","Japanese Yen",
-                "Korean Won","Lithuanian Litas","Mexican Peso","Norwegian Krone",
-                "New Zealand Dollar","Philippine Peso","Polish NEW Zloty","Romanian Leu",
-                "Russian Rouble","Swedish Krona","Singapore Dollar","Thai Baht",
-                "New Turkish Lira","United States Dollar","South African Rand"
+                "Australian Dollar", "Bulgarian Lev", "Brazilian Real", "Canadian Dollar",
+                "Swiss Franc", "Chinese Yuan", "Czech Koruna", "Danish Krone", "Euro",
+                "British Pound", "Hong Kong Dollar", "Croatian Kuna", "Hungarian Forint",
+                "Indonesian Rupiah", "Israeli Shekel", "Indian Rupee", "Japanese Yen",
+                "Korean Won", "Lithuanian Litas", "Mexican Peso", "Norwegian Krone",
+                "New Zealand Dollar", "Philippine Peso", "Polish NEW Zloty", "Romanian Leu",
+                "Russian Rouble", "Swedish Krona", "Singapore Dollar", "Thai Baht",
+                "New Turkish Lira", "United States Dollar", "South African Rand"
         };
 
 
-        for (int i = 0; i < settingsFlags.length; i++){
+        for (int i = 0; i < settingsFlags.length; i++) {
 
             // instantiate ListData class
             ListData listData = new ListData();
@@ -242,34 +242,39 @@ public class SettingsActivity extends ActionBarActivity {
     }
 
 
-        // create ListData CLASS with getters and setters to 'Get' and 'Set'
-        // data in the listView (create ListData Array from class below)
-        public class ListData{
+    // create ListData CLASS with getters and setters to 'Get' and 'Set'
+    // data in the listView (create ListData Array from class below)
+    public class ListData {
 
-            int flagNumberId;
-            String countryCodeId;
-            String countryId;
+        int flagNumberId;
+        String countryCodeId;
+        String countryId;
 
-            public int getFlagNumberId(){
-                return flagNumberId;
-            }
-            public void setFlagNumberId(int flagNumberId){
-                this.flagNumberId = flagNumberId;
-            }
-            public String getCountryCodeId(){
-                return countryCodeId;
-            }
-            public void setCountryCodeId(String countryCodeId){
-                this.countryCodeId = countryCodeId;
-            }
-            public String getCountryId(){
-                return countryId;
-            }
-            public void setCountryId(String countryId) {
-                this.countryId = countryId;
-            }
+        public int getFlagNumberId() {
+            return flagNumberId;
         }
 
+        public void setFlagNumberId(int flagNumberId) {
+            this.flagNumberId = flagNumberId;
+        }
+
+        public String getCountryCodeId() {
+            return countryCodeId;
+        }
+
+        public void setCountryCodeId(String countryCodeId) {
+            this.countryCodeId = countryCodeId;
+        }
+
+        public String getCountryId() {
+            return countryId;
+        }
+
+        public void setCountryId(String countryId) {
+            this.countryId = countryId;
+        }
+    }
 
 
 }
+
