@@ -360,6 +360,9 @@ public class MainActivity extends ActionBarActivity {
                         editor.remove(code);
                         editor.apply();
                     }
+
+                    String baseSelector = "Cho";
+                    swapBaseCurrency(baseSelector);
                 }
 
                 // update listView to update icon (will try to get a null or "" sharedPref key
@@ -592,7 +595,7 @@ public class MainActivity extends ActionBarActivity {
 
         } else {
 
-            Toast.makeText(getApplication(), "No Internet Connection Available",
+            Toast.makeText(getApplication(), "No Internet Connection - Offline mode available only",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -780,7 +783,7 @@ public class MainActivity extends ActionBarActivity {
                         // convert the rate amount to string 2 decimal places
                         finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
 
-                        Log.v("FINAL CONVERTED AMOUNT FOR UPDATING LIST VIEW", finalConvertedAmountText[i]);
+                        Log.v("FINAL CONVERTED AMOUNT", finalConvertedAmountText[i]);
                     }
 
                     customAdapter.clear();

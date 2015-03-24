@@ -194,7 +194,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                     }
 
                                     for (int i = 0; i < positionsToPin.length; i++) {
-                                        Log.v("POSITION TO ADD TO PIN LIST", String.valueOf(positionsToPin[i]));
+                                        Log.v("ADDED TO PIN LIST", String.valueOf(positionsToPin[i]));
                                     }
 
                                     // Cannot store int array in SharedPreferences - must be converted to String format
@@ -234,6 +234,15 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                     editor.remove(code);
                                     editor.apply();
                                     notifyDataSetChanged();
+
+                                    String currentCurrencyCode = viewHolder.convertedCurrencyCode.getText().toString();
+
+                                    if (MainActivity.currencyFromSpinner.getSelectedItem().toString().substring(0, 3).equals(currentCurrencyCode)){
+
+                                        String baseSelector = "Cho";
+                                        MainActivity.swapBaseCurrency(baseSelector);
+
+                                    }
 
                                 }
                                 return true;
