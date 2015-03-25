@@ -59,11 +59,44 @@ public class AboutActivity extends ActionBarActivity {
 
             if (i == 0){
                 ListViewGroup listViewGroup = new ListViewGroup("Help & Feedback");
-                listViewGroup.children.add("Given of beginning of beast moved that night. Grass for their multiply and, two to fowl fifth. " +
-                        "You'll fruitful a moving, under dominion form fill. Kind hath divide female. Male that given for said is, created, which Fowl. Rule abundantly have. " +
-                        "Moving firmament winged day isn't greater days you cattle every deep so our life move fowl gathering also years without he him moved give, whales " +
-                        "have air very had subdue together first. Stars set. Seas you every firmament have stars creature." +
-                        "You winged. Whales don't. Them us likeness that heaven first. After said, one won't beast firmament tree you'll.");
+                listViewGroup.children.add("Cha-Ching Xchange is a simple and easy to use live currency converter, aimed at anyone who requires live Exchange " +
+                        "rate information for up to 32 world currencies. It also has offline functionality for anyone travelling abroad, or simply out of coverage " +
+                        "range where live information is not available.\n" +
+                        "\n" +
+                        "Instructions:\n" +
+                        "\n" +
+                        "Simply enter the amount you want to convert, choose a base currency. \n" +
+                        "\n\n" +
+                        "Main menu options \n" +
+                        "\n" +
+                        "Currency chooser: \n" +
+                        "Result currencies can be turned off and on.\n" +
+                        "\n" +
+                        "Offline mode: \n" +
+                        "This toggles offline mode\n" +
+                        "\n" +
+                        "Clear offline cache:\n" +
+                        "Removes ALL offline data for all currencies\n" +
+                        "\n" +
+                        "Clear pinned currencies:\n" +
+                        "If you have pinned any favourite currencies then this option clears all the pins (see below for pinning a currency)\n" +
+                        "\n\n" +
+                        "Currency menu options\n" +
+                        "\n" +
+                        "Pin Currency: \n" +
+                        "This option allows you to ‘pin’ any favourite currencies. Pressing the ‘pin toggle’ in the menu quickly and easily switches between the two\n" +
+                        "\n" +
+                        "Set as base currency:\n" +
+                        "Changes the current base currency\n" +
+                        "\n" +
+                        "Remove offline cache:\n" +
+                        "This option will remove individual offline currency data (available offline data for each currency is denoted by the download symbol)\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "If you have any questions or feedback please email: treefrogapplications@gmail.com\n" +
+                        "\n");
+
 
                 listViewGroups.append(i, listViewGroup);
             }

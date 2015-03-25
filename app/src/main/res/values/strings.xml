@@ -21,7 +21,7 @@
     <string name="currency_results_code">Currency type</string>
     <string name="currency_results_rate">Rate</string>
     <string name="currency_code">Code</string>
-    <string name="popupmenu_pin_currency">Pin Currency</string>
+    <string name="popupmenu_pin_currency">Pin currency</string>
     <string name="popupmenu_swap_to_base">Set as base currency</string>
     <string name="popupmenu_remove_cache">Remove offline cache</string>
     <string name="title_activity_settings">Currencies</string>

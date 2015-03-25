@@ -63,7 +63,7 @@ public class SettingsAdapter extends BaseAdapter{
 
                 settingsRemovedPositionsIntArray[i] = Integer.parseInt(settingsRemovedPositionsStringArray[i].trim());
 
-                Log.v("POSITIONS TO REMOVE FROM FLAG AND CURRENCY LIST", String.valueOf(settingsRemovedPositionsIntArray[i]));
+                Log.v("REMOVE FROM FAC LIST", String.valueOf(settingsRemovedPositionsIntArray[i]));
             }
         }
         return settingsRemovedPositionsIntArray;
@@ -167,13 +167,13 @@ public class SettingsAdapter extends BaseAdapter{
                     MainActivity.resetPinnedCurrencies();
 
                     settingsRemovedPositionsIntArray[position] = (position + 1);
-                    Log.v("SETTINGS REMOVED POSITION", String.valueOf(position + 1));
+                    Log.v("SETTINGS REMOVED POS", String.valueOf(position + 1));
                 }
 
                 // store the int array holding all data about positions to keep/remove in a string (can't save int arrays in sharedPreferences)
                 String settingsPositionsToString = Arrays.toString(settingsRemovedPositionsIntArray);
                 // see the string list (should have 32 entries, either 0 or the position number
-                Log.v("SETTINGS POSITIONS TO STRING", settingsPositionsToString);
+                Log.v("SETTINGS POS TO STRING", settingsPositionsToString);
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 // Get SharedPreferences and store as a string - NO NEED TO CLEAR WHEN SWAPPING ACTIVITIES!
