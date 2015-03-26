@@ -3,6 +3,7 @@ package com.home.markkeen.exchangerates;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.Spanned;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,7 +123,7 @@ public class AboutExpandableAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         // String which gets the child text in relation to the associated SparseArray position (ListViewGroup String name) List<String> (text for child position)
-        final String children = (String) getChild(groupPosition, childPosition);
+        final Spanned children = (Spanned) getChild(groupPosition, childPosition);
         TextView childTextView;
 
         if (convertView == null) {
@@ -139,6 +140,8 @@ public class AboutExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+
+
+        return true;
     }
 }

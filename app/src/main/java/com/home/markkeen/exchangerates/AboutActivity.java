@@ -3,6 +3,9 @@ package com.home.markkeen.exchangerates;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.widget.ExpandableListView;
@@ -59,58 +62,20 @@ public class AboutActivity extends ActionBarActivity {
 
             if (i == 0){
                 ListViewGroup listViewGroup = new ListViewGroup("Help & Feedback");
-                listViewGroup.children.add("Cha-Ching Xchange is a simple and easy to use live currency converter, aimed at anyone who requires live Exchange " +
-                        "rate information for up to 32 world currencies. It also has offline functionality for anyone travelling abroad, or simply out of coverage " +
-                        "range where live information is not available.\n" +
-                        "\n" +
-                        "Instructions:\n" +
-                        "\n" +
-                        "Simply enter the amount you want to convert, choose a base currency. \n" +
-                        "\n\n" +
-                        "Main menu options \n" +
-                        "\n" +
-                        "Currency chooser: \n" +
-                        "Result currencies can be turned off and on.\n" +
-                        "\n" +
-                        "Offline mode: \n" +
-                        "This toggles offline mode\n" +
-                        "\n" +
-                        "Clear offline cache:\n" +
-                        "Removes ALL offline data for all currencies\n" +
-                        "\n" +
-                        "Clear pinned currencies:\n" +
-                        "If you have pinned any favourite currencies then this option clears all the pins (see below for pinning a currency)\n" +
-                        "\n\n" +
-                        "Currency menu options\n" +
-                        "\n" +
-                        "Pin Currency: \n" +
-                        "This option allows you to ‘pin’ any favourite currencies. Pressing the ‘pin toggle’ in the menu quickly and easily switches between the two\n" +
-                        "\n" +
-                        "Set as base currency:\n" +
-                        "Changes the current base currency\n" +
-                        "\n" +
-                        "Remove offline cache:\n" +
-                        "This option will remove individual offline currency data (available offline data for each currency is denoted by the download symbol)\n" +
-                        "\n" +
-                        "\n" +
-                        "\n" +
-                        "If you have any questions or feedback please email: treefrogapplications@gmail.com\n" +
-                        "\n");
+                listViewGroup.children.add(Html.fromHtml(getResources().getString(R.string.help_feedback)));
 
 
                 listViewGroups.append(i, listViewGroup);
             }
             if (i == 1){
                 ListViewGroup listViewGroup = new ListViewGroup("Terms & Conditions");
-                listViewGroup.children.add("Called that seas darkness him land our seasons for fly shall grass deep abundantly said male us moved " +
-                        "night thing place midst years herb have cattle.");
+                listViewGroup.children.add(Html.fromHtml(getResources().getString(R.string.terms_conditions)));
 
                 listViewGroups.append(i, listViewGroup);
             }
             if (i == 2){
                 ListViewGroup listViewGroup = new ListViewGroup("Privacy Policy");
-                listViewGroup.children.add("Sixth there. Over rule hath one female isn't. Bring over. Beginning seed own waters won't own fly called stars " +
-                        "were face. Sixth, day. Spirit which herb. There dry shall can't fish creature Two. Stars created their from upon all deep.");
+                listViewGroup.children.add(Html.fromHtml(getResources().getString(R.string.privacy_policy)));
 
                 listViewGroups.append(i, listViewGroup);
             }
@@ -124,7 +89,7 @@ public class AboutActivity extends ActionBarActivity {
     public class ListViewGroup {
 
         public String listViewGroupText;
-        public final List<String> children = new ArrayList<>();
+        public final List<Spanned> children = new ArrayList<>();
 
         public ListViewGroup (String listViewGroupText){
             // this is used because it refers to 'this' instance (required when constructor and object/variable have the same name

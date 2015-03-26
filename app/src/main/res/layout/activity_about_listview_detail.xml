@@ -6,6 +6,7 @@
     android:clickable="true"
     android:orientation="vertical"
     android:paddingLeft="32dp"
+    android:paddingRight="16dp"
     tools:context=".MainActivity" >
 
     <TextView

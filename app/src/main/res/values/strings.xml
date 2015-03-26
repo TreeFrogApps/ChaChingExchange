@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Exchange Rates</string>
+    <string name="app_name">Cha-Ching Exchange</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Currency chooser</string>
     <string name="reset_pinned_currencies">Clear pinned currencies</string>
@@ -29,6 +29,88 @@
     <string name="title_activity_about">About</string>
     <string name="menu_about">About</string>
     <string name="support_information">Support and Information</string>
+    
+    <string name="help_feedback">
+Cha-Ching Exchange is a simple and easy to use live currency converter, aimed at anyone who requires live Exchange
+rate information for up to 32 world currencies. It also has offline functionality for anyone travelling abroad,
+or simply out of coverage range where live information is not available.
+
+
+
+<Data><![CDATA[ <b>Instructions</b> ]]> </Data>
+
+Simply enter the amount you want to convert, choose a base currency.
+
+
+Main menu options
+
+Currency chooser:
+
+Result currencies can be turned off and on.
+
+Offline mode:
+
+This toggles offline mode
+
+Clear offline cache:
+
+Removes ALL offline data for all currencies
+
+
+Clear pinned currencies:
+
+If you have pinned any favourite currencies then this option clears all the pins (see below for pinning a currency)
+
+
+
+Currency menu options
+
+
+Pin Currency:
+
+This option allows you to ‘pin’ any favourite currencies. Pressing the ‘pin toggle’ in the menu quickly and easily switches between the two
+
+
+Set as base currency:
+
+Changes the current base currency
+
+
+Remove offline cache:
+
+This option will remove individual offline currency data (available offline data for each currency is denoted by the download symbol)
+
+
+
+
+If you have any questions or feedback please email:
+<Data><![CDATA[ <a href="mailto:treefrogapplications@gmail.com">treefrogapplications@gmail.com</a> ]]> </Data>
+
+    </string>
+
+    <string name="terms_conditions">
+        Last updated: 03/2015.
+        /n
+        Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using
+        Cha-Ching Exchange by Tree Frog Apps ("us", "we", or "our").
+        /n
+        Your access to and use of the Service is conditioned on your acceptance of and compliance with
+        these Terms. These Terms apply to all visitors, users and others who access or use the Service.
+        By accessing or using the Service you agree to be bound by these Terms. If you disagree with any
+        part of the terms then you may not access the Service.
+        /n
+        Termination
+        We may terminate or suspend access to our Service immediately, without prior notice or liability, for
+        any reason whatsoever, including without limitation if you breach the Terms.
+        All provisions of the Terms which by their nature should survive termination shall survive
+        termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and
+        limitations of liability.
+    </string>
+
+    <string name="privacy_policy">
+        Cha-Ching Exchange does not collect or use any personal information
+
+    </string>
 
 </resources>
 

@@ -361,12 +361,17 @@ public class MainActivity extends ActionBarActivity {
                         editor.apply();
                     }
 
-                    String baseSelector = "Cho";
-                    swapBaseCurrency(baseSelector);
+
                 }
 
                 // update listView to update icon (will try to get a null or "" sharedPref key
+                currencyFromSpinner.setSelection(0);
+                customAdapter.clear();
+                finalConvertedAmountText = new String[32];
+                finalRateArray = new String[32];
+                populatedArrayList();
                 customAdapter.notifyDataSetChanged();
+
                 return true;
 
             case R.id.action_reset_pinned:
@@ -595,6 +600,7 @@ public class MainActivity extends ActionBarActivity {
 
         } else {
 
+            currencyFromSpinner.setSelection(0);
             Toast.makeText(getApplication(), "No Internet Connection - Offline mode available only",
                     Toast.LENGTH_SHORT).show();
             return false;
@@ -724,6 +730,7 @@ public class MainActivity extends ActionBarActivity {
                     finalRateArray = new String[32];
                     populatedArrayList();
                     customAdapter.notifyDataSetChanged();
+                    currencyFromSpinner.setSelection(0);
 
                     Toast.makeText(getApplication(), "Offline data not available",
                             Toast.LENGTH_SHORT).show();

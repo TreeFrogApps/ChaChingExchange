@@ -17,7 +17,7 @@
         <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>
         <!-- android:textColorSecondary is the color of the menu
              overflow icon (three vertical dots) -->
-        <item name="android:textColorSecondary">@color/abc_secondary_text_material_dark</item>
+        <item name="android:textColorSecondary">@color/black</item>
         <!-- attributes for editText colors - overriding theme base colors  -->
         <item name="colorControlNormal">@color/editTextGrey</item>
     </style>
