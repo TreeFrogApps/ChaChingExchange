@@ -56,7 +56,17 @@ public class MainActivity extends ActionBarActivity {
     static String[] spinnerCurrencyList;
     static ArrayAdapter<String> spinnerArray;
     static ImageView flagBase;
-
+    static SharedPreferences sharedPreferences;
+    static CustomAdapter customAdapter;
+    static ListView listView;
+    static String[] pinnedItems;
+    static int[] pinnedPositions;
+    static String pinnedPositionsToKeep;
+    static ToggleButton menuPinToggleButton;
+    static ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
+    private static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
+    private static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+    private static boolean offlineState;
     int[] flags = {
             // holder flag for 'Choose a base currency' position in Select currency from web spinner
             R.drawable.flag_ic_00_empty,
@@ -72,21 +82,6 @@ public class MainActivity extends ActionBarActivity {
             R.drawable.flag_ic_sgd_27, R.drawable.flag_ic_thb_28, R.drawable.flag_ic_try_29,
             R.drawable.flag_ic_usd_30, R.drawable.flag_ic_zar_31,
     };
-
-    static SharedPreferences sharedPreferences;
-    private boolean pinToggleSavedState;
-
-    static CustomAdapter customAdapter;
-    static ListView listView;
-
-    private static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
-    private static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-    private static String getRatesLatest;
-    private static String getRatesFinal;
-    private static String getAmount;
-    private double getAmountAsDouble;
-    private static boolean offlineState;
-
     // string to hold the sharedPreference "POSITIONS TO REMOVE"
     String settingsRemovedPositionsString;
     // string array to hold the split string
@@ -95,32 +90,64 @@ public class MainActivity extends ActionBarActivity {
     // otherwise array out of bounds issue - try / catch in populatedList method will
     // sort because it doesn't have a value on first start
     int[] settingsRemovedPositionsIntArray;
-
-    static String[] pinnedItems;
-    static int[] pinnedPositions;
-    static String pinnedPositionsToKeep;
-
     double[] convertedAmount = new double[32];
     double[] finalConvertedAmount = new double[32];
-    private String[] rateArray = new String[32];
-    private String[] finalRateArray = new String[32];
-    private String[] finalConvertedAmountText = new String[32];
     String[] currency;
     String[] flag;
     String[] currencyCode;
     String currencyFromType;
     String currencyFromSubsting;
-    static ToggleButton menuPinToggleButton;
     ImageView pinToggle;
     ImageView progressBar;
     Animation progressBarAnimation;
     Animation flagAnimation;
-
     // int's for saving position of the listView
     int indexPosition;
     int top;
+    private boolean pinToggleSavedState;
+    private String getRatesLatest;
+    private String getRatesFinal;
+    private String getAmount;
+    private double getAmountAsDouble;
+    private String[] rateArray = new String[32];
+    private String[] finalRateArray = new String[32];
+    private String[] finalConvertedAmountText = new String[32];
 
-    static ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
+    public static void resetPinnedCurrencies() {
+
+        // reset the pinToggle, if this is not done there is a outOfBounds error
+        menuPinToggleButton.setChecked(false);
+        // update customAdapter to tell is the toggles state for the pin image
+        customAdapter.pinToggleOn = false;
+        // reset the pinnedPositions int[]
+        pinnedPositions = new int[flagAndCurrencyList.size()];
+
+        // remove the save pinned positions string from shared Prefs
+        sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
+
+        // reset the pinnedPositionsToKeep string from the customAdapter
+        customAdapter.pinnedPositionsToKeep = "";
+
+        // reset the positionsToPin int[] from the customAdapter
+        customAdapter.positionsToPin = new int[flagAndCurrencyList.size()];
+
+        customAdapter.clear();
+    }
+
+    public static void swapBaseCurrency(String currency) {
+
+        String spinnerItem;
+
+        for (int i = 0; i < currencyFromSpinner.getCount(); i++) {
+
+            spinnerItem = currencyFromSpinner.getItemAtPosition(i).toString();
+
+            if (currency.equals(spinnerItem.substring(0, 3))) {
+
+                currencyFromSpinner.setSelection(i);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,7 +242,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -323,7 +349,6 @@ public class MainActivity extends ActionBarActivity {
         offlineState = false;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -403,28 +428,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public static void resetPinnedCurrencies() {
-
-        // reset the pinToggle, if this is not done there is a outOfBounds error
-        menuPinToggleButton.setChecked(false);
-        // update customAdapter to tell is the toggles state for the pin image
-        customAdapter.pinToggleOn = false;
-        // reset the pinnedPositions int[]
-        pinnedPositions = new int[flagAndCurrencyList.size()];
-
-        // remove the save pinned positions string from shared Prefs
-        sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
-
-        // reset the pinnedPositionsToKeep string from the customAdapter
-        customAdapter.pinnedPositionsToKeep = "";
-
-        // reset the positionsToPin int[] from the customAdapter
-        customAdapter.positionsToPin = new int[flagAndCurrencyList.size()];
-
-        customAdapter.clear();
-    }
-
-
     public void addItemExchangeRateFromSpinner() {
 
         currencyFromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -500,7 +503,6 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
-
     public void setExchangeAmountOnTextChangeListener() {
 
         amountEditText.addTextChangedListener(new TextWatcher() {
@@ -566,21 +568,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public static void swapBaseCurrency(String currency) {
-
-        String spinnerItem;
-
-        for (int i = 0; i < currencyFromSpinner.getCount(); i++) {
-
-            spinnerItem = currencyFromSpinner.getItemAtPosition(i).toString();
-
-            if (currency.equals(spinnerItem.substring(0, 3))) {
-
-                currencyFromSpinner.setSelection(i);
-            }
-        }
-    }
-
     // create method to check connection status before executing MyAsyncTask
     // return true if available
     public boolean checkConnection() {
@@ -605,6 +592,89 @@ public class MainActivity extends ActionBarActivity {
                     Toast.LENGTH_SHORT).show();
             return false;
         }
+    }
+
+    public ArrayList<HashMap<String, String>> populatedArrayList() {
+
+        flag = new String[]{
+                "flag_ic_aud_00","flag_ic_bgn_01","flag_ic_brl_02","flag_ic_cad_03","flag_ic_chf_04","flag_ic_cny_05","flag_ic_czk_06",
+                "flag_ic_dkk_07","flag_ic_eur_08","flag_ic_gbp_09","flag_ic_hkd_10","flag_ic_hrk_11","flag_ic_huf_12","flag_ic_idr_13",
+                "flag_ic_ils_14","flag_ic_inr_15","flag_ic_jpy_16","flag_ic_krw_17","flag_ic_ltl_18","flag_ic_mxn_19","flag_ic_nok_20",
+                "flag_ic_nzd_21","flag_ic_php_22","flag_ic_pln_23","flag_ic_ron_24","flag_ic_rub_25","flag_ic_sek_26","flag_ic_sgd_27",
+                "flag_ic_thb_28","flag_ic_try_29","flag_ic_usd_30","flag_ic_zar_31"};
+        Arrays.sort(flag);
+
+        currencyCode = new String[]{
+                "AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HKD","HRK","HUF","IDR",
+                "ILS","INR","JPY","KRW","LTL","MXN","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"};
+        Arrays.sort(currencyCode);
+
+        currency = new String[]{
+                "00 Australian Dollar","01 Bulgarian Lev","02 Brazilian Real","03 Canadian Dollar","04 Swiss Franc","05 Chinese Yuan",
+                "06 Czech Koruna","07 Danish Krone","08 Euro","09 British Pound","10 Hong Kong Dollar","11 Croatian Kuna","12 Hungarian Forint",
+                "13 Indonesian Rupiah","14 Israeli Shekel","15 Indian Rupee","16 Japanese Yen","17 South Korean Won","18 Lithuanian Litas",
+                "19 Mexican Peso","20 Norwegian Krone","21 New Zealand Dollar","22 Philippine Peso","23 Polish NEW Zloty","24 Romanian Leu","25 Russian Rouble",
+                "26 Swedish Krona","27 Singapore Dollar","28 Thai Baht","29 New Turkish Lira","30 United States Dollar","31 South African Rand"};
+        Arrays.sort(currency);
+
+        for (int i = 0; i < flag.length; i++) {
+
+            HashMap<String, String> currencyFlagList = new HashMap<>();
+
+            currencyFlagList.put("flagType", flag[i]);
+            currencyFlagList.put("currencyCode", currencyCode[i]);
+            currencyFlagList.put("currencyType", currency[i]);
+            currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
+            currencyFlagList.put("rateAmountText", finalRateArray[i]);
+
+
+            flagAndCurrencyList.add(currencyFlagList);
+
+            Log.v("CURRENCY Code", currencyCode[i]);
+            Log.v("CURRENCY TYPE", currency[i]);
+            Log.v("FLAG TYPE", flag[i]);
+
+        }
+
+        // Remove positions from settingsActivity from retrieved int[] settingsRemovedPositionsIntArray from onResume() and from menuPinToggle
+        // Make sure there is something in the String passed from SettingsActivity otherwise null pointer exception (try/catch)
+        // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
+        try {
+            for (int i = (flagAndCurrencyList.size() - 1); i >= 0; i--) {
+
+                if (settingsRemovedPositionsIntArray[i] != 0) {
+
+                    // remove position - minus 1 because array has ALL zero's in 32 holders (default),
+                    // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
+                    flagAndCurrencyList.remove((settingsRemovedPositionsIntArray[i] - 1));
+                }
+
+            }
+
+        } catch (NullPointerException e) {
+
+        }
+
+        // any 'Positions To Remove' from the settings activity been done so we have the new
+        // flagAndCurrencyList size, so anything that remove using the 'pinned positions' int array
+        // will be in relation to the correct result currencies list
+        try {
+            for (int i = (flagAndCurrencyList.size() - 1); i >= 0; i--) {
+
+                // check to see if the menuToggle is checked
+                if (menuPinToggleButton.isChecked()) {
+
+                    if (pinnedPositions[i] == 0) {
+
+                        flagAndCurrencyList.remove(i);
+                    }
+                }
+            }
+
+        } catch (NullPointerException e) {
+
+        }
+        return flagAndCurrencyList;
     }
 
     private class MyAsyncTask extends AsyncTask<String, String, String> {
@@ -805,174 +875,6 @@ public class MainActivity extends ActionBarActivity {
                         Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-
-    public ArrayList<HashMap<String, String>> populatedArrayList() {
-
-        flag = new String[]{
-                "flag_ic_aud_00",
-                "flag_ic_bgn_01",
-                "flag_ic_brl_02",
-                "flag_ic_cad_03",
-                "flag_ic_chf_04",
-                "flag_ic_cny_05",
-                "flag_ic_czk_06",
-                "flag_ic_dkk_07",
-                "flag_ic_eur_08",
-                "flag_ic_gbp_09",
-                "flag_ic_hkd_10",
-                "flag_ic_hrk_11",
-                "flag_ic_huf_12",
-                "flag_ic_idr_13",
-                "flag_ic_ils_14",
-                "flag_ic_inr_15",
-                "flag_ic_jpy_16",
-                "flag_ic_krw_17",
-                "flag_ic_ltl_18",
-                "flag_ic_mxn_19",
-                "flag_ic_nok_20",
-                "flag_ic_nzd_21",
-                "flag_ic_php_22",
-                "flag_ic_pln_23",
-                "flag_ic_ron_24",
-                "flag_ic_rub_25",
-                "flag_ic_sek_26",
-                "flag_ic_sgd_27",
-                "flag_ic_thb_28",
-                "flag_ic_try_29",
-                "flag_ic_usd_30",
-                "flag_ic_zar_31"};
-        Arrays.sort(flag);
-
-        currencyCode = new String[]{
-                "AUD",
-                "BGN",
-                "BRL",
-                "CAD",
-                "CHF",
-                "CNY",
-                "CZK",
-                "DKK",
-                "EUR",
-                "GBP",
-                "HKD",
-                "HRK",
-                "HUF",
-                "IDR",
-                "ILS",
-                "INR",
-                "JPY",
-                "KRW",
-                "LTL",
-                "MXN",
-                "NOK",
-                "NZD",
-                "PHP",
-                "PLN",
-                "RON",
-                "RUB",
-                "SEK",
-                "SGD",
-                "THB",
-                "TRY",
-                "USD",
-                "ZAR"};
-        Arrays.sort(currencyCode);
-
-        currency = new String[]{
-                "00 Australian Dollar",
-                "01 Bulgarian Lev",
-                "02 Brazilian Real",
-                "03 Canadian Dollar",
-                "04 Swiss Franc",
-                "05 Chinese Yuan",
-                "06 Czech Koruna",
-                "07 Danish Krone",
-                "08 Euro",
-                "09 British Pound",
-                "10 Hong Kong Dollar",
-                "11 Croatian Kuna",
-                "12 Hungarian Forint",
-                "13 Indonesian Rupiah",
-                "14 Israeli Shekel",
-                "15 Indian Rupee",
-                "16 Japanese Yen",
-                "17 South Korean Won",
-                "18 Lithuanian Litas",
-                "19 Mexican Peso",
-                "20 Norwegian Krone",
-                "21 New Zealand Dollar",
-                "22 Philippine Peso",
-                "23 Polish NEW Zloty",
-                "24 Romanian Leu",
-                "25 Russian Rouble",
-                "26 Swedish Krona",
-                "27 Singapore Dollar",
-                "28 Thai Baht",
-                "29 New Turkish Lira",
-                "30 United States Dollar",
-                "31 South African Rand"};
-        Arrays.sort(currency);
-
-        for (int i = 0; i < flag.length; i++) {
-
-            HashMap<String, String> currencyFlagList = new HashMap<>();
-
-            currencyFlagList.put("flagType", flag[i]);
-            currencyFlagList.put("currencyCode", currencyCode[i]);
-            currencyFlagList.put("currencyType", currency[i]);
-            currencyFlagList.put("finalConvertedAmountText", finalConvertedAmountText[i]);
-            currencyFlagList.put("rateAmountText", finalRateArray[i]);
-
-
-            flagAndCurrencyList.add(currencyFlagList);
-
-            Log.v("CURRENCY Code", currencyCode[i]);
-            Log.v("CURRENCY TYPE", currency[i]);
-            Log.v("FLAG TYPE", flag[i]);
-
-        }
-
-        // Remove positions from settingsActivity from retrieved int[] settingsRemovedPositionsIntArray from onResume() and from menuPinToggle
-        // Make sure there is something in the String passed from SettingsActivity otherwise null pointer exception (try/catch)
-        // Reverse loop from 31 to 0 (32 positions), otherwise positions in the ArrayList<HashMap> flagAndCurrencyList reshuffle in lower indexes before higher ones!
-        try {
-            for (int i = (flagAndCurrencyList.size() - 1); i >= 0; i--) {
-
-                if (settingsRemovedPositionsIntArray[i] != 0) {
-
-                    // remove position - minus 1 because array has ALL zero's in 32 holders (default),
-                    // so + 1 was added when storing it originally from CurrencyAdapter, then into SharedPreferences
-                    flagAndCurrencyList.remove((settingsRemovedPositionsIntArray[i] - 1));
-                }
-
-            }
-
-        } catch (NullPointerException e) {
-
-        }
-
-        // any 'Positions To Remove' from the settings activity been done so we have the new
-        // flagAndCurrencyList size, so anything that remove using the 'pinned positions' int array
-        // will be in relation to the correct result currencies list
-        try {
-            for (int i = (flagAndCurrencyList.size() - 1); i >= 0; i--) {
-
-                // check to see if the menuToggle is checked
-                if (menuPinToggleButton.isChecked()) {
-
-                    if (pinnedPositions[i] == 0) {
-
-                        flagAndCurrencyList.remove(i);
-                    }
-                }
-            }
-
-        } catch (NullPointerException e) {
-
-        }
-        return flagAndCurrencyList;
     }
 
 }

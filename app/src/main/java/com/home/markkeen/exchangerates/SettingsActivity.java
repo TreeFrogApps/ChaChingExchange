@@ -96,7 +96,7 @@ public class SettingsActivity extends ActionBarActivity {
         switchToggle = (SwitchCompat) menu.findItem(R.id.menu_pin_button_id_settings).getActionView().findViewById(R.id.menu_pin_toggle_button);
 
         settingsRemovedPositionsString = sharedPreferences.getString("POSITIONS TO REMOVE", "");
-        Log.v("SETTINGS POSITIONS TO STRING", settingsRemovedPositionsString);
+        Log.v("SETTINGS POS TO STRING", settingsRemovedPositionsString);
 
         // set the master switch to 'on' of the sharesPreference string is set to 'all on', or if it doesn't hold anything, either first time use or string is reset
         if (settingsRemovedPositionsString.equals("[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]") || settingsRemovedPositionsString.equals("")) {
