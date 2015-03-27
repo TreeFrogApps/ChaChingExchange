@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="@string/hello_world"
-        android:textSize="@dimen/text_bigger">
+        android:textSize="@dimen/text_bigger"
+        android:autoLink="email|web">
     </TextView>
 
     <View

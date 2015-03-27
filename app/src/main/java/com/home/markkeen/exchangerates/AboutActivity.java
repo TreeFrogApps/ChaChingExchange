@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.Spanned;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -69,6 +68,7 @@ public class AboutActivity extends ActionBarActivity {
             }
             if (i == 1){
                 ListViewGroup listViewGroup = new ListViewGroup("Terms & Conditions");
+
                 listViewGroup.children.add(Html.fromHtml(getResources().getString(R.string.terms_conditions)));
 
                 listViewGroups.append(i, listViewGroup);
