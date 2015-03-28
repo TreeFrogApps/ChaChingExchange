@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.home.markkeen.exchangerates.SettingsActivity">
+    tools:context="com.home.treefrogapps.ChaChingExchange.SettingsActivity">
 
     <include layout="@layout/my_tool_action_bar"></include>
 

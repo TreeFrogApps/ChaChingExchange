@@ -1,4 +1,4 @@
-package com.home.markkeen.exchangerates;
+package com.home.treefrogapps.ChaChingExchange;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

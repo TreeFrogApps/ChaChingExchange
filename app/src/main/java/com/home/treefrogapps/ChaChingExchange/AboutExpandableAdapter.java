@@ -1,4 +1,4 @@
-package com.home.markkeen.exchangerates;
+package com.home.treefrogapps.ChaChingExchange;
 
 
 import android.content.Context;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.home.markkeen.exchangerates" >
+    package="com.home.treefrogapps.ChaChingExchange" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.home.treefrogapps.ChaChingExchange.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -24,22 +24,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.home.treefrogapps.ChaChingExchange.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName="com.home.treefrogapps.ChaChingExchange.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.home.markkeen.exchangerates.MainActivity" />
+                android:value="com.home.treefrogapps.ChaChingExchange.MainActivity" />
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name="com.home.treefrogapps.ChaChingExchange.AboutActivity"
             android:label="@string/title_activity_about"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName="com.home.treefrogapps.ChaChingExchange.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.home.markkeen.exchangerates.MainActivity" />
+                android:value="com.home.treefrogapps.ChaChingExchange.MainActivity" />
         </activity>
     </application>
 

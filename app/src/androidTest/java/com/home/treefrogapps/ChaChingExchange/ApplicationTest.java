@@ -1,4 +1,4 @@
-package com.home.markkeen.exchangerates;
+package com.home.treefrogapps.ChaChingExchange;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
