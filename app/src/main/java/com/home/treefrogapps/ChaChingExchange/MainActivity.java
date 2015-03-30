@@ -502,6 +502,15 @@ public class MainActivity extends ActionBarActivity {
                             new MyAsyncTask().execute();
                         }
                     }
+                } else {
+
+                    customAdapter.clear();
+                    finalConvertedAmountText = new String[32];
+                    finalRateArray = new String[32];
+                    populatedArrayList();
+                    customAdapter.notifyDataSetChanged();
+                    resultsDate.setText("");
+                    resultsTime.setText("");
                 }
             }
 
