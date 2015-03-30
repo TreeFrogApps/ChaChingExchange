@@ -32,9 +32,10 @@
     
     <string name="help_feedback">
 
-            Cha-Ching Exchange is a simple and easy to use live currency converter, aimed at anyone who requires live Exchange
+            Cha-Ching Exchange is a simple and easy to use live currency converter, aimed at anyone who requires live exchange
             rate information for up to 32 world currencies. It also has offline functionality for anyone travelling abroad,
-            or simply out of coverage range where live information is not available.
+            or simply out of coverage range where live information is not available. All offline information will be correct
+            to the last time the currency information was downloaded.
 
              <Data><![CDATA[ <br><br><font color=#9143d6><b>Instructions</b></font> ]]> </Data>
              <Data><![CDATA[ <br><br>Simply enter the amount you want to convert then choose a base currency]]></Data>
@@ -79,6 +80,8 @@
 
     </string>
     <string name="tree_frog_apps">\u00a9 Tree Frog Apps</string>
+    <string name="results_date">Date</string>
+    <string name="results_time">Time</string>
 
 </resources>
 

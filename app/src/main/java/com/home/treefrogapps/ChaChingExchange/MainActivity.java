@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -64,6 +65,10 @@ public class MainActivity extends ActionBarActivity {
     static String pinnedPositionsToKeep;
     static ToggleButton menuPinToggleButton;
     static ArrayList<HashMap<String, String>> flagAndCurrencyList = new ArrayList<HashMap<String, String>>();
+    static TextView resultsDate;
+    static TextView resultsTime;
+    private static String date;
+    private static String time;
     private static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
     private static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
     private static boolean offlineState;
@@ -76,10 +81,10 @@ public class MainActivity extends ActionBarActivity {
             R.drawable.flag_ic_gbp_09, R.drawable.flag_ic_hkd_10, R.drawable.flag_ic_hrk_11,
             R.drawable.flag_ic_huf_12, R.drawable.flag_ic_idr_13, R.drawable.flag_ic_ils_14,
             R.drawable.flag_ic_inr_15, R.drawable.flag_ic_jpy_16, R.drawable.flag_ic_krw_17,
-            R.drawable.flag_ic_ltl_18, R.drawable.flag_ic_mxn_19, R.drawable.flag_ic_nok_20,
-            R.drawable.flag_ic_nzd_21, R.drawable.flag_ic_php_22, R.drawable.flag_ic_pln_23,
-            R.drawable.flag_ic_ron_24, R.drawable.flag_ic_rub_25, R.drawable.flag_ic_sek_26,
-            R.drawable.flag_ic_sgd_27, R.drawable.flag_ic_thb_28, R.drawable.flag_ic_try_29,
+            R.drawable.flag_ic_mxn_18, R.drawable.flag_ic_nok_19, R.drawable.flag_ic_nzd_20,
+            R.drawable.flag_ic_php_21, R.drawable.flag_ic_pln_22, R.drawable.flag_ic_ron_23,
+            R.drawable.flag_ic_rub_24, R.drawable.flag_ic_sek_25, R.drawable.flag_ic_sgd_26,
+            R.drawable.flag_ic_thb_27, R.drawable.flag_ic_try_28, R.drawable.flag_ic_twd_29,
             R.drawable.flag_ic_usd_30, R.drawable.flag_ic_zar_31,
     };
     // string to hold the sharedPreference "POSITIONS TO REMOVE"
@@ -159,6 +164,8 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(actionBar);
 
         amountEditText = (EditText) findViewById(R.id.amountEditText);
+        resultsDate = (TextView) findViewById(R.id.results_date);
+        resultsTime = (TextView) findViewById(R.id.results_time);
 
         spinnerCurrencyList = new String[]{
                 "Choose a base currency", "AUD\t\tAustralian Dollar", "BGN\t\tBulgarian Lev",
@@ -167,11 +174,11 @@ public class MainActivity extends ActionBarActivity {
                 "EUR\t\tEuro", "GBP\t\tBritish Pound", "HKD\t\tHong Kong Dollar",
                 "HRK\t\tCroatian Kuna", "HUF\t\tHungarian Forint", "IDR\t\tIndonesian Rupiah",
                 "ILS\t\tIsraeli Shekel", "INR\t\tIndian Rupee", "JPY\t\tJapanese Yen",
-                "KRW\t\tSouth Korean Won", "LTL\t\tLithuanian Litas", "MXN\t\tMexican Peso",
-                "NOK\t\tNorwegian Krone", "NZD\t\tNew Zealand Dollar", "PHP\t\tPhilippine Peso",
-                "PLN\t\tPolish NEW Zloty", "RON\t\tRomanian Leu", "RUB\t\tRussian Rouble",
-                "SEK\t\tSwedish Krona", "SGD\t\tSingapore Dollar", "THB\t\tThai Baht",
-                "TRY\t\tNew Turkish Lira", "USD\t\tUnited States Dollar", "ZAR\t\tSouth African Rand"};
+                "KRW\t\tSouth Korean Won", "MXN\t\tMexican Peso", "NOK\t\tNorwegian Krone",
+                "NZD\t\tNew Zealand Dollar", "PHP\t\tPhilippine Peso", "PLN\t\tPolish NEW Zloty",
+                "RON\t\tRomanian Leu", "RUB\t\tRussian Rouble", "SEK\t\tSwedish Krona",
+                "SGD\t\tSingapore Dollar", "THB\t\tThai Baht", "TRY\t\tNew Turkish Lira",
+                "TWD\t\tTaiwan Dollar", "USD\t\tUnited States Dollar", "ZAR\t\tSouth African Rand"};
 
         currencyFromSpinner = (Spinner) findViewById(R.id.spinnerCurrencyFrom);
         spinnerArray = new ArrayAdapter<String>(this, R.layout.spinner_view, R.id.spinner_list_item, spinnerCurrencyList);
@@ -396,6 +403,8 @@ public class MainActivity extends ActionBarActivity {
                 finalRateArray = new String[32];
                 populatedArrayList();
                 customAdapter.notifyDataSetChanged();
+                resultsDate.setText("");
+                resultsTime.setText("");
 
                 return true;
 
@@ -599,22 +608,22 @@ public class MainActivity extends ActionBarActivity {
         flag = new String[]{
                 "flag_ic_aud_00","flag_ic_bgn_01","flag_ic_brl_02","flag_ic_cad_03","flag_ic_chf_04","flag_ic_cny_05","flag_ic_czk_06",
                 "flag_ic_dkk_07","flag_ic_eur_08","flag_ic_gbp_09","flag_ic_hkd_10","flag_ic_hrk_11","flag_ic_huf_12","flag_ic_idr_13",
-                "flag_ic_ils_14","flag_ic_inr_15","flag_ic_jpy_16","flag_ic_krw_17","flag_ic_ltl_18","flag_ic_mxn_19","flag_ic_nok_20",
-                "flag_ic_nzd_21","flag_ic_php_22","flag_ic_pln_23","flag_ic_ron_24","flag_ic_rub_25","flag_ic_sek_26","flag_ic_sgd_27",
-                "flag_ic_thb_28","flag_ic_try_29","flag_ic_usd_30","flag_ic_zar_31"};
+                "flag_ic_ils_14","flag_ic_inr_15","flag_ic_jpy_16","flag_ic_krw_17","flag_ic_mxn_18","flag_ic_nok_19","flag_ic_nzd_20",
+                "flag_ic_php_21","flag_ic_pln_22","flag_ic_ron_23","flag_ic_rub_24","flag_ic_sek_25","flag_ic_sgd_26",
+                "flag_ic_thb_27","flag_ic_try_28","flag_ic_twd_29","flag_ic_usd_30","flag_ic_zar_31"};
         Arrays.sort(flag);
 
         currencyCode = new String[]{
                 "AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HKD","HRK","HUF","IDR",
-                "ILS","INR","JPY","KRW","LTL","MXN","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"};
+                "ILS","INR","JPY","KRW","MXN","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","TWD","USD","ZAR"};
         Arrays.sort(currencyCode);
 
         currency = new String[]{
                 "00 Australian Dollar","01 Bulgarian Lev","02 Brazilian Real","03 Canadian Dollar","04 Swiss Franc","05 Chinese Yuan",
                 "06 Czech Koruna","07 Danish Krone","08 Euro","09 British Pound","10 Hong Kong Dollar","11 Croatian Kuna","12 Hungarian Forint",
-                "13 Indonesian Rupiah","14 Israeli Shekel","15 Indian Rupee","16 Japanese Yen","17 South Korean Won","18 Lithuanian Litas",
-                "19 Mexican Peso","20 Norwegian Krone","21 New Zealand Dollar","22 Philippine Peso","23 Polish NEW Zloty","24 Romanian Leu","25 Russian Rouble",
-                "26 Swedish Krona","27 Singapore Dollar","28 Thai Baht","29 New Turkish Lira","30 United States Dollar","31 South African Rand"};
+                "13 Indonesian Rupiah","14 Israeli Shekel","15 Indian Rupee","16 Japanese Yen","17 South Korean Won","18 Mexican Peso",
+                "19 Norwegian Krone","20 New Zealand Dollar","21 Philippine Peso","22 Polish NEW Zloty","23 Romanian Leu","24 Russian Rouble",
+                "25 Swedish Krona","26 Singapore Dollar","27 Thai Baht","28 New Turkish Lira","29 Taiwan Dollar","30 United States Dollar","31 South African Rand"};
         Arrays.sort(currency);
 
         for (int i = 0; i < flag.length; i++) {
@@ -801,6 +810,8 @@ public class MainActivity extends ActionBarActivity {
                     populatedArrayList();
                     customAdapter.notifyDataSetChanged();
                     currencyFromSpinner.setSelection(0);
+                    resultsDate.setText("");
+                    resultsTime.setText("");
 
                     Toast.makeText(getApplication(), "Offline data not available",
                             Toast.LENGTH_SHORT).show();
@@ -841,6 +852,9 @@ public class MainActivity extends ActionBarActivity {
                             Log.v("CURRENCY FROM WEB ", rateArray[i]);
                         }
 
+                        date = jsonArray.getJSONObject(0).getString("Date");
+                        time = jsonArray.getJSONObject(0).getString("Time");
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -855,8 +869,8 @@ public class MainActivity extends ActionBarActivity {
 
                     for (int i = 0; i < rateArray.length; i++) {
 
-                        // convert back the rate but to 2 decimal places in String format
-                        finalRateArray[i] = String.valueOf((String.format("%.03f", convertedAmount[i])));
+                        // convert back the rate but to 3 decimal places in String format
+                        finalRateArray[i] = String.valueOf((String.format("%.03f", convertedAmount[i])).replaceAll("0*$", "").replaceAll("\\.$", ""));
                         // convert the rate amount to string 2 decimal places
                         finalConvertedAmountText[i] = String.valueOf((String.format("%.02f", finalConvertedAmount[i])));
 
@@ -868,6 +882,11 @@ public class MainActivity extends ActionBarActivity {
                     populatedArrayList();
 
                     customAdapter.notifyDataSetChanged();
+
+                    resultsDate.setText(date);
+                    resultsTime.setText(time);
+
+
                 }
 
             } else {

@@ -115,7 +115,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         // in the listView (test for string 'result' below)
         String result = sharedPreferences.getString(flagAndCurrencyItem.get("currencyCode"), "");
         // set the icon based on the result currency - all updating of listView handled in MainActivity
-        if (!result.equals("")){
+        if (!result.equals("")) {
             viewHolder.offlineToggle.setBackground(getContext().getResources().getDrawable(R.drawable.ic_button_down_y));
         } else {
             viewHolder.offlineToggle.setBackground(getContext().getResources().getDrawable(R.drawable.ic_button_down_n));
@@ -230,18 +230,28 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                 String code = flagAndCurrencyItem.get("currencyCode");
 
                                 // test if it present in sharedPrefs, if so remove it and update adapter
-                                if (sharedPreferences.contains(code)){
+                                if (sharedPreferences.contains(code)) {
                                     editor.remove(code);
                                     editor.apply();
                                     notifyDataSetChanged();
 
                                     String currentCurrencyCode = viewHolder.convertedCurrencyCode.getText().toString();
 
-                                    if (MainActivity.currencyFromSpinner.getSelectedItem().toString().substring(0, 3).equals(currentCurrencyCode)){
+                                    if (MainActivity.currencyFromSpinner.getSelectedItem().toString().substring(0, 3).equals(currentCurrencyCode)) {
 
                                         String baseSelector = "Cho";
                                         MainActivity.swapBaseCurrency(baseSelector);
 
+                                        for (int i = 0; i < flagAndCurrencyList.size(); i++) {
+
+                                            HashMap<String, String> tempFlagAndCurrencyList = flagAndCurrencyList.get(i);
+                                            tempFlagAndCurrencyList.remove("finalConvertedAmountText");
+                                            tempFlagAndCurrencyList.remove("rateAmountText");
+                                        }
+
+                                        notifyDataSetChanged();
+                                        MainActivity.resultsDate.setText("");
+                                        MainActivity.resultsTime.setText("");
                                     }
 
                                 }
