@@ -861,6 +861,7 @@ public class MainActivity extends ActionBarActivity {
                             Log.v("CURRENCY FROM WEB ", rateArray[i]);
                         }
 
+
                         date = jsonArray.getJSONObject(0).getString("Date");
                         time = jsonArray.getJSONObject(0).getString("Time");
 

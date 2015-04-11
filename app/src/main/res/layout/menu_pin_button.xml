@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal|center_vertical">
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="23dp"
+        />
     <android.support.v7.widget.SwitchCompat
         android:textOff=""
         android:textOn=""
@@ -14,4 +19,4 @@
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         />
 
-</RelativeLayout>
+</LinearLayout>
