@@ -11,5 +11,6 @@
     <color name="gradientEnd">#80dcdcdc</color>
     <color name="editTextGrey">#FF999999</color>
     <color name="myRed">#ff990e10</color>
+    <color name="dialogBG">#fff0f0f0</color>
 </resources>
 

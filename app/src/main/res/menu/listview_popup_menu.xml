@@ -22,4 +22,22 @@
         android:orderInCategory="3"
         app:showAsAction="never"
         />
+
+    <item android:id="@+id/menu_show_1day"
+        android:title="@string/popmenu_show_1day"
+        android:orderInCategory="4"
+        app:showAsAction="never"
+        />
+
+    <item android:id="@+id/menu_show_5day"
+        android:title="@string/popmenu_show_5day"
+        android:orderInCategory="5"
+        app:showAsAction="never"
+        />
+
+    <item android:id="@+id/menu_show_1yr"
+        android:title="@string/popmenu_show_1yr"
+        android:orderInCategory="6"
+        app:showAsAction="never"
+        />
 </menu>

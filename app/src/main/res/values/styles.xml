@@ -37,5 +37,18 @@
         <item name="android:textSize">@dimen/text_bigger</item>
     </style>
 
+    <style name="myDialogWindowAnimation" parent="">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnim</item>
+    </style>
+
+    <style name="DialogAnim" parent="">
+        <item name="android:windowEnterAnimation">@anim/dialog_anim_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_anim_exit</item>
+    </style>
 
 </resources>
+

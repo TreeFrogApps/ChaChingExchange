@@ -1,8 +1,12 @@
 package com.home.treefrogapps.ChaChingExchange;
 
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -15,11 +19,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,6 +47,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -206,7 +214,45 @@ public class MainActivity extends ActionBarActivity {
         customAdapter = new CustomAdapter(getApplication(), flagAndCurrencyList);
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(customAdapter);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ImageDownloadService.IMAGE_DOWNLOAD_COMPLETE);
+        registerReceiver(broadcastReceiver, intentFilter);
     }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.getAction().equals(ImageDownloadService.IMAGE_DOWNLOAD_COMPLETE)) {
+                try{
+
+                    FileInputStream fileInputStream = context.openFileInput("downloaded_graph.png");
+
+                    final Dialog dialogBuilder = new Dialog(context, R.style.myDialogWindowAnimation);
+                    dialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialogBuilder.setContentView(R.layout.main_image_dialog);
+                    dialogBuilder.setCancelable(true);
+
+                    ImageView graphImageView = (ImageView) dialogBuilder.findViewById(R.id.dialogImageView);
+                    Button okButton = (Button) dialogBuilder.findViewById(R.id.okButton);
+                    okButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            dialogBuilder.dismiss();
+                        }
+                    });
+
+                    graphImageView.setImageBitmap(BitmapFactory.decodeStream(fileInputStream));
+                    dialogBuilder.show();
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     // NB: THIS IS CALLED WHEN THE ACTIVITY IS FIRST OPENED AFTER ONCREATE & ONSTART
     // THIS MEANS THAT THE FULL FLAGANDCURRNCYLIST IS ALWAYS INITIALLY POPULATED
@@ -354,6 +400,23 @@ public class MainActivity extends ActionBarActivity {
         editor.apply();
 
         offlineState = false;
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ImageDownloadService.IMAGE_DOWNLOAD_COMPLETE);
+        registerReceiver(broadcastReceiver, intentFilter);
     }
 
     @Override
@@ -476,7 +539,7 @@ public class MainActivity extends ActionBarActivity {
                             new MyAsyncTask().onPostExecute(offlineResult);
                         }
                         // check the internet connection and run MyAsyncTask if available
-                        else if (checkConnection()) {
+                        else if (checkConnection(getApplicationContext())) {
                             new MyAsyncTask().execute();
                         }
 
@@ -498,7 +561,7 @@ public class MainActivity extends ActionBarActivity {
                         }
 
                         // check the internet connection and run MyAsyncTask if available
-                        else if (checkConnection()) {
+                        else if (checkConnection(getApplicationContext())) {
                             new MyAsyncTask().execute();
                         }
                     }
@@ -588,12 +651,12 @@ public class MainActivity extends ActionBarActivity {
 
     // create method to check connection status before executing MyAsyncTask
     // return true if available
-    public boolean checkConnection() {
+    public static boolean checkConnection(Context context) {
 
         // system service connectivity manager
         // include in manifest : <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
         ConnectivityManager checkNetworkStatus = (ConnectivityManager)
-                this.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // network info will get all the status
         NetworkInfo networkInfo = checkNetworkStatus.getActiveNetworkInfo();
@@ -606,7 +669,7 @@ public class MainActivity extends ActionBarActivity {
         } else {
 
             currencyFromSpinner.setSelection(0);
-            Toast.makeText(getApplication(), "No Internet Connection - Offline mode available only",
+            Toast.makeText(context, "No Internet Connection - Offline mode available only",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -861,7 +924,6 @@ public class MainActivity extends ActionBarActivity {
                             Log.v("CURRENCY FROM WEB ", rateArray[i]);
                         }
 
-
                         date = jsonArray.getJSONObject(0).getString("Date");
                         time = jsonArray.getJSONObject(0).getString("Time");
 
@@ -888,17 +950,11 @@ public class MainActivity extends ActionBarActivity {
                     }
 
                     customAdapter.clear();
-
                     populatedArrayList();
-
                     customAdapter.notifyDataSetChanged();
-
                     resultsDate.setText(date);
                     resultsTime.setText(time);
-
-
                 }
-
             } else {
                 Toast.makeText(getApplication(), "Error : Connection Timeout",
                         Toast.LENGTH_SHORT).show();

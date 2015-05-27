@@ -24,6 +24,9 @@
     <string name="popupmenu_pin_currency">Pin currency</string>
     <string name="popupmenu_swap_to_base">Set as base currency</string>
     <string name="popupmenu_remove_cache">Remove offline cache</string>
+    <string name="popmenu_show_1day">Show 1 day graph</string>
+    <string name="popmenu_show_5day">Show 5 day graph</string>
+    <string name="popmenu_show_1yr">Show 1 year graph</string>
     <string name="title_activity_settings">Currencies</string>
     <string name="settings_results">Choose currency results</string>
     <string name="title_activity_about">About</string>
@@ -82,6 +85,8 @@
     <string name="tree_frog_apps">\u00a9 Tree Frog Apps</string>
     <string name="results_date">Date</string>
     <string name="results_time">Time</string>
+    <string name="currency_comparison_graph">Currency Comparison Graph</string>
+    <string name="dialog_ok_button">OK</string>
 
 </resources>
 

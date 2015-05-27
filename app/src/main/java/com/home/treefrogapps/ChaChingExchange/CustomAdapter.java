@@ -2,6 +2,7 @@ package com.home.treefrogapps.ChaChingExchange;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +62,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
 
         final HashMap<String, String> flagAndCurrencyItem = flagAndCurrencyList.get(position);
 
@@ -148,6 +149,10 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                 popUpMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+
+                        String compareCurrency;
+                        String timeScale;
+
                         switch (item.getItemId()) {
                             case R.id.menu_pin_currency:
 
@@ -257,6 +262,30 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
                                 }
                                 return true;
 
+                            case R.id.menu_show_1day:
+
+                                compareCurrency = viewHolder.convertedCurrencyCode.getText().toString();
+                                timeScale = "1d";
+                                showGraph( compareCurrency, timeScale);
+
+                                return true;
+
+                            case R.id.menu_show_5day:
+
+                                compareCurrency = viewHolder.convertedCurrencyCode.getText().toString();
+                                timeScale = "5d";
+                                showGraph( compareCurrency, timeScale);
+
+                                return true;
+
+                            case R.id.menu_show_1yr:
+
+                                compareCurrency = viewHolder.convertedCurrencyCode.getText().toString();
+                                timeScale = "1y";
+                                showGraph(compareCurrency, timeScale);
+
+                                return true;
+
                             default:
                                 return false;
                         }
@@ -268,5 +297,23 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
         return convertView;
     }
+
+    private void showGraph(String listViewCurrency,String timeScale) {
+
+        if(MainActivity.checkConnection(context) && !MainActivity.currencyFromSpinner.getSelectedItem().toString().startsWith("Cho", 0)){
+
+            String originalCurrency = MainActivity.currencyFromSpinner.getSelectedItem().toString().substring(0, 3);
+            String url = "http://ichart.finance.yahoo.com/instrument/1.0/" +
+                    originalCurrency + listViewCurrency + "=X/chart;range=" + timeScale + "/image;size=260x115";
+
+            Intent imageIntent = new Intent(getContext(), ImageDownloadService.class);
+            imageIntent.putExtra("url", url);
+            getContext().startService(imageIntent);
+
+        } else {
+            Toast.makeText(context, "No Base Currency Selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 }
