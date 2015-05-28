@@ -86,7 +86,8 @@
     <string name="results_date">Date</string>
     <string name="results_time">Time</string>
     <string name="currency_comparison_graph">Currency Comparison Graph</string>
-    <string name="dialog_ok_button">OK</string>
+    <string name="dialog_ok_button">Close Window</string>
+    <string name="rate_data">Downloading Rate Data ...</string>
 
 </resources>
 

@@ -1,6 +1,7 @@
 package com.home.treefrogapps.ChaChingExchange;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -111,8 +112,6 @@ public class MainActivity extends ActionBarActivity {
     String currencyFromType;
     String currencyFromSubsting;
     ImageView pinToggle;
-    ImageView progressBar;
-    Animation progressBarAnimation;
     Animation flagAnimation;
     // int's for saving position of the listView
     int indexPosition;
@@ -192,10 +191,6 @@ public class MainActivity extends ActionBarActivity {
         spinnerArray = new ArrayAdapter<String>(this, R.layout.spinner_view, R.id.spinner_list_item, spinnerCurrencyList);
         currencyFromSpinner.setAdapter(spinnerArray);
 
-
-        progressBar = (ImageView) findViewById(R.id.progress_bar);
-        progressBarAnimation = AnimationUtils.loadAnimation(this, R.anim.progress_bar_rotate);
-
         flagBase = (ImageView) findViewById(R.id.flag_base);
         flagAnimation = AnimationUtils.loadAnimation(this, R.anim.flag_scale);
 
@@ -253,6 +248,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
     };
+
 
     // NB: THIS IS CALLED WHEN THE ACTIVITY IS FIRST OPENED AFTER ONCREATE & ONSTART
     // THIS MEANS THAT THE FULL FLAGANDCURRNCYLIST IS ALWAYS INITIALLY POPULATED
@@ -629,21 +625,6 @@ public class MainActivity extends ActionBarActivity {
                         new MyAsyncTask().onPostExecute(result);
                     }
                 }
-
-                /*
-                // delay the keyboard from disappearing
-                new Timer().schedule(
-                        new TimerTask() {
-                            @Override
-                            public void run() {
-
-                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                imm.hideSoftInputFromWindow(amountEditText.getWindowToken(), 0);
-                            }
-                        },
-                        2000
-                );
-                */
             }
         });
 
@@ -759,11 +740,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private class MyAsyncTask extends AsyncTask<String, String, String> {
+
+        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+
         @Override
         protected void onPreExecute() {
 
-            progressBar.startAnimation(progressBarAnimation);
-            progressBar.setVisibility(View.VISIBLE);
+            progressDialog.setCancelable(true);
+            progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            progressDialog.show();
+            progressDialog.setContentView(R.layout.progress_dialog);
+
         }
 
         @Override
@@ -863,8 +850,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            progressBar.setVisibility(View.INVISIBLE);
-            progressBar.clearAnimation();
+            progressDialog.dismiss();
 
             // Holds Key Value pairs from a JSON source
             JSONObject jsonObject;

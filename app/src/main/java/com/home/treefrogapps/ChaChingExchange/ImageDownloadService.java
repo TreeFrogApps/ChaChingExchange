@@ -42,6 +42,9 @@ public class ImageDownloadService extends IntentService {
         Intent broadcastIntent = new Intent(IMAGE_DOWNLOAD_COMPLETE);
         ImageDownloadService.this.sendBroadcast(broadcastIntent);
 
+
+
+
     }
 
     private void downloadImage(String passedURL) {
