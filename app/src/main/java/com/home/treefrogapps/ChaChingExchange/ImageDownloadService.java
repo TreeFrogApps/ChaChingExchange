@@ -35,7 +35,8 @@ public class ImageDownloadService extends IntentService {
         Log.e("SERVICE", "STARTED");
 
         String passedURL = intent.getStringExtra("url");
-        downloadImage(passedURL);
+        String timeScale = intent.getStringExtra("timescale");
+        downloadImage(passedURL, timeScale);
 
         Log.e("SERVICE", "STOPPED");
 
@@ -47,9 +48,9 @@ public class ImageDownloadService extends IntentService {
 
     }
 
-    private void downloadImage(String passedURL) {
+    private void downloadImage(String passedURL, String timeScale) {
 
-        String graphImage = "downloaded_graph.png";
+        String graphImage = "downloaded_graph_" + timeScale + ".png";
 
         try {
 

@@ -41,7 +41,7 @@
             to the last time the currency information was downloaded.
 
              <Data><![CDATA[ <br><br><font color=#9143d6><b>Instructions</b></font> ]]> </Data>
-             <Data><![CDATA[ <br><br>Simply enter the amount you want to convert then choose a base currency]]></Data>
+             <Data><![CDATA[ <br><br>Simply enter the amount you want to convert then choose a base currency. Also click on result currencies for graph comparison data]]></Data>
              <Data><![CDATA[ <br><br><font color=#9143d6><b>Main menu options</b></font> ]]> </Data>
              <Data><![CDATA[ <br><br><b>Currency chooser:</b> ]]></Data>
              <Data><![CDATA[ <br>Result currencies can be turned on and off]]></Data>
@@ -58,6 +58,8 @@
              <Data><![CDATA[ <br>Changes the current base currency]]></Data>
              <Data><![CDATA[ <br><br><b>Remove offline cache:</b> ]]></Data>
              <Data><![CDATA[ <br>This option will remove individual offline currency data (available offline data for each currency is denoted by the download symbol)]]></Data>
+             <Data><![CDATA[ <br><br><b>Show 1, 5 day or 1 year graph:</b> ]]></Data>
+             <Data><![CDATA[ <br>Live graph data will be downloaded for rate comparison against selected base currency]]></Data>
              <Data><![CDATA[ <br><br><br>If you have any questions or feedback please email:]]></Data>
              <Data><![CDATA[ <br><br><a href="mailto:treefrogapplications@gmail.com">treefrogapplications@gmail.com</a><br> ]]> </Data>
     </string>
@@ -88,6 +90,13 @@
     <string name="currency_comparison_graph">Currency Comparison Graph</string>
     <string name="dialog_ok_button">Close Window</string>
     <string name="rate_data">Downloading Rate Data ...</string>
+    <string name="graph_time_scale">Graph Time Scale</string>
+    <string name="five_day_button">Five Day</string>
+    <string name="one_day_button">One Day</string>
+    <string name="one_year_button">One Year</string>
+    <string name="one_day">ONE DAY</string>
+    <string name="five_day">FIVE DAY</string>
+    <string name="one_year">ONE YEAR</string>
 
 </resources>
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/actionBarTextWhite"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/currency_comparison_graph"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/text_bigger"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/dialogImageView1d"
+        android:layout_width="260dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/one_day"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/dialogImageView5d"
+        android:layout_width="260dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/five_day"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/dialogImageView1y"
+        android:layout_width="260dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/one_year"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/imagesOKButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_selector"
+        android:ems="8"
+        android:text="@string/dialog_ok_button"
+        android:textColor="@color/actionBarTextWhite" />
+
+</LinearLayout>

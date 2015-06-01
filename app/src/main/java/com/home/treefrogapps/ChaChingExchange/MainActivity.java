@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +63,7 @@ import java.util.HashMap;
 
 public class MainActivity extends ActionBarActivity {
 
+    public static boolean offlineState;
     static EditText amountEditText;
     static Spinner currencyFromSpinner;
     static String[] spinnerCurrencyList;
@@ -80,7 +83,6 @@ public class MainActivity extends ActionBarActivity {
     private static String time;
     private static String getRatesURLA = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
     private static String getGetRatesURLB = "%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-    private static boolean offlineState;
     int[] flags = {
             // holder flag for 'Choose a base currency' position in Select currency from web spinner
             R.drawable.flag_ic_00_empty,
@@ -124,42 +126,73 @@ public class MainActivity extends ActionBarActivity {
     private String[] rateArray = new String[32];
     private String[] finalRateArray = new String[32];
     private String[] finalConvertedAmountText = new String[32];
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
-    public static void resetPinnedCurrencies() {
+            if (intent.getAction().equals(ImageDownloadService.IMAGE_DOWNLOAD_COMPLETE)) {
+                try {
 
-        // reset the pinToggle, if this is not done there is a outOfBounds error
-        menuPinToggleButton.setChecked(false);
-        // update customAdapter to tell is the toggles state for the pin image
-        customAdapter.pinToggleOn = false;
-        // reset the pinnedPositions int[]
-        pinnedPositions = new int[flagAndCurrencyList.size()];
+                    FileInputStream fileInputStream = context.openFileInput("downloaded_graph_1y.png");
 
-        // remove the save pinned positions string from shared Prefs
-        sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
+                    final Dialog dialogBuilder = new Dialog(context, R.style.myDialogWindowAnimation);
+                    dialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialogBuilder.setContentView(R.layout.main_image_dialog);
+                    dialogBuilder.setCancelable(true);
 
-        // reset the pinnedPositionsToKeep string from the customAdapter
-        customAdapter.pinnedPositionsToKeep = "";
+                    ImageView graphImageView = (ImageView) dialogBuilder.findViewById(R.id.dialogImageView);
+                    Button okButton = (Button) dialogBuilder.findViewById(R.id.okButton);
+                    okButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-        // reset the positionsToPin int[] from the customAdapter
-        customAdapter.positionsToPin = new int[flagAndCurrencyList.size()];
+                            dialogBuilder.dismiss();
+                        }
+                    });
 
-        customAdapter.clear();
-    }
+                    graphImageView.setImageBitmap(BitmapFactory.decodeStream(fileInputStream));
+                    dialogBuilder.show();
 
-    public static void swapBaseCurrency(String currency) {
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else if (intent.getAction().equals(ImagesDownloadService.IMAGES_DOWNLOAD_COMPLETE)) {
+                try {
 
-        String spinnerItem;
+                    FileInputStream fileInputStream1d = context.openFileInput("downloaded_graph_00.png");
+                    FileInputStream fileInputStream5d = context.openFileInput("downloaded_graph_01.png");
+                    FileInputStream fileInputStream1y = context.openFileInput("downloaded_graph_02.png");
 
-        for (int i = 0; i < currencyFromSpinner.getCount(); i++) {
 
-            spinnerItem = currencyFromSpinner.getItemAtPosition(i).toString();
+                    final Dialog dialogBuilder = new Dialog(context, R.style.myDialogWindowAnimation);
+                    dialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialogBuilder.setContentView(R.layout.main_images_dialog);
+                    dialogBuilder.setCancelable(true);
 
-            if (currency.equals(spinnerItem.substring(0, 3))) {
+                    ImageView graphImageView1d = (ImageView) dialogBuilder.findViewById(R.id.dialogImageView1d);
+                    ImageView graphImageView5d = (ImageView) dialogBuilder.findViewById(R.id.dialogImageView5d);
+                    ImageView graphImageView1y = (ImageView) dialogBuilder.findViewById(R.id.dialogImageView1y);
 
-                currencyFromSpinner.setSelection(i);
+                    Button okButton = (Button) dialogBuilder.findViewById(R.id.imagesOKButton);
+                    okButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            dialogBuilder.dismiss();
+                        }
+                    });
+
+                    graphImageView1d.setImageBitmap(BitmapFactory.decodeStream(fileInputStream1d));
+                    graphImageView5d.setImageBitmap(BitmapFactory.decodeStream(fileInputStream5d));
+                    graphImageView1y.setImageBitmap(BitmapFactory.decodeStream(fileInputStream1y));
+                    dialogBuilder.show();
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
-    }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,43 +245,10 @@ public class MainActivity extends ActionBarActivity {
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ImageDownloadService.IMAGE_DOWNLOAD_COMPLETE);
+        intentFilter.addAction(ImagesDownloadService.IMAGES_DOWNLOAD_COMPLETE);
+
         registerReceiver(broadcastReceiver, intentFilter);
     }
-
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            if (intent.getAction().equals(ImageDownloadService.IMAGE_DOWNLOAD_COMPLETE)) {
-                try{
-
-                    FileInputStream fileInputStream = context.openFileInput("downloaded_graph.png");
-
-                    final Dialog dialogBuilder = new Dialog(context, R.style.myDialogWindowAnimation);
-                    dialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialogBuilder.setContentView(R.layout.main_image_dialog);
-                    dialogBuilder.setCancelable(true);
-
-                    ImageView graphImageView = (ImageView) dialogBuilder.findViewById(R.id.dialogImageView);
-                    Button okButton = (Button) dialogBuilder.findViewById(R.id.okButton);
-                    okButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            dialogBuilder.dismiss();
-                        }
-                    });
-
-                    graphImageView.setImageBitmap(BitmapFactory.decodeStream(fileInputStream));
-                    dialogBuilder.show();
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    };
-
 
     // NB: THIS IS CALLED WHEN THE ACTIVITY IS FIRST OPENED AFTER ONCREATE & ONSTART
     // THIS MEANS THAT THE FULL FLAGANDCURRNCYLIST IS ALWAYS INITIALLY POPULATED
@@ -385,34 +385,75 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public static void resetPinnedCurrencies() {
 
+        // reset the pinToggle, if this is not done there is a outOfBounds error
         menuPinToggleButton.setChecked(false);
-        // save the checked state of the ToggleButton
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("PIN CHECKED STATE", menuPinToggleButton.isChecked());
-        editor.apply();
+        // update customAdapter to tell is the toggles state for the pin image
+        customAdapter.pinToggleOn = false;
+        // reset the pinnedPositions int[]
+        pinnedPositions = new int[flagAndCurrencyList.size()];
 
-        offlineState = false;
+        // remove the save pinned positions string from shared Prefs
+        sharedPreferences.edit().remove("PINNED_POSITIONS_TO_KEEP").apply();
 
+        // reset the pinnedPositionsToKeep string from the customAdapter
+        customAdapter.pinnedPositionsToKeep = "";
+
+        // reset the positionsToPin int[] from the customAdapter
+        customAdapter.positionsToPin = new int[flagAndCurrencyList.size()];
+
+        customAdapter.clear();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+    public static void swapBaseCurrency(String currency) {
 
-        unregisterReceiver(broadcastReceiver);
+        String spinnerItem;
+
+        for (int i = 0; i < currencyFromSpinner.getCount(); i++) {
+
+            spinnerItem = currencyFromSpinner.getItemAtPosition(i).toString();
+
+            if (currency.equals(spinnerItem.substring(0, 3))) {
+
+                currencyFromSpinner.setSelection(i);
+            }
+        }
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
+    // create method to check connection status before executing MyAsyncTask
+    // return true if available
+    public static boolean checkConnection(Context context) {
 
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ImageDownloadService.IMAGE_DOWNLOAD_COMPLETE);
-        registerReceiver(broadcastReceiver, intentFilter);
+        // system service connectivity manager
+        // include in manifest : <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+        ConnectivityManager checkNetworkStatus = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // network info will get all the status
+        NetworkInfo networkInfo = checkNetworkStatus.getActiveNetworkInfo();
+
+        // check that the state is 'connected' (either wifi or phone network - only 1 connection type
+        // can exist at the same time
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+
+        } else {
+
+            currencyFromSpinner.setSelection(0);
+
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View customToast = layoutInflater.inflate(R.layout.custom_toast, null);
+            TextView customToastTextView = (TextView) customToast.findViewById(R.id.customToastTextView);
+            customToastTextView.setText("Internet Unavailable - Offline Mode only");
+
+            Toast toast = new Toast(context);
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(customToast);
+            toast.show();
+            return false;
+        }
     }
 
     @Override
@@ -441,7 +482,7 @@ public class MainActivity extends ActionBarActivity {
                 //get sharedPreferences to clear ALL cached results
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                for (int i = 1; i < spinnerCurrencyList.length; i++){
+                for (int i = 1; i < spinnerCurrencyList.length; i++) {
 
                     // use the spinner string array for cycling through sharedPrefs
                     // check if that 'key' is present, if so remove it
@@ -630,53 +671,27 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    // create method to check connection status before executing MyAsyncTask
-    // return true if available
-    public static boolean checkConnection(Context context) {
-
-        // system service connectivity manager
-        // include in manifest : <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-        ConnectivityManager checkNetworkStatus = (ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        // network info will get all the status
-        NetworkInfo networkInfo = checkNetworkStatus.getActiveNetworkInfo();
-
-        // check that the state is 'connected' (either wifi or phone network - only 1 connection type
-        // can exist at the same time
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-
-        } else {
-
-            currencyFromSpinner.setSelection(0);
-            Toast.makeText(context, "No Internet Connection - Offline mode available only",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
-    }
-
     public ArrayList<HashMap<String, String>> populatedArrayList() {
 
         flag = new String[]{
-                "flag_ic_aud_00","flag_ic_bgn_01","flag_ic_brl_02","flag_ic_cad_03","flag_ic_chf_04","flag_ic_cny_05","flag_ic_czk_06",
-                "flag_ic_dkk_07","flag_ic_eur_08","flag_ic_gbp_09","flag_ic_hkd_10","flag_ic_hrk_11","flag_ic_huf_12","flag_ic_idr_13",
-                "flag_ic_ils_14","flag_ic_inr_15","flag_ic_jpy_16","flag_ic_krw_17","flag_ic_mxn_18","flag_ic_nok_19","flag_ic_nzd_20",
-                "flag_ic_php_21","flag_ic_pln_22","flag_ic_ron_23","flag_ic_rub_24","flag_ic_sek_25","flag_ic_sgd_26",
-                "flag_ic_thb_27","flag_ic_try_28","flag_ic_twd_29","flag_ic_usd_30","flag_ic_zar_31"};
+                "flag_ic_aud_00", "flag_ic_bgn_01", "flag_ic_brl_02", "flag_ic_cad_03", "flag_ic_chf_04", "flag_ic_cny_05", "flag_ic_czk_06",
+                "flag_ic_dkk_07", "flag_ic_eur_08", "flag_ic_gbp_09", "flag_ic_hkd_10", "flag_ic_hrk_11", "flag_ic_huf_12", "flag_ic_idr_13",
+                "flag_ic_ils_14", "flag_ic_inr_15", "flag_ic_jpy_16", "flag_ic_krw_17", "flag_ic_mxn_18", "flag_ic_nok_19", "flag_ic_nzd_20",
+                "flag_ic_php_21", "flag_ic_pln_22", "flag_ic_ron_23", "flag_ic_rub_24", "flag_ic_sek_25", "flag_ic_sgd_26",
+                "flag_ic_thb_27", "flag_ic_try_28", "flag_ic_twd_29", "flag_ic_usd_30", "flag_ic_zar_31"};
         Arrays.sort(flag);
 
         currencyCode = new String[]{
-                "AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HKD","HRK","HUF","IDR",
-                "ILS","INR","JPY","KRW","MXN","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","TWD","USD","ZAR"};
+                "AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HRK", "HUF", "IDR",
+                "ILS", "INR", "JPY", "KRW", "MXN", "NOK", "NZD", "PHP", "PLN", "RON", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "USD", "ZAR"};
         Arrays.sort(currencyCode);
 
         currency = new String[]{
-                "00 Australian Dollar","01 Bulgarian Lev","02 Brazilian Real","03 Canadian Dollar","04 Swiss Franc","05 Chinese Yuan",
-                "06 Czech Koruna","07 Danish Krone","08 Euro","09 British Pound","10 Hong Kong Dollar","11 Croatian Kuna","12 Hungarian Forint",
-                "13 Indonesian Rupiah","14 Israeli Shekel","15 Indian Rupee","16 Japanese Yen","17 South Korean Won","18 Mexican Peso",
-                "19 Norwegian Krone","20 New Zealand Dollar","21 Philippine Peso","22 Polish NEW Zloty","23 Romanian Leu","24 Russian Rouble",
-                "25 Swedish Krona","26 Singapore Dollar","27 Thai Baht","28 New Turkish Lira","29 Taiwan Dollar","30 United States Dollar","31 South African Rand"};
+                "00 Australian Dollar", "01 Bulgarian Lev", "02 Brazilian Real", "03 Canadian Dollar", "04 Swiss Franc", "05 Chinese Yuan",
+                "06 Czech Koruna", "07 Danish Krone", "08 Euro", "09 British Pound", "10 Hong Kong Dollar", "11 Croatian Kuna", "12 Hungarian Forint",
+                "13 Indonesian Rupiah", "14 Israeli Shekel", "15 Indian Rupee", "16 Japanese Yen", "17 South Korean Won", "18 Mexican Peso",
+                "19 Norwegian Krone", "20 New Zealand Dollar", "21 Philippine Peso", "22 Polish NEW Zloty", "23 Romanian Leu", "24 Russian Rouble",
+                "25 Swedish Krona", "26 Singapore Dollar", "27 Thai Baht", "28 New Turkish Lira", "29 Taiwan Dollar", "30 United States Dollar", "31 South African Rand"};
         Arrays.sort(currency);
 
         for (int i = 0; i < flag.length; i++) {
@@ -871,8 +886,16 @@ public class MainActivity extends ActionBarActivity {
                     resultsDate.setText("");
                     resultsTime.setText("");
 
-                    Toast.makeText(getApplication(), "Offline data not available",
-                            Toast.LENGTH_SHORT).show();
+                    LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View customToast = layoutInflater.inflate(R.layout.custom_toast, null);
+                    TextView customToastTextView = (TextView) customToast.findViewById(R.id.customToastTextView);
+                    customToastTextView.setText("Offline Data Not Available");
+
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.setView(customToast);
+                    toast.show();
 
                 } else {
                     try {
@@ -942,10 +965,48 @@ public class MainActivity extends ActionBarActivity {
                     resultsTime.setText(time);
                 }
             } else {
-                Toast.makeText(getApplication(), "Error : Connection Timeout",
-                        Toast.LENGTH_SHORT).show();
+                LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View customToast = layoutInflater.inflate(R.layout.custom_toast, null);
+                TextView customToastTextView = (TextView) customToast.findViewById(R.id.customToastTextView);
+                customToastTextView.setText("Error - Connection Timeout");
+
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(customToast);
+                toast.show();
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        menuPinToggleButton.setChecked(false);
+        // save the checked state of the ToggleButton
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("PIN CHECKED STATE", menuPinToggleButton.isChecked());
+        editor.apply();
+
+        offlineState = false;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ImageDownloadService.IMAGE_DOWNLOAD_COMPLETE);
+        intentFilter.addAction(ImagesDownloadService.IMAGES_DOWNLOAD_COMPLETE);
+        registerReceiver(broadcastReceiver, intentFilter);
     }
 
 }

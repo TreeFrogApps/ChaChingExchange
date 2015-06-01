@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,9 +48,7 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         protected ImageView pinToggle;
         protected ImageView offlineToggle;
         protected Button context_menu;
-
     }
-
 
     public CustomAdapter(Context context, ArrayList<HashMap<String, String>> flagAndCurrencyList) {
         super(context, R.layout.list_view_results, flagAndCurrencyList);
@@ -58,7 +59,6 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
         this.flagAndCurrencyList = flagAndCurrencyList;
 
     }
-
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -295,12 +295,33 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             }
         });
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String compareCurrency = viewHolder.convertedCurrencyCode.getText().toString();
+                String[] timeScales = new String[] {"1d", "5d", "1y"};
+                showGraphs(compareCurrency, timeScales);
+
+
+
+            }
+        });
+
         return convertView;
     }
 
-    private void showGraph(String listViewCurrency,String timeScale) {
+    private void showGraph(String listViewCurrency, String timeScale) {
 
-        if(MainActivity.checkConnection(context) && !MainActivity.currencyFromSpinner.getSelectedItem().toString().startsWith("Cho", 0)){
+        if (!checkNetwork(context)){
+            customToast("Internet Unavailable");
+
+        } else if (MainActivity.currencyFromSpinner.getSelectedItem().toString().startsWith("Cho", 0)){
+            customToast("No Base Currency Selected");
+
+        } else if (MainActivity.offlineState){
+            customToast("Offline Mode Active \n Graph data not available");
+        } else {
 
             String originalCurrency = MainActivity.currencyFromSpinner.getSelectedItem().toString().substring(0, 3);
             String url = "http://ichart.finance.yahoo.com/instrument/1.0/" +
@@ -308,10 +329,76 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
 
             Intent imageIntent = new Intent(getContext(), ImageDownloadService.class);
             imageIntent.putExtra("url", url);
+            imageIntent.putExtra("timescale", timeScale);
             getContext().startService(imageIntent);
 
+        }
+    }
+
+    private void showGraphs(String listViewCurrency, String[] timeScales) {
+
+        if (!checkNetwork(context)){
+            customToast("Internet Unavailable");
+
+        } else if (MainActivity.currencyFromSpinner.getSelectedItem().toString().startsWith("Cho", 0)){
+            customToast("No Base Currency Selected");
+
+        } else if (MainActivity.offlineState){
+            customToast("Offline Mode Active \n Graph data not available");
         } else {
-            Toast.makeText(context, "No Base Currency Selected", Toast.LENGTH_SHORT).show();
+
+            Intent imageIntent = new Intent(getContext(), ImagesDownloadService.class);
+
+            ArrayList<String> myURLS = new ArrayList<>();
+            String originalCurrency = MainActivity.currencyFromSpinner.getSelectedItem().toString().substring(0, 3);
+            String url;
+            for (int i = 0; i < timeScales.length; i++){
+
+                url = "http://ichart.finance.yahoo.com/instrument/1.0/" +
+                        originalCurrency + listViewCurrency + "=X/chart;range=" + timeScales[i] + "/image;size=260x115";
+
+                Log.d("URL ", url);
+
+                myURLS.add(i, url);
+            }
+
+            imageIntent.putStringArrayListExtra("urls", myURLS);
+            getContext().startService(imageIntent);
+        }
+    }
+
+
+    public void customToast(String toastText){
+
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customToast = layoutInflater.inflate(R.layout.custom_toast, null);
+        TextView customToastTextView = (TextView) customToast.findViewById(R.id.customToastTextView);
+        customToastTextView.setText(toastText);
+
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(customToast);
+        toast.show();
+    }
+
+
+    public boolean checkNetwork(Context context) {
+
+        // system service connectivity manager
+        // include in manifest : <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+        ConnectivityManager checkNetworkStatus = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // network info will get all the status
+        NetworkInfo networkInfo = checkNetworkStatus.getActiveNetworkInfo();
+
+        // check that the state is 'connected' (either wifi or phone network - only 1 connection type
+        // can exist at the same time
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
         }
     }
 
