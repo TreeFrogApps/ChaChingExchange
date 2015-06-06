@@ -54,7 +54,8 @@
                 android:imeOptions="actionDone"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="32sp"/>
+                android:textSize="32sp"
+                android:maxLength="11"/>
 
         </LinearLayout>
 

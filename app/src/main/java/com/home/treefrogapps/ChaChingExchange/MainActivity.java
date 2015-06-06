@@ -56,6 +56,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -133,7 +134,7 @@ public class MainActivity extends ActionBarActivity {
             if (intent.getAction().equals(ImageDownloadService.IMAGE_DOWNLOAD_COMPLETE)) {
                 try {
 
-                    FileInputStream fileInputStream = context.openFileInput("downloaded_graph_1y.png");
+                    FileInputStream fileInputStream = context.openFileInput("downloaded_graph_single.png");
 
                     final Dialog dialogBuilder = new Dialog(context, R.style.myDialogWindowAnimation);
                     dialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -945,7 +946,7 @@ public class MainActivity extends ActionBarActivity {
                         // parse the String rateArray to double
                         convertedAmount[i] = Double.parseDouble(rateArray[i]);
 
-                        finalConvertedAmount[i] = (convertedAmount[i] * getAmountAsDouble);
+                        finalConvertedAmount[i] = (Double.valueOf(new DecimalFormat("#.###").format(convertedAmount[i])) * getAmountAsDouble);
                     }
 
                     for (int i = 0; i < rateArray.length; i++) {

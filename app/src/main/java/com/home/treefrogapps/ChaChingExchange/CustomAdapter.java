@@ -327,6 +327,8 @@ public class CustomAdapter extends ArrayAdapter<HashMap<String, String>> {
             String url = "http://ichart.finance.yahoo.com/instrument/1.0/" +
                     originalCurrency + listViewCurrency + "=X/chart;range=" + timeScale + "/image;size=260x115";
 
+            Log.d("URL ", url);
+
             Intent imageIntent = new Intent(getContext(), ImageDownloadService.class);
             imageIntent.putExtra("url", url);
             imageIntent.putExtra("timescale", timeScale);

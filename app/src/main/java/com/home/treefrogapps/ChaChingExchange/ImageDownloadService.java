@@ -50,7 +50,7 @@ public class ImageDownloadService extends IntentService {
 
     private void downloadImage(String passedURL, String timeScale) {
 
-        String graphImage = "downloaded_graph_" + timeScale + ".png";
+        String graphImage = "downloaded_graph_single.png";
 
         try {
 

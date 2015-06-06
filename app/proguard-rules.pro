@@ -26,3 +26,6 @@
     public static int d(...);
     public static int e(...);
 }
+
+# stops warning about external depencdencies used for okio.** - safe to do so after investigation
+-dontwarn okio.**
