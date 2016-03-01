@@ -37,14 +37,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +47,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -772,26 +765,16 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected String doInBackground(String[] params) {
 
-            // Get the standard parameters associated with the default http client
-            HttpParams httpParams = new BasicHttpParams();
-            // Set a parameter for Connection timeout set at 9 seconds
-            HttpConnectionParams.setConnectionTimeout(httpParams, 9000);
-            // Set some parameters for Socket timeout set at 9 seconds
-            HttpConnectionParams.setSoTimeout(httpParams, 9000);
-
-            // HTTP Client that supports streaming uploads and downloads apply the adjusted
-            // httpParams to the client
-            DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
-
+            String result = null;
+            InputStream inputStream = null;
 
             // Define that I want to use the POST method to grab data from
             // the provided URL
             getRatesLatest = getRatesURLA;
 
             // loop round all the country codes concatenating into one big URL string
-            for (int i = 0; i < currencyCode.length; i++) {
-
-                getRatesLatest = getRatesLatest + currencyFromSubsting + currencyCode[i] + "%22%2C%22";
+            for (String aCurrencyCode : currencyCode) {
+                getRatesLatest = getRatesLatest + currencyFromSubsting + aCurrencyCode + "%22%2C%22";
             }
 
             // remove last "%22%2C%22" reassigning the string using substring to minus 9 characters
@@ -799,67 +782,59 @@ public class MainActivity extends ActionBarActivity {
 
             getRatesFinal = getRatesLatest + getGetRatesURLB;
 
-            HttpPost httpPost = new HttpPost(getRatesFinal);
-
             Log.v("HTTPS Address ", getRatesFinal);
-
-            // Web service used is defined
-            httpPost.setHeader("Content-type", "application/json");
-
-            // Used to read data from the URL
-            InputStream inputStream = null;
-
-            // Will hold all the data gathered from the URL
-            String result = null;
 
             try {
 
-                // Get a response if any from the web service
-                HttpResponse response = httpClient.execute(httpPost);
+                URL url = new URL(getRatesFinal);
 
-                // The content from the requested URL along with headers, etc.
-                HttpEntity entity = response.getEntity();
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                // Get the main content from the URL
-                inputStream = entity.getContent();
+                connection.setRequestMethod("GET");
 
-                Log.v("INPUT STREAM ", inputStream.toString());
+                connection.setRequestProperty("Content-length", "0");
+                connection.setUseCaches(false);
+                connection.setAllowUserInteraction(false);
+                connection.setConnectTimeout(20000); // 20 seconds
+                connection.setReadTimeout(20000); // 20 seconds
+                connection.connect();
 
-                // JSON is UTF-8 by default
-                // BufferedReader reads data from the InputStream until the Buffer is full
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                switch (connection.getResponseCode()) {
 
-                //Store the data
-                StringBuilder theStringBuilder = new StringBuilder();
+                    case 200:
+                    case 201:
+                    case 202:
+                        inputStream = connection.getInputStream();
 
-                String line = null;
+                        Log.v("INPUT STREAM ", inputStream.toString());
 
-                while ((line = reader.readLine()) != null) {
+                        // JSON is UTF-8 by default
+                        // BufferedReader reads data from the InputStream until the Buffer is full
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
 
-                    theStringBuilder.append(line + "\n");
+                        //Store the data
+                        StringBuilder theStringBuilder = new StringBuilder();
+
+                        String line = null;
+
+                        while ((line = reader.readLine()) != null) {
+
+                            theStringBuilder.append(line + "\n");
+                        }
+
+                        // Store the complete data in result
+                        result = theStringBuilder.toString();
+                        inputStream.close();
+                        break;
+
                 }
 
-                // Store the complete data in result
-                result = theStringBuilder.toString();
 
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
+
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("Error", "Error" + e);
+                return null;
             }
-
-            // Close the InputStream when you're done with it
-            finally {
-
-                try {
-                    if (inputStream != null) inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
             return result;
         }
 
